@@ -25,7 +25,7 @@ button {
     font-family: Arial, Helvetica, sans-serif;
  }
 
- #grid-header{
+ #grid-header {
     grid-area: header;
     display: inline;
     position: relative;
@@ -36,12 +36,17 @@ button {
     grid-template-columns: 1fr 2fr;
  }
 
- #grid-header h1 {
-    grid-area: heading;
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    padding: 20px;
+ .heading-main {
+    font-weight: bold;
+    font-size: 2em;
+ }
+
+ #heading-loginpage {
+   grid-area: heading;
+   position: absolute;
+   left: 0;
+   bottom: 0;
+   padding: 40px;
  }
 
  #grid-header img {
@@ -52,12 +57,17 @@ button {
     padding: 20px; 
  }
 
- #grid-body {
+ #grid-body div {
     grid-area: body;
+    margin: 8px;
+ }
+
+ #grid-body a {
+   margin: 5px;
  }
  
  form {
-    display: table;
+    display: block;
     margin: 0 auto;
     width: 25%;
  }
@@ -65,4 +75,13 @@ button {
  input {
     margin: 5px;
     width: 100%;
+ }
+
+ .heading-sub {
+    font-size: 1.3em;
+    font-weight: bold;
+ }
+
+ .heading-main {
+
  }
