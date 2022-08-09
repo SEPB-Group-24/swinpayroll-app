@@ -22,7 +22,7 @@ const LoginPage = () => {
           </div>
 
           <div>
-            <input type="text" id="username"></input>
+            <input type="text" id="username" />
           </div>
           
           <div>
@@ -30,11 +30,11 @@ const LoginPage = () => {
           </div>
           
           <div>
-            <input type="text" id="password"></input>
+            <input type="text" id="password" />
           </div>
           
           <div>
-            <button type="submit" value="Submit">SIGN IN</button>
+            <button type="submit">SIGN IN</button>
           </div>
 
           <div>
@@ -44,7 +44,7 @@ const LoginPage = () => {
           <hr/>
 
           <div>
-            <label>New User?</label>
+            New User?
           </div>
 
           <div>
