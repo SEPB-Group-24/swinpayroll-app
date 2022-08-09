@@ -1,47 +1,48 @@
 button {
-    background-color: #008cff;
-    color: white;
-    padding: 0.8em 0em 0.8em 0em;
-    border: none;
-    border-radius: 10px;
-    width: 7em;
-    margin: 5px;
-    border: #008cff 2px solid;
+   background-color: #008cff;
+   color: white;
+   padding: 0.8em 0em 0.8em 0em;
+   border: none;
+   border-radius: 10px;
+   width: 7em;
+   margin: 5px;
+   border: #008cff 2px solid;
  }
 
  button:hover {
-     background-color: white;
-     color: black;
-     border: #008cff 2px solid;
+   background-color: white;
+   color: black;
+   border: #008cff 2px solid;
  }
 
- body {
-    display: grid;
-    grid-template-areas: 
-        "header"
-        "body";
-    grid-template-rows: 1fr 2fr;
-    font-size: 1em;
-    font-family: Arial, Helvetica, sans-serif;
+ .LoginPage {
+   display: grid;
+   grid-template-areas: 
+      "header"
+      "body";
+   grid-template-rows: 1fr 2fr;
+   font-size: 1em;
+   font-family: Arial, Helvetica, sans-serif;
+   height: 100vh;
  }
 
- #grid-header {
-    grid-area: header;
-    display: inline;
-    position: relative;
-
-    display: grid;
-    grid-template-areas: 
-        "logo heading";
-    grid-template-columns: 1fr 2fr;
+ .gridHeader {
+   grid-area: header;
+   display: inline;
+   position: relative;
+   display: grid;
+   grid-template-areas: 
+      "logo heading";
+   grid-template-columns: 1fr 2fr;
  }
 
- .heading-main {
-    font-weight: bold;
-    font-size: 2em;
+ .gridBody {
+   grid-area: body;
  }
 
- #heading-loginpage {
+ .headingMain{
+   font-weight: bold;
+   font-size: 2em;
    grid-area: heading;
    position: absolute;
    left: 0;
@@ -49,39 +50,35 @@ button {
    padding: 40px;
  }
 
- #grid-header img {
-    grid-area: logo;
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    padding: 20px; 
+ .gridHeader img {
+   grid-area: logo;
+   position: absolute;
+   right: 0;
+   bottom: 0;
+   padding: 20px; 
  }
 
- #grid-body div {
-    grid-area: body;
-    margin: 8px;
+ .gridBody div {
+   margin: 8px;
  }
 
- #grid-body a {
+ .gridBody a {
    margin: 5px;
  }
  
  form {
-    display: block;
-    margin: 0 auto;
-    width: 25%;
+   display: block;
+   margin: 0 auto;
+   width: 25%;
  }
 
  input {
-    margin: 5px;
-    width: 100%;
+   margin: 5px;
+   width: 100%;
  }
 
- .heading-sub {
-    font-size: 1.3em;
-    font-weight: bold;
+ .headingSub {
+   font-size: 1.3em;
+   font-weight: bold;
  }
 
- .heading-main {
-
- }
