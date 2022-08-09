@@ -1,0 +1,68 @@
+button {
+    background-color: #008cff;
+    color: white;
+    padding: 0.8em 0em 0.8em 0em;
+    border: none;
+    border-radius: 10px;
+    width: 7em;
+    margin: 5px;
+    border: #008cff 2px solid;
+ }
+
+ button:hover {
+     background-color: white;
+     color: black;
+     border: #008cff 2px solid;
+ }
+
+ body {
+    display: grid;
+    grid-template-areas: 
+        "header"
+        "body";
+    grid-template-rows: 1fr 2fr;
+    font-size: 1em;
+    font-family: Arial, Helvetica, sans-serif;
+ }
+
+ #grid-header{
+    grid-area: header;
+    display: inline;
+    position: relative;
+
+    display: grid;
+    grid-template-areas: 
+        "logo heading";
+    grid-template-columns: 1fr 2fr;
+ }
+
+ #grid-header h1 {
+    grid-area: heading;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    padding: 20px;
+ }
+
+ #grid-header img {
+    grid-area: logo;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    padding: 20px; 
+ }
+
+ #grid-body {
+    grid-area: body;
+ }
+ 
+ form {
+    display: table;
+    margin: 0 auto;
+    width: 25%;
+ }
+
+ input {
+    margin: 5px;
+    width: 100%;
+ }
