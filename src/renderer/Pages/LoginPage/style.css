@@ -7,6 +7,7 @@ button {
    width: 7em;
    margin: 5px;
    border: #008cff 2px solid;
+   cursor: pointer
  }
 
  button:hover {
@@ -33,7 +34,7 @@ button {
    width: 60%;
    text-align: start;
    height: 100px;
-   line-height: 100px;
+   margin-top: 35px;
  }
 
  .logoContainer {
