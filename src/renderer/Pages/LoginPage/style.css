@@ -33,7 +33,7 @@ button {
    height: 33%;
  }
  
- .headingMain{
+ .headingMain {
    font-weight: bold;
    font-size: 2em;
    grid-area: heading;
@@ -43,7 +43,7 @@ button {
    padding: 40px;
  }
 
- .gridHeader img {
+ .gridHeader > img {
    grid-area: logo;
    position: absolute;
    right: 0;
@@ -51,11 +51,11 @@ button {
    padding: 20px; 
  }
 
- .gridBody div {
+ .gridBody  div {
    margin: 8px;
  }
 
- .gridBody a {
+ .gridBody > a {
    margin: 5px;
  }
  
