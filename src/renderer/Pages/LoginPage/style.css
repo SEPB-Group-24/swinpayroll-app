@@ -20,39 +20,38 @@ button {
    flex-direction: column;
  }
 
- .gridHeader {
-   display: inline;
-   position: relative;
-   display: grid;
-   grid-template-areas: 
-      "logo heading";
-   grid-template-columns: 1fr 2fr;
-   height: 33%;
+ .header {
+   display: flex;
+   text-align: center;
+   margin-top: 10%;
+   vertical-align: baseline;
  }
  
  .headingMain {
    font-weight: bold;
    font-size: 2em;
-   grid-area: heading;
-   position: absolute;
-   left: 0;
-   bottom: 0;
-   padding: 40px;
+   width: 60%;
+   text-align: start;
+   height: 100px;
+   line-height: 100px;
  }
 
- .gridHeader > img {
-   grid-area: logo;
-   position: absolute;
-   right: 0;
-   bottom: 0;
-   padding: 20px; 
+ .logoContainer {
+   width: 40%;
+   text-align: end;
+   margin-right: 20px;
  }
 
- .gridBody  div {
+ .header > img {
+   position: absolute;
+   float: right;
+ }
+
+ form > div {
    margin: 8px;
  }
 
- .gridBody > a {
+ .body > a {
    margin: 5px;
  }
  

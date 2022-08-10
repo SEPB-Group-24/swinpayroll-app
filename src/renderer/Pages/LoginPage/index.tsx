@@ -4,14 +4,16 @@ import logo from './logo.jpg';
 const LoginPage = () => {
   return (
     <div className="LoginPage">
-      <div className="gridHeader">
-        <img src={logo} />
+      <div className="header">
+        <div className="logoContainer">
+          <img src={logo} />
+        </div>
         <div className="headingMain">
           Welcome to SwinPayroll
         </div>
       </div>
 
-      <div className="gridBody">
+      <div className="body">
         <form>
           <div className="headingSub">
             Sign In
