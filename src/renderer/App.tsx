@@ -12,7 +12,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<IndexPage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/" element={<TabsComponent />} />
+        <Route path="/tabs" element={<TabsComponent />} />
       </Routes>
     </Router>
   );
