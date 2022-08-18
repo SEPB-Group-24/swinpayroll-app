@@ -12,7 +12,7 @@ const Tabs = () => {
       </div>
 
       <div className="container">
-        <div className="containerStripe">&nbsp;</div>
+        <div className="containerStripe" />
         <div className="containerTabs">
           <div className="containerTab viewTab">View</div>
           <div className="containerTab editTab">Edit</div>
@@ -20,15 +20,15 @@ const Tabs = () => {
         <div className="containerContent">
           <div className="containerFormRow">
             <div className="formField">
-              <label htmlFor="field1">
-                Field1:&nbsp;
-                <input type="text" id="field1" />
+              <label>
+                Field:&nbsp;
+                <input type="text" />
               </label>
             </div>
             <div className="formField">
-              <label htmlFor="field2">
-                Field2:&nbsp;
-                <input type="text" id="field2" />
+              <label>
+                Field:&nbsp;
+                <input type="text" />
               </label>
             </div>
           </div>

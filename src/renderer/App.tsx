@@ -2,7 +2,7 @@ import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 
 import IndexPage from './pages/IndexPage';
 import LoginPage from './pages/LoginPage';
-import Tabs from './components/Tabs';
+import MasterPage from './components/MasterPage';
 
 import './App.css';
 
@@ -12,7 +12,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<IndexPage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/master/MasterPage" element={<Tabs />} />
+        <Route path="/master" element={<MasterPage />} />
       </Routes>
     </Router>
   );
