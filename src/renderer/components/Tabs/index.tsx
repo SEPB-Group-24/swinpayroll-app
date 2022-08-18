@@ -1,8 +1,8 @@
 import './style.css';
 
-const TabsComponent = () => {
+const Tabs = () => {
   return (
-    <div className="TabsComponent">
+    <div className="Tabs">
       <div className="tabs">
         <div className="tab employeeTab">Employee</div>
         <div className="tab subContractorTab">Sub Contractor</div>
@@ -49,4 +49,4 @@ const TabsComponent = () => {
   );
 };
 
-export default TabsComponent;
+export default Tabs;

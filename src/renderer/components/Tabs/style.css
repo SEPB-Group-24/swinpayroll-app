@@ -57,10 +57,6 @@
   display: flex;
 }
 
-.controlBecauseGitIsAnnoying {
-  display: none;
-}
-
 .containerFormRow {
   display: flex;
   flex-direction: row;
