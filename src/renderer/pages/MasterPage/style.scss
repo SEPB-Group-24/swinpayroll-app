@@ -1,0 +1,81 @@
+.MasterPage {
+  margin: 0 auto;
+  width: calc(100% - 100px);
+
+  > .tabs {
+    display: flex;
+    margin: 0 10px;
+    margin-bottom: -1px;
+
+    > .tab {
+      border-radius: 0;
+      cursor: pointer;
+      flex-grow: 1;
+      border: 1px solid black;
+      padding: 5px 0;
+      margin: 0 3px;
+      text-align: center;
+
+      &:hover,
+      &.active {
+        color: white;
+        background-color: #008cff;
+        border-bottom: 1px solid #008cff;
+      }
+    }
+  }
+
+  > .container {
+    border: 1px solid black;
+    border-radius: 10px;
+
+    > .containerStripe {
+      background-color: #008cff;
+      border: 1px solid #008cff;
+      border-bottom: 1px solid black;
+      border-radius: 10px 10px 0px 0px;
+      padding: 10px;
+    }
+
+    > .containerTabs {
+      display: flex;
+
+      > .containerTab {
+        cursor: pointer;
+        flex-grow: 1;
+        border: 1px solid black;
+        padding: 5px 0;
+        text-align: center;
+
+        &:hover,
+        &.active {
+          color: white;
+          background-color: #008cff;
+          border: 1px solid #008cff;
+        }
+
+        &.newTab {
+          border-left: 0;
+        }
+
+        &.viewTab {
+          border-right: 0;
+        }
+      }
+    }
+
+    > .containerContent {
+      margin: 10px auto;
+      display: flex;
+      max-width: 1000px;
+
+      > .tableWrapper {
+        overflow-x: auto;
+
+        > table {
+          max-width: 100%;
+        }
+      }
+    }
+  }
+}
