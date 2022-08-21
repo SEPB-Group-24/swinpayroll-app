@@ -1,0 +1,112 @@
+.tabs {
+  display: flex;
+  margin: 0 10px;
+  margin-bottom: -1px;
+}
+
+.tab {
+  flex-grow: 1;
+  border: 1px solid black;
+  padding: 5px 0;
+  margin-right: 5px;
+  text-align: center;
+}
+
+.tab:hover {
+  color: white;
+  background-color: #008cff;
+  cursor: pointer;
+  border-bottom: 1px solid #008cff;
+}
+
+.container {
+  border: 1px solid black;
+  border-radius: 10px;
+  margin: auto;
+}
+
+.containerStripe {
+  background-color: #008cff;
+  border: 1px solid #008cff;
+  border-bottom: 1px solid black;
+  border-radius: 10px 10px 0px 0px;
+  padding: 10px;
+}
+
+.containerTabs {
+  display: flex;
+}
+
+.containerTab {
+  flex-grow: 1;
+  border-left: 1px solid black;
+  border-bottom: 1px solid black;
+  padding: 5px 0;
+  text-align: center;
+}
+
+.containerTab:active {
+  cursor: pointer;
+  border-bottom: 0;
+}
+
+.viewTab {
+  border-left: 0;
+}
+
+.containerContent {
+  margin: 10px;
+  display: flex;
+}
+
+.containerFormRow {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  align-items: baseline;
+}
+
+.formField {
+  display: flex;
+  flex-grow: 1;
+}
+
+label {
+  display: flex;
+  flex-grow: 1;
+}
+
+input {
+  margin: 0;
+  margin-right: 5px;
+}
+
+.containerButtons {
+  display: flex;
+  flex-direction: column;
+}
+
+.containerButton {
+  border: 1px solid black;
+  padding: 5px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.containerButton:hover {
+  color: white;
+  background-color: #008cff;
+  cursor: pointer;
+}
+
+.buttonsPrevNext {
+  display: flex;
+}
+
+.buttonPrevNext {
+  flex-direction: row;
+}
+
+.prevButton {
+  margin-right: 5px;
+}
