@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Navigate, Routes, Route } from 'react-router-dom';
 
 import Auth from 'renderer/components/Auth';
 import IndexPage from 'renderer/pages/IndexPage';
@@ -23,6 +23,7 @@ export default class App extends Component {
                   </Routes>
                 ) : (
                   <Routes>
+                    <Route path="/" element={<Navigate to="/login" />} />
                     <Route path="/login" element={<LoginPage onLogin={onLogin} />} />
                   </Routes>
                 )}
