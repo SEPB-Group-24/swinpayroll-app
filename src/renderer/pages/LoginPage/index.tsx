@@ -1,12 +1,15 @@
 import { Component, FormEvent } from 'react';
 
+import { OnLogin } from 'renderer/components/Auth';
 import fetchApi from 'utils/fetchApi';
 
 import logo from './logo.jpg';
 
-import './style.css';
+import './style.scss';
 
-interface Props {}
+interface Props {
+  onLogin: OnLogin;
+}
 
 interface State {
   email: string;
@@ -40,7 +43,7 @@ export default class LoginPage extends Component<Props, State> {
         email,
         password
       });
-      console.log('logged in', user);
+      this.props.onLogin(user);
     } catch (error) {
       console.error('error while logging in', {
           error
@@ -106,8 +109,6 @@ export default class LoginPage extends Component<Props, State> {
             </div>
           </form>
         </div>
-
-
       </div>
     );
   }

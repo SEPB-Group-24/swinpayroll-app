@@ -1,0 +1,37 @@
+.MasterForm {
+  width: 100%;
+
+  > form {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+
+    > div {
+      > img {
+        border: 1px solid black;
+        height: 150px;
+        width: 150px;
+      }
+
+      &:last-of-type {
+        display: flex;
+        flex-direction: column;
+        height: 150px;
+        justify-content: space-around;
+
+        > button {
+          background-color: #008cff;
+          border: 0;
+          border-radius: 5px;
+          color: #fff;
+          cursor: pointer;
+          padding: 10px 10px;
+
+          &.delete {
+            background-color: red;
+          }
+        }
+      }
+    }
+  }
+}
