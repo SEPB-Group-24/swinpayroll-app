@@ -1,4 +1,4 @@
-const API_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:8080' : 'https://swinpayroll.app';
+const API_URL = process.env.USE_LOCAL_BACKEND === 'true' ? 'http://localhost:8080' : 'https://api.swinpayroll.xyz';
 
 export default async function fetchApi(method: 'GET' | 'POST' | 'PUT' | 'DELETE', endpoint: string, data: Record<string, unknown> = {}, headers: Record<string, string> = {}, files: Record<string, File> = {}) {
   const isGet = method === 'GET';
