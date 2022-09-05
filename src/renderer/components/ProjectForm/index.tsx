@@ -10,10 +10,10 @@ export interface Project {
   name: string;
   acronym: string;
   accumulation_amount: string;
+  address: string;
+  end_date: string;
   project_group: string;
   start_date: string;
-  end_date: string;
-  address: string;
 }
 
 interface Props {
@@ -27,8 +27,6 @@ interface Props {
 interface State {
   project: Project;
   files: Files;
-  photoNonce: string;
-  photoSrc: string | undefined;
 }
 
 export default class ProjectForm extends Component<Props, State> {
@@ -39,58 +37,24 @@ export default class ProjectForm extends Component<Props, State> {
         name: '',
         acronym: '',
         accumulation_amount: '',
-        project_group: '',
-        start_date: '',
-        end_date: '',
         address: '',
+        end_date: '',
+        project_group: '',
+        start_date: ''
       },
-      files: {},
-      photoNonce: Date.now().toString(),
-      photoSrc: undefined,
+      files: {}
     };
   }
   constructor(props: Props) {
     super(props);
 
     this.state = this.defaultState;
-
-    this.loadPhotoSrc();
   }
 
   componentDidUpdate(prevProps: Props) {
     if (!!prevProps.project !== !!this.props.project) {
       this.setState(this.defaultState);
-      this.loadPhotoSrc();
     }
-  }
-
-  async loadPhotoSrc() {
-    const { project } = this.props;
-    if (!project) {
-      return;
-    }
-
-    const blob = await this.props.fetchApi(
-      'GET',
-      `projects/${project.id}/photo`
-    );
-    this.setPhotoSrc(blob);
-  }
-
-  setPhotoSrc(blob: Blob) {
-    const fileReader = new FileReader();
-
-    fileReader.onload = ({ target }) => {
-      if (!target || !target.result) {
-        return;
-      }
-
-      this.setState({
-        photoSrc: target.result as string,
-      });
-    };
-
-    fileReader.readAsDataURL(blob);
   }
 
   render() {
@@ -106,26 +70,19 @@ export default class ProjectForm extends Component<Props, State> {
           this.setState({
             project: {
               ...this.state.project,
-              [key]: value,
-            },
-          });
+              [key]: value
+            }
+          })
         }}
         onClose={this.props.onClose}
         onDelete={this.props.onDelete}
-        onFileChange={(key, value) =>
-          this.setState({
-            files: {
-              ...this.state.files,
-              [key]: value,
-            },
-          })
-        }
-        onSubmit={() =>
-          this.props.onSubmit(
-            this.state.project as unknown as Record<string, unknown>,
-            this.state.files
-          )
-        }
+        onFileChange={(key, value) => this.setState({
+          files: {
+            ...this.state.files,
+            [key]: value
+          }
+        })}
+        onSubmit={() => this.props.onSubmit(this.state.project as unknown as Record<string, unknown>, this.state.files)}
       >
         <>
           <div>

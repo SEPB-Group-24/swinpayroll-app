@@ -38,7 +38,7 @@ export default class MasterPage extends Component<Props, State> {
       activeSubTab: 'new',
       inFlight: 'fetching',
       resourceEditing: null,
-      resources: new Map(),
+      resources: new Map()
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -51,7 +51,7 @@ export default class MasterPage extends Component<Props, State> {
   componentDidUpdate(prevProps: Props, prevState: State) {
     if (prevState.activeTab !== this.state.activeTab) {
       this.setState({
-        resourceEditing: null,
+        resourceEditing: null
       });
     }
   }
@@ -59,25 +59,23 @@ export default class MasterPage extends Component<Props, State> {
   async fetchResources() {
     try {
       this.setState({
-        inFlight: 'fetching',
+        inFlight: 'fetching'
       });
       const ret: Resources = new Map();
-      await Promise.all(
-        resources.map(async (resourceName) => {
-          const response = await this.props.fetchApi('GET', resourceName);
-          ret.set(resourceName, response[resourceName]);
-        })
-      );
+      await Promise.all(resources.map(async (resourceName) => {
+        const response = await this.props.fetchApi('GET', resourceName);
+        ret.set(resourceName, response[resourceName]);
+      }));
       this.setState({
         inFlight: null,
-        resources: ret,
+        resources: ret
       });
     } catch (error) {
       console.error('[master] error while fetching', {
-        error,
+        error
       });
       this.setState({
-        inFlight: 'error',
+        inFlight: 'error'
       });
     }
   }
@@ -90,17 +88,8 @@ export default class MasterPage extends Component<Props, State> {
   async handleSubmit(data: Data, files: Files) {
     const { activeSubTab, activeTab, resourceEditing } = this.state;
     const method = activeSubTab === 'edit' ? 'PUT' : 'POST';
-    const endpoint =
-      activeSubTab === 'edit'
-        ? `${activeTab}/${resourceEditing?.id}`
-        : activeTab;
-    await this.props.fetchApi(
-      method,
-      endpoint,
-      { [singularise(activeTab)]: data },
-      {},
-      files
-    );
+    const endpoint = activeSubTab === 'edit' ? `${activeTab}/${resourceEditing?.id}` : activeTab
+    await this.props.fetchApi(method, endpoint, { [singularise(activeTab)]: data }, {}, files);
     await this.fetchResources();
     this.setState({ activeSubTab: 'view' });
   }
@@ -112,7 +101,7 @@ export default class MasterPage extends Component<Props, State> {
     }
 
     if (inFlight === 'error') {
-      return <div>An error occurred</div>;
+      return <div>An error occurred</div>
     }
 
     return (
@@ -129,30 +118,9 @@ export default class MasterPage extends Component<Props, State> {
         <div className="container">
           <div className="containerStripe" />
           <div className="containerTabs">
-            <div
-              className={`containerTab newTab ${
-                activeSubTab === 'new' ? 'active' : ''
-              }`}
-              onClick={() => this.setState({ activeSubTab: 'new' })}
-            >
-              New
-            </div>
-            <div
-              className={`containerTab editTab ${
-                activeSubTab === 'edit' ? 'active' : ''
-              }`}
-              onClick={() => this.setState({ activeSubTab: 'edit' })}
-            >
-              Edit
-            </div>
-            <div
-              className={`containerTab viewTab ${
-                activeSubTab === 'view' ? 'active' : ''
-              }`}
-              onClick={() => this.setState({ activeSubTab: 'view' })}
-            >
-              View
-            </div>
+            <div className={`containerTab newTab ${activeSubTab === 'new' ? 'active' : ''}`} onClick={() => this.setState({ activeSubTab: 'new'})}>New</div>
+            <div className={`containerTab editTab ${activeSubTab === 'edit' ? 'active' : ''}`} onClick={() => this.setState({ activeSubTab: 'edit'})}>Edit</div>
+            <div className={`containerTab viewTab ${activeSubTab === 'view' ? 'active' : ''}`} onClick={() => this.setState({ activeSubTab: 'view' })}>View</div>
           </div>
           <div className="containerContent">
             {/* TODO */}
@@ -166,30 +134,26 @@ export default class MasterPage extends Component<Props, State> {
   renderForm() {
     const { activeSubTab, activeTab, resources, resourceEditing } = this.state;
     if (activeSubTab === 'edit' && !resourceEditing) {
-      return <div>Select a record from the view tab first</div>;
+      return (
+        <div>Select a record from the view tab first</div>
+      );
     }
 
     switch (activeTab) {
       case 'employees':
         return (
           <EmployeeForm
-            employee={
-              this.state.activeSubTab === 'edit'
-                ? (this.state.resourceEditing as unknown as Employee)
-                : undefined
-            }
+            employee={this.state.activeSubTab === 'edit' ? this.state.resourceEditing as unknown as Employee : undefined}
             fetchApi={this.props.fetchApi}
-            onClose={() =>
-              this.setState({
-                activeSubTab: 'view',
-                resourceEditing: null,
-              })
-            }
+            onClose={() => this.setState({
+              activeSubTab: 'view',
+              resourceEditing: null
+            })}
             onDelete={async () => {
               await this.handleDelete(resourceEditing?.id ?? '');
               this.setState({
                 activeSubTab: 'view',
-                resourceEditing: null,
+                resourceEditing: null
               });
             }}
             onSubmit={this.handleSubmit}
@@ -208,17 +172,15 @@ export default class MasterPage extends Component<Props, State> {
                 : undefined
             }
             fetchApi={this.props.fetchApi}
-            onClose={() =>
-              this.setState({
-                activeSubTab: 'view',
-                resourceEditing: null,
-              })
-            }
+            onClose={() => this.setState({
+              activeSubTab: 'view',
+              resourceEditing: null
+            })}
             onDelete={async () => {
               await this.handleDelete(resourceEditing?.id ?? '');
               this.setState({
                 activeSubTab: 'view',
-                resourceEditing: null,
+                resourceEditing: null
               });
             }}
             onSubmit={this.handleSubmit}
@@ -231,8 +193,7 @@ export default class MasterPage extends Component<Props, State> {
 
   renderTab(name: ResourceName) {
     const label = name
-      .replace(/_/g, ' ')
-      .split(' ')
+      .replace(/_/g, ' ').split(' ')
       .map((word) => `${word[0].toUpperCase()}${word.slice(1)}`)
       .join(' ');
     return (
@@ -254,9 +215,7 @@ export default class MasterPage extends Component<Props, State> {
           <thead>
             <tr>
               <th></th>
-              {keys.map((key) => (
-                <th>{key}</th>
-              ))}
+              {keys.map((key) => <th>{key}</th>)}
             </tr>
           </thead>
           <tbody>
@@ -264,24 +223,18 @@ export default class MasterPage extends Component<Props, State> {
               <tr>
                 <td>
                   <button
-                    onClick={() =>
-                      this.setState({
-                        activeSubTab: 'edit',
-                        resourceEditing: resource,
-                      })
-                    }
+                    onClick={() => this.setState({
+                      activeSubTab: 'edit',
+                      resourceEditing: resource
+                    })}
+                  >Edit</button>
+                  <button 
+                    onClick={() => this.handleDelete(resource.id)}
                   >
-                    Edit
-                  </button>
-                  <button onClick={() => this.handleDelete(resource.id)}>
                     Delete
                   </button>
                 </td>
-                {Object.values(resource).map((value, index) => (
-                  <td key={index}>
-                    {typeof value === 'string' ? value : JSON.stringify(value)}
-                  </td>
-                ))}
+                {Object.values(resource).map((value, index) => <td key={index}>{typeof value === 'string' ? value : JSON.stringify(value)}</td>)}
               </tr>
             ))}
           </tbody>
