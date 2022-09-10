@@ -85,7 +85,7 @@ export default class MasterPage extends Component<Props, State> {
     await this.fetchResources();
   }
 
-  async handleSubmit(data: Data, files: Files) {
+  async handleSubmit(data: Data, files: Files = {}) {
     const { activeSubTab, activeTab, resourceEditing } = this.state;
     const method = activeSubTab === 'edit' ? 'PUT' : 'POST';
     const endpoint = activeSubTab === 'edit' ? `${activeTab}/${resourceEditing?.id}` : activeTab

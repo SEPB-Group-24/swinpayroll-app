@@ -9,7 +9,7 @@ export interface Project {
   code: string;
   name: string;
   acronym: string;
-  accumulation_amount: string;
+  accumulation_amount: number;
   address: string;
   end_date: string;
   project_group: string;
@@ -21,12 +21,11 @@ interface Props {
   fetchApi: FetchApi;
   onClose: () => void;
   onDelete: () => void;
-  onSubmit: (data: Data, files: Files) => void;
+  onSubmit: (data: Data) => void;
 }
 
 interface State {
   project: Project;
-  files: Files;
 }
 
 export default class ProjectForm extends Component<Props, State> {
@@ -36,13 +35,12 @@ export default class ProjectForm extends Component<Props, State> {
         code: '',
         name: '',
         acronym: '',
-        accumulation_amount: '',
+        accumulation_amount: 0,
         address: '',
         end_date: '',
         project_group: '',
         start_date: ''
-      },
-      files: {}
+      }
     };
   }
   constructor(props: Props) {
@@ -76,13 +74,7 @@ export default class ProjectForm extends Component<Props, State> {
         }}
         onClose={this.props.onClose}
         onDelete={this.props.onDelete}
-        onFileChange={(key, value) => this.setState({
-          files: {
-            ...this.state.files,
-            [key]: value
-          }
-        })}
-        onSubmit={() => this.props.onSubmit(this.state.project as unknown as Record<string, unknown>, this.state.files)}
+        onSubmit={() => this.props.onSubmit(this.state.project as unknown as Record<string, unknown>)}
       >
         <>
           <div>
@@ -103,20 +95,12 @@ export default class ProjectForm extends Component<Props, State> {
 
             <div>
               Accumulation Amount:
-              <input
-                name="accumulation_amount"
-                type="text"
-                value={project.accumulation_amount}
-              />
+              <input name="accumulation_amount" type="number" min="0" step="0.01" value={project.accumulation_amount} />
             </div>
 
             <div>
               Project Group:
-              <input
-                name="project_group"
-                type="text"
-                value={project.project_group}
-              />
+              <input name="project_group" type="text" value={project.project_group} />
             </div>
 
             <div>
