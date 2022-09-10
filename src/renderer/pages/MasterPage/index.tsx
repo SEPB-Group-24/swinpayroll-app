@@ -2,13 +2,13 @@ import { Component } from 'react';
 
 import { FetchApi } from 'renderer/components/Auth';
 import EmployeeForm, { Employee } from 'renderer/components/EmployeeForm';
-import InsurancePoliciesForm, {InsurancePolicies} from 'renderer/components/InsurancePoliciesForm';
+import InsurancePolicyForm, {InsurancePolicy} from 'renderer/components/InsurancePolicyForm';
 import { Resource as BaseResource } from 'renderer/components/MasterForm';
 import singularise from 'utils/singularise';
 
 import './style.scss';
 
-const resources = ['employees', 'positions', 'projects', 'insurancePolicies' ] as const;
+const resources = ['employees', 'positions', 'projects', 'insurancePolicy' ] as const;
 
 export type Data = Record<string, unknown>;
 export type Files = Record<string, File>;
@@ -110,7 +110,7 @@ export default class MasterPage extends Component<Props, State> {
           {this.renderTab('employees')}
           {/* {this.renderTab('subcontractors')} */}
           {this.renderTab('projects')}
-          {this.renderTab('insurancePolicies')}
+          {this.renderTab('insurancePolicy')}
           {/* {this.renderTab('insurance_companies')} */}
           {this.renderTab('positions')}
         </div>

@@ -3,7 +3,7 @@ import { FetchApi } from 'renderer/components/Auth';
 import MasterForm, { Resource } from 'renderer/components/MasterForm';
 import { Data, Files } from 'renderer/pages/MasterPage';
 
-export interface InsurancePolicies {
+export interface InsurancePolicy {
   id?: string; 
   policy_code: string;
   project_id: string;
@@ -15,7 +15,7 @@ export interface InsurancePolicies {
 }
 
 interface Props {
-  insurancePolicies?: InsurancePolicies;
+  InsurancePolicy?: InsurancePolicy;
   fetchApi: FetchApi;
   onClose: () => void;
   onDelete: () => void;
@@ -24,40 +24,40 @@ interface Props {
 }
 
 interface State {
-  insurancePolicies: InsurancePolicies;
+  InsurancePolicy: InsurancePolicy;
   files: Files;
 }
 
-export default class InsurancePoliciesForm extends Component<Props, State> {
+export default class InsurancePolicyForm/index.tsx extends Component<Props, State> {
   get defaultState() {
     return {
-      InsurancePolicies: this.props.insurancePolicies ?? {
-        policy_code: '',
-        project_id: undefined,
+      insurancePolicy: this.props.insurancePolicy ?? {
+        policyCode: '',
+        projectId: undefined,
         company: '',
-        policy_details: '',
+        policyDetails: '',
         comment: '',
-        start_date: '',
-        end_date: '',
+        startDate: '',
+        endDate: ''
       },
-      files: {},
+      files: {}
     };
   }
   
   render() {
     const {projects} = this.props;
-    const {insurancePolicies} = this.state;
+    const {InsurancePolicy} = this.state;
     return (
-      <MasterForm<State['insurancePolicies']>
-        isEditing={!!insurancePolicies}
+      <MasterForm<State['InsurancePolicy']>
+        isEditing={!!InsurancePolicy}
         onChange={(key, value) => {
           if (!key) {
             return;
           }
 
           this.setState({
-            insurancePolicies: {
-              ...this.state.insurancePolicies,
+            InsurancePolicy: {
+              ...this.state.InsurancePolicy,
               [key]: value
             }
           })
@@ -70,30 +70,30 @@ export default class InsurancePoliciesForm extends Component<Props, State> {
         })}
         onClose={this.props.onClose}
         onDelete={this.props.onDelete}
-        onSubmit={() => this.props.onSubmit(this.state.insurancePolicies as unknown as Record<string, unknown>, this.state.files)}
+        onSubmit={() => this.props.onSubmit(this.state.InsurancePolicy as unknown as Record<string, unknown>, this.state.files)}
       >
       <div>
         <div>
-         <input name="policy_code" type="text" value={this.state.insurancePolicies.policy_code}/>
+         <input name="policy_code" type="text" value={this.state.InsurancePolicy.policy_code}/>
        </div>
         <div>
-         <input name="project_id" type="text" value={this.state.insurancePolicies.project_id}/>
-         {(MasterForm.renderSelectOptions(projects, !this.state.insurancePolicies.project_id))}
+         <input name="project_id" type="text" value={this.state.InsurancePolicy.project_id}/>
+         {MasterForm.renderSelectOptions(projects, !this.state.InsurancePolicy.project_id)}
         </div>
         <div>
-         <input name="company" type="text" value={this.state.insurancePolicies.company}/>
+         <input name="company" type="text" value={this.state.InsurancePolicy.company}/>
         </div>
         <div>
-         <input name="policy_details" type="text" value={this.state.insurancePolicies.policy_details}/>
+         <input name="policy_details" type="text" value={this.state.InsurancePolicy.policy_details}/>
        </div>
         <div>
-          <input name="comment" type="text" value={this.state.insurancePolicies.comment}/>
+          <input name="comment" type="text" value={this.state.InsurancePolicy.comment}/>
        </div>
         <div>
-          <input name="start_date" type="date" value={this.state.insurancePolicies.start_date}/>
+          <input name="start_date" type="date" value={this.state.InsurancePolicy.start_date}/>
         </div>
         <div>
-         <input name="end_date" type="date" value={this.state.insurancePolicies.end_date}/>
+         <input name="end_date" type="date" value={this.state.InsurancePolicy.end_date}/>
         </div>
       </div>
       </MasterForm>
