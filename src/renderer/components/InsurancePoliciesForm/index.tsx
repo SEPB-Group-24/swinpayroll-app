@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { FetchApi } from 'renderer/components/Auth';
 import MasterForm, { Resource } from 'renderer/components/MasterForm';
-import { Data } from 'renderer/pages/MasterPage';
+import { Data, Files } from 'renderer/pages/MasterPage';
 
 export interface InsurancePolicies {
   id?: string; 
@@ -19,14 +19,13 @@ interface Props {
   fetchApi: FetchApi;
   onClose: () => void;
   onDelete: () => void;
-  onSubmit: (data: Data) => void;
-  positions: Resource[];
+  onSubmit: (data: Data, files: Files) => void;
   projects: Resource[];
-  subcontracts: Resource[]
 }
 
 interface State {
   insurancePolicies: InsurancePolicies;
+  files: Files;
 }
 
 export default class InsurancePoliciesForm extends Component<Props, State> {
@@ -40,22 +39,10 @@ export default class InsurancePoliciesForm extends Component<Props, State> {
         comment: '',
         start_date: '',
         end_date: '',
-      }
+      },
+      files: {},
     };
   }
-
-  /*constructor(props: Props) {
-    //super(props);
-    //this.defaultState = this.state;
-    //this.state = this.defaultState;
-  }*/
-
-  /*componentDidUpdate(prevProps: Props) {
-    if (!!prevProps.insurancePolicies !== !!this.props.insurancePolicies) {
-      this.setState(this.defaultState);
-    }
-  }*/
-  
   
   render() {
     const {projects} = this.props;
@@ -75,10 +62,15 @@ export default class InsurancePoliciesForm extends Component<Props, State> {
             }
           })
         }}
-        onFileChange={}
+        onFileChange={(key, value) => this.setState({
+          files: {
+            ...this.state.files,
+            [key]: value
+          }
+        })}
         onClose={this.props.onClose}
         onDelete={this.props.onDelete}
-        onSubmit={() => this.props.onSubmit(this.state.insurancePolicies as unknown as Record<string, unknown>)}
+        onSubmit={() => this.props.onSubmit(this.state.insurancePolicies as unknown as Record<string, unknown>, this.state.files)}
       >
       <div>
         <div>
