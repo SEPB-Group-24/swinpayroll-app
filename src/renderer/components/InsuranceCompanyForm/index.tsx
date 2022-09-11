@@ -1,7 +1,7 @@
 import { Component } from 'react';
 
 import { FetchApi } from 'renderer/components/Auth';
-import MasterForm, { Resource } from 'renderer/components/MasterForm';
+import MasterForm from 'renderer/components/MasterForm';
 import { Data } from 'renderer/pages/MasterPage';
 
 export interface InsuranceCompany {
@@ -34,6 +34,7 @@ export default class InsuranceCompanyForm extends Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
+
     this.state = this.defaultState;
   }
 
