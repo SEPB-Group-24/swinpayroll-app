@@ -2,8 +2,7 @@ import { Component } from 'react';
 
 import { FetchApi } from 'renderer/components/Auth';
 import MasterForm, { Resource } from 'renderer/components/MasterForm';
-import { Data, Files } from 'renderer/pages/MasterPage';
-
+import { Data } from 'renderer/pages/MasterPage';
 
 export interface InsuranceCompany {
   id?: string;
@@ -12,79 +11,70 @@ export interface InsuranceCompany {
 }
 
 interface Props {
-  insurance_company?: InsuranceCompany;
+  insuranceCompany?: InsuranceCompany;
   fetchApi: FetchApi;
   onClose: () => void;
   onDelete: () => void;
-  onSubmit: (data: Data, files: Files) => void;
+  onSubmit: (data: Data) => void;
 }
 
 interface State {
-  insurance_company: InsuranceCompany;
-  files: Files;
-
+  insuranceCompany: InsuranceCompany;
 }
 
 export default class InsuranceCompanyForm extends Component<Props, State> {
   get defaultState() {
     return {
-      insurance_company: this.props.insurance_company ?? {
+      insuranceCompany: this.props.insuranceCompany ?? {
         code: '',
         name: ''
-      },
-      files: {},
+      }
     };
   }
+
   constructor(props: Props) {
     super(props);
     this.state = this.defaultState;
   }
 
   componentDidUpdate(prevProps: Props) {
-    if (!!prevProps.insurance_company !== !!this.props.insurance_company) {
+    if (!!prevProps.insuranceCompany !== !!this.props.insuranceCompany) {
       this.setState(this.defaultState);
     }
   }
 
   render() {
-
-    const { insurance_company } = this.state;
+    const { insuranceCompany } = this.state;
     return (
-      <MasterForm<State['insurance_company']>
-        isEditing={!!insurance_company}
+      <MasterForm<State['insuranceCompany']>
+        isEditing={!!insuranceCompany}
         onChange={(key, value) => {
           if (!key) {
             return;
           }
 
           this.setState({
-            insurance_company: {
-              ...this.state.insurance_company,
+            insuranceCompany: {
+              ...this.state.insuranceCompany,
               [key]: value
             }
           })
         }}
         onClose={this.props.onClose}
         onDelete={this.props.onDelete}
-        onFileChange={(key, value) => this.setState({
-          files: {
-            ...this.state.files,
-            [key]: value
-          }
-        })}
-        onSubmit={() => this.props.onSubmit(this.state.insurance_company as unknown as Record<string, unknown>, this.state.files)}
+        onSubmit={() => this.props.onSubmit(this.state.insuranceCompany as unknown as Record<string, unknown>)}
       >
         <>
           <div>
             <div>
               Company Code:
-              <input name="code" type="text" value={insurance_company.code} />
+              <input name="code" type="text" value={insuranceCompany.code} />
             </div>
           </div>
           <div>
             <div>
               Company Name:
-              <input name="name" type="text" value={insurance_company.name} />
+              <input name="name" type="text" value={insuranceCompany.name} />
             </div>
           </div>
         </>

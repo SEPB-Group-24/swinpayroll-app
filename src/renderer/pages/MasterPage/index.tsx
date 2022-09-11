@@ -85,7 +85,7 @@ export default class MasterPage extends Component<Props, State> {
     await this.fetchResources();
   }
 
-  async handleSubmit(data: Data, files: Files) {
+  async handleSubmit(data: Data, files: Files = {}) {
     const { activeSubTab, activeTab, resourceEditing } = this.state;
     const method = activeSubTab === 'edit' ? 'PUT' : 'POST';
     const endpoint = activeSubTab === 'edit' ? `${activeTab}/${resourceEditing?.id}` : activeTab
@@ -163,26 +163,24 @@ export default class MasterPage extends Component<Props, State> {
             subcontracts={[]}
           />
         );
-
         case 'insurance_companies':
-        return (
-          <InsuranceCompanyForm
-            insurance_company={this.state.activeSubTab === 'edit' ? this.state.resourceEditing as unknown as InsuranceCompany : undefined}
-            fetchApi={this.props.fetchApi}
-            onClose={() => this.setState({
-              activeSubTab: 'view',
-              resourceEditing: null
-            })}
-            onDelete={async () => {
-              await this.handleDelete(resourceEditing?.id ?? '');
-              this.setState({
+          return (
+            <InsuranceCompanyForm
+              insuranceCompany={this.state.activeSubTab === 'edit' ? this.state.resourceEditing as unknown as InsuranceCompany : undefined}
+              fetchApi={this.props.fetchApi}
+              onClose={() => this.setState({
                 activeSubTab: 'view',
                 resourceEditing: null
-              });
-            }}
-            onSubmit={this.handleSubmit}
-          
-          />
+              })}
+              onDelete={async () => {
+                await this.handleDelete(resourceEditing?.id ?? '');
+                this.setState({
+                  activeSubTab: 'view',
+                  resourceEditing: null
+                });
+              }}
+              onSubmit={this.handleSubmit}
+            />
         );
       default:
         return <></>;
