@@ -2,13 +2,14 @@ import { Component } from 'react';
 
 import { FetchApi } from 'renderer/components/Auth';
 import EmployeeForm, { Employee } from 'renderer/components/EmployeeForm';
+import InsuranceCompanyForm, { InsuranceCompany } from 'renderer/components/InsuranceCompanyForm';
 import ProjectForm, { Project } from 'renderer/components/ProjectForm';
 import { Resource as BaseResource } from 'renderer/components/MasterForm';
 import singularise from 'utils/singularise';
 
 import './style.scss';
 
-const resources = ['employees', 'positions', 'projects'] as const;
+const resources = ['employees', 'positions', 'projects', 'insurance_companies'] as const;
 
 export type Data = Record<string, unknown>;
 export type Files = Record<string, File>;
@@ -111,7 +112,7 @@ export default class MasterPage extends Component<Props, State> {
           {/* {this.renderTab('subcontractors')} */}
           {this.renderTab('projects')}
           {/* {this.renderTab('insurance_policies')} */}
-          {/* {this.renderTab('insurance_companies')} */}
+          {this.renderTab('insurance_companies')}
           {this.renderTab('positions')}
         </div>
 
@@ -159,6 +160,25 @@ export default class MasterPage extends Component<Props, State> {
             projects={resources.get('projects') ?? []}
             // TODO
             subcontracts={[]}
+          />
+        );
+      case 'insurance_companies':
+        return (
+          <InsuranceCompanyForm
+            insuranceCompany={this.state.activeSubTab === 'edit' ? this.state.resourceEditing as unknown as InsuranceCompany : undefined}
+            fetchApi={this.props.fetchApi}
+            onClose={() => this.setState({
+              activeSubTab: 'view',
+              resourceEditing: null
+            })}
+            onDelete={async () => {
+              await this.handleDelete(resourceEditing?.id ?? '');
+              this.setState({
+                activeSubTab: 'view',
+                resourceEditing: null
+              });
+            }}
+            onSubmit={this.handleSubmit}
           />
         );
       case 'projects':
