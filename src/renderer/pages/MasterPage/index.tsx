@@ -8,7 +8,7 @@ import singularise from 'utils/singularise';
 
 import './style.scss';
 
-const resources = ['employees', 'positions', 'projects', 'insurancePolicy' ] as const;
+const resources = ['employees', 'positions', 'projects', 'InsurancePolicy' ] as const;
 
 export type Data = Record<string, unknown>;
 export type Files = Record<string, File>;
@@ -110,7 +110,7 @@ export default class MasterPage extends Component<Props, State> {
           {this.renderTab('employees')}
           {/* {this.renderTab('subcontractors')} */}
           {this.renderTab('projects')}
-          {this.renderTab('insurancePolicy')}
+          {this.renderTab('InsurancePolicy')}
           {/* {this.renderTab('insurance_companies')} */}
           {this.renderTab('positions')}
         </div>
@@ -166,10 +166,10 @@ export default class MasterPage extends Component<Props, State> {
       default:
         return <></>;
 
-      case 'insurancePolicies':
+      case 'InsurancePolicy':
         return (
-          <InsurancePoliciesForm
-            insurancePolicies={this.state.activeSubTab === 'edit' ? this.state.resourceEditing as unknown as InsurancePolicies: undefined}
+          <InsurancePolicyForm
+          InsurancePolicy={this.state.activeSubTab === 'edit' ? this.state.resourceEditing as unknown as InsurancePolicy: undefined}
             fetchApi={this.props.fetchApi}
             onClose={() => this.setState({
                 activeSubTab: 'view',
