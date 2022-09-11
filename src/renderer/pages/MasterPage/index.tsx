@@ -3,6 +3,7 @@ import { Component } from 'react';
 import { FetchApi } from 'renderer/components/Auth';
 import EmployeeForm, { Employee } from 'renderer/components/EmployeeForm';
 import InsuranceCompanyForm, { InsuranceCompany } from 'renderer/components/InsuranceCompanyForm';
+import ProjectForm, { Project } from 'renderer/components/ProjectForm';
 import { Resource as BaseResource } from 'renderer/components/MasterForm';
 import singularise from 'utils/singularise';
 
@@ -12,7 +13,7 @@ const resources = ['employees', 'positions', 'projects', 'insurance_companies'] 
 
 export type Data = Record<string, unknown>;
 export type Files = Record<string, File>;
-type InFlight = 'creating'  | 'error' | 'fetching' | null;
+type InFlight = 'creating' | 'error' | 'fetching' | null;
 type ResourceName = typeof resources[number];
 type Resource = BaseResource & Record<string, unknown>;
 type Resources = Map<ResourceName, Resource[]>;
@@ -116,15 +117,13 @@ export default class MasterPage extends Component<Props, State> {
         </div>
 
         <div className="container">
-          <div className="containerStripe" />
           <div className="containerTabs">
-            <div className={`containerTab newTab ${activeSubTab === 'new' ? 'active' : ''}`} onClick={() => this.setState({ activeSubTab: 'new'})}>New</div>
-            <div className={`containerTab editTab ${activeSubTab === 'edit' ? 'active' : ''}`} onClick={() => this.setState({ activeSubTab: 'edit'})}>Edit</div>
-            <div className={`containerTab viewTab ${activeSubTab === 'view' ? 'active' : ''}`} onClick={() => this.setState({ activeSubTab: 'view' })}>View</div>
+            <button className={`containerTab newTab ${activeSubTab === 'new' ? 'active' : ''}`} onClick={() => this.setState({ activeSubTab: 'new'})}>New</button>
+            <button className={`containerTab editTab ${activeSubTab === 'edit' ? 'active' : ''}`} onClick={() => this.setState({ activeSubTab: 'edit'})}>Edit</button>
+            <button className={`containerTab viewTab ${activeSubTab === 'view' ? 'active' : ''}`} onClick={() => this.setState({ activeSubTab: 'view' })}>View</button>
           </div>
           <div className="containerContent">
-            {/* TODO */}
-            {activeSubTab !== 'view' ? this.renderForm() : this.renderTable()}
+            {activeSubTab === 'view' ? this.renderTable() : this.renderForm()}
           </div>
         </div>
       </div>
@@ -163,24 +162,47 @@ export default class MasterPage extends Component<Props, State> {
             subcontracts={[]}
           />
         );
-        case 'insurance_companies':
-          return (
-            <InsuranceCompanyForm
-              insuranceCompany={this.state.activeSubTab === 'edit' ? this.state.resourceEditing as unknown as InsuranceCompany : undefined}
-              fetchApi={this.props.fetchApi}
-              onClose={() => this.setState({
+      case 'insurance_companies':
+        return (
+          <InsuranceCompanyForm
+            insuranceCompany={this.state.activeSubTab === 'edit' ? this.state.resourceEditing as unknown as InsuranceCompany : undefined}
+            fetchApi={this.props.fetchApi}
+            onClose={() => this.setState({
+              activeSubTab: 'view',
+              resourceEditing: null
+            })}
+            onDelete={async () => {
+              await this.handleDelete(resourceEditing?.id ?? '');
+              this.setState({
                 activeSubTab: 'view',
                 resourceEditing: null
-              })}
-              onDelete={async () => {
-                await this.handleDelete(resourceEditing?.id ?? '');
-                this.setState({
-                  activeSubTab: 'view',
-                  resourceEditing: null
-                });
-              }}
-              onSubmit={this.handleSubmit}
-            />
+              });
+            }}
+            onSubmit={this.handleSubmit}
+          />
+        );
+      case 'projects':
+        return (
+          <ProjectForm
+            project={
+              this.state.activeSubTab === 'edit'
+                ? (this.state.resourceEditing as unknown as Project)
+                : undefined
+            }
+            fetchApi={this.props.fetchApi}
+            onClose={() => this.setState({
+              activeSubTab: 'view',
+              resourceEditing: null
+            })}
+            onDelete={async () => {
+              await this.handleDelete(resourceEditing?.id ?? '');
+              this.setState({
+                activeSubTab: 'view',
+                resourceEditing: null
+              });
+            }}
+            onSubmit={this.handleSubmit}
+          />
         );
       default:
         return <></>;
