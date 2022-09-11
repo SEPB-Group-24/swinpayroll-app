@@ -115,15 +115,13 @@ export default class MasterPage extends Component<Props, State> {
         </div>
 
         <div className="container">
-          <div className="containerStripe" />
           <div className="containerTabs">
-            <div className={`containerTab newTab ${activeSubTab === 'new' ? 'active' : ''}`} onClick={() => this.setState({ activeSubTab: 'new'})}>New</div>
-            <div className={`containerTab editTab ${activeSubTab === 'edit' ? 'active' : ''}`} onClick={() => this.setState({ activeSubTab: 'edit'})}>Edit</div>
-            <div className={`containerTab viewTab ${activeSubTab === 'view' ? 'active' : ''}`} onClick={() => this.setState({ activeSubTab: 'view' })}>View</div>
+            <button className={`containerTab newTab ${activeSubTab === 'new' ? 'active' : ''}`} onClick={() => this.setState({ activeSubTab: 'new'})}>New</button>
+            <button className={`containerTab editTab ${activeSubTab === 'edit' ? 'active' : ''}`} onClick={() => this.setState({ activeSubTab: 'edit'})}>Edit</button>
+            <button className={`containerTab viewTab ${activeSubTab === 'view' ? 'active' : ''}`} onClick={() => this.setState({ activeSubTab: 'view' })}>View</button>
           </div>
           <div className="containerContent">
-            {/* TODO */}
-            {activeSubTab !== 'view' ? this.renderForm() : this.renderTable()}
+            {activeSubTab === 'view' ? this.renderTable() : this.renderForm()}
           </div>
         </div>
       </div>

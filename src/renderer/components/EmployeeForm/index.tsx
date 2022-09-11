@@ -198,7 +198,7 @@ export default class EmployeeForm extends Component<Props, State> {
             </div>
 
             <div>
-              Sex:
+              <div>Sex:</div>
               <select name="sex" value={employee.sex}>
                 {Object.entries(sexLabels).map(([value, label]) => (
                   <option key={value} value={value}>{label}</option>
@@ -207,7 +207,7 @@ export default class EmployeeForm extends Component<Props, State> {
             </div>
 
             <div>
-              Marital Status:
+              <div>Marital Status:</div>
               <select name="marital_status" value={employee.marital_status}>
                 {Object.entries(maritalStatusLabels).map(([value, label]) => (
                   <option key={value} value={value}>{label}</option>
@@ -231,14 +231,16 @@ export default class EmployeeForm extends Component<Props, State> {
             </div>
 
             <div>
-              Skills:
+              <div>Skills:</div>
+              <textarea name="skill" value={employee.skill}></textarea>
             </div>
-            <textarea name="skill" value={employee.skill}></textarea>
 
-            <div>Subcontract:</div>
-            <select name="subcontract_id" value={employee.subcontract_id}>
-              {MasterForm.renderSelectOptions(subcontracts, true)}
-            </select>
+            <div>
+              <div>Subcontract:</div>
+              <select name="subcontract_id" value={employee.subcontract_id}>
+                {MasterForm.renderSelectOptions(subcontracts, true)}
+              </select>
+            </div>
           </div>
           <div>
             <img key={this.state.photoNonce} src={this.state.photoSrc} />
@@ -260,19 +262,23 @@ export default class EmployeeForm extends Component<Props, State> {
               />
 
             <div>
-              CV:
+              <div>CV:</div>
+              <input accept="application/pdf" name="cv" type="file" />
             </div>
-            <input accept="application/pdf" name="cv" type="file" />
 
-            <div>Position:</div>
-            <select name="position_id" value={employee.position_id}>
-              {MasterForm.renderSelectOptions(positions, !employee.position_id)}
-            </select>
+            <div>
+              <div>Position:</div>
+              <select name="position_id" value={employee.position_id}>
+                {MasterForm.renderSelectOptions(positions, !employee.position_id)}
+              </select>
+            </div>
 
-            <div>Project:</div>
-            <select name="project_id" value={employee.project_id}>
-              {MasterForm.renderSelectOptions(projects, !employee.project_id)}
-            </select>
+            <div>
+              <div>Project:</div>
+              <select name="project_id" value={employee.project_id}>
+                {MasterForm.renderSelectOptions(projects, !employee.project_id)}
+              </select>
+            </div>
 
             <div>Emergency Contact</div>
 
