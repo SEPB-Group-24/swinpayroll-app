@@ -2,6 +2,7 @@ import { Component } from 'react';
 
 import { FetchApi } from 'renderer/components/Auth';
 import EmployeeForm, { Employee } from 'renderer/components/EmployeeForm';
+import ProjectForm, { Project } from 'renderer/components/ProjectForm';
 import { Resource as BaseResource } from 'renderer/components/MasterForm';
 import singularise from 'utils/singularise';
 
@@ -11,7 +12,7 @@ const resources = ['employees', 'positions', 'projects'] as const;
 
 export type Data = Record<string, unknown>;
 export type Files = Record<string, File>;
-type InFlight = 'creating'  | 'error' | 'fetching' | null;
+type InFlight = 'creating' | 'error' | 'fetching' | null;
 type ResourceName = typeof resources[number];
 type Resource = BaseResource & Record<string, unknown>;
 type Resources = Map<ResourceName, Resource[]>;
@@ -84,7 +85,7 @@ export default class MasterPage extends Component<Props, State> {
     await this.fetchResources();
   }
 
-  async handleSubmit(data: Data, files: Files) {
+  async handleSubmit(data: Data, files: Files = {}) {
     const { activeSubTab, activeTab, resourceEditing } = this.state;
     const method = activeSubTab === 'edit' ? 'PUT' : 'POST';
     const endpoint = activeSubTab === 'edit' ? `${activeTab}/${resourceEditing?.id}` : activeTab
@@ -158,6 +159,29 @@ export default class MasterPage extends Component<Props, State> {
             projects={resources.get('projects') ?? []}
             // TODO
             subcontracts={[]}
+          />
+        );
+      case 'projects':
+        return (
+          <ProjectForm
+            project={
+              this.state.activeSubTab === 'edit'
+                ? (this.state.resourceEditing as unknown as Project)
+                : undefined
+            }
+            fetchApi={this.props.fetchApi}
+            onClose={() => this.setState({
+              activeSubTab: 'view',
+              resourceEditing: null
+            })}
+            onDelete={async () => {
+              await this.handleDelete(resourceEditing?.id ?? '');
+              this.setState({
+                activeSubTab: 'view',
+                resourceEditing: null
+              });
+            }}
+            onSubmit={this.handleSubmit}
           />
         );
       default:

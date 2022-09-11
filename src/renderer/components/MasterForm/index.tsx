@@ -13,7 +13,7 @@ interface Props<TResource> {
   onChange: (key: keyof TResource, value: TResource[keyof TResource]) => void;
   onClose: () => void;
   onDelete: () => void;
-  onFileChange: (key: string, value: File) => void;
+  onFileChange?: (key: string, value: File) => void;
   onSubmit: () => void;
 }
 
@@ -35,7 +35,7 @@ export default class MasterForm<TResource> extends Component<Props<TResource>> {
         <form
           onChange={({ target: { files, name, type, value } }: ChangeEvent<HTMLFormElement>) => {
             if (type === 'file') {
-              this.props.onFileChange(name, files[0]);
+              this.props.onFileChange?.(name, files[0]);
             } else if (type === 'number') {
               const parsedValue = parseFloat(value);
               this.props.onChange(name as keyof TResource, (isNaN(parsedValue) ? 0 : parsedValue) as unknown as TResource[keyof TResource]);
