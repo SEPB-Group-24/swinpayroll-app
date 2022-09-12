@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { FetchApi } from 'renderer/components/Auth';
 import MasterForm, { Resource } from 'renderer/components/MasterForm';
-import { Data, Files } from 'renderer/pages/MasterPage';
+import { Data } from 'renderer/pages/MasterPage';
 
 export interface InsurancePolicy {
   id?: string; 
@@ -19,13 +19,12 @@ interface Props {
   fetchApi: FetchApi;
   onClose: () => void;
   onDelete: () => void;
-  onSubmit: (data: Data, files: Files) => void;
+  onSubmit: (data: Data) => void;
   projects: Resource[];
 }
 
 interface State {
   insurancePolicy: InsurancePolicy;
-  files: Files;
 }
 
 export default class InsurancePolicyForm extends Component<Props, State> {
@@ -39,8 +38,7 @@ export default class InsurancePolicyForm extends Component<Props, State> {
         comment: '',
         start_date: '',
         end_date: '',
-      },
-      files: {},
+      }
     };
   }
   
@@ -64,7 +62,7 @@ export default class InsurancePolicyForm extends Component<Props, State> {
         }}
         onClose={this.props.onClose}
         onDelete={this.props.onDelete}
-        onSubmit={() => this.props.onSubmit(this.state.insurancePolicy as unknown as Record<string, unknown>, this.state.files)}
+        onSubmit={() => this.props.onSubmit(this.state.insurancePolicy as unknown as Record<string, unknown>)}
       >
       <div>
         <div>
