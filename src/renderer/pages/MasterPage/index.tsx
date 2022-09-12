@@ -8,7 +8,7 @@ import singularise from 'utils/singularise';
 
 import './style.scss';
 
-const resources = ['employees', 'positions', 'projects', 'InsurancePolicy' ] as const;
+const resources = ['employees', 'positions', 'projects', 'insurance_policy' ] as const;
 
 export type Data = Record<string, unknown>;
 export type Files = Record<string, File>;
@@ -51,7 +51,7 @@ export default class MasterPage extends Component<Props, State> {
   componentDidUpdate(prevProps: Props, prevState: State) {
     if (prevState.activeTab !== this.state.activeTab) {
       this.setState({
-        resourceEditing: null 
+        resourceEditing: null
       });
     }
   }
@@ -110,7 +110,7 @@ export default class MasterPage extends Component<Props, State> {
           {this.renderTab('employees')}
           {/* {this.renderTab('subcontractors')} */}
           {this.renderTab('projects')}
-          {this.renderTab('InsurancePolicy')}
+          {this.renderTab('insurance_policy')}
           {/* {this.renderTab('insurance_companies')} */}
           {this.renderTab('positions')}
         </div>
@@ -163,17 +163,15 @@ export default class MasterPage extends Component<Props, State> {
             subcontracts={[]}
           />
         );
-      default:
-        return <></>;
 
-      case 'InsurancePolicy':
+      case 'insurance_policy':
         return (
           <InsurancePolicyForm
-          InsurancePolicy={this.state.activeSubTab === 'edit' ? this.state.resourceEditing as unknown as InsurancePolicy: undefined}
-            fetchApi={this.props.fetchApi}
-            onClose={() => this.setState({
-                activeSubTab: 'view',
-                resourceEditing: null
+            insurancePolicy={this.state.activeSubTab === 'edit' ? this.state.resourceEditing as unknown as InsurancePolicy: undefined}
+              fetchApi={this.props.fetchApi}
+              onClose={() => this.setState({
+                  activeSubTab: 'view',
+                  resourceEditing: null
             })}
             onDelete={async () => {
               await this.handleDelete(resourceEditing?.id ?? '');
@@ -186,6 +184,9 @@ export default class MasterPage extends Component<Props, State> {
             projects={resources.get('projects') ?? []}
             />
         );
+
+      default:
+        return <></>;
     }
   }
 

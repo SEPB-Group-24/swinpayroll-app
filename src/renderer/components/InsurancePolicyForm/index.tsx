@@ -15,7 +15,7 @@ export interface InsurancePolicy {
 }
 
 interface Props {
-  InsurancePolicy?: InsurancePolicy;
+  insurancePolicy?: InsurancePolicy;
   fetchApi: FetchApi;
   onClose: () => void;
   onDelete: () => void;
@@ -24,14 +24,14 @@ interface Props {
 }
 
 interface State {
-  InsurancePolicy: InsurancePolicy;
+  insurancePolicy: InsurancePolicy;
   files: Files;
 }
 
 export default class InsurancePolicyForm extends Component<Props, State> {
   get defaultState() {
     return {
-      InsurancePolicy: this.props.InsurancePolicy ?? {
+      InsurancePolicy: this.props.insurancePolicy ?? {
         policy_code: '',
         project_id: undefined,
         company: '',
@@ -45,55 +45,50 @@ export default class InsurancePolicyForm extends Component<Props, State> {
   }
   
   render() {
-    const {projects} = this.props;
-    const {InsurancePolicy} = this.state;
+    const { projects } = this.props;
+    const { insurancePolicy } = this.state;
     return (
-      <MasterForm<State['InsurancePolicy']>
-        isEditing={!!InsurancePolicy}
+      <MasterForm<State['insurancePolicy']>
+        isEditing={!!insurancePolicy}
         onChange={(key, value) => {
           if (!key) {
             return;
           }
 
           this.setState({
-            InsurancePolicy: {
-              ...this.state.InsurancePolicy,
+            insurancePolicy: {
+              ...this.state.insurancePolicy,
               [key]: value
             }
           })
         }}
-        onFileChange={(key, value) => this.setState({
-          files: {
-            ...this.state.files,
-            [key]: value
-          }
-        })}
         onClose={this.props.onClose}
         onDelete={this.props.onDelete}
-        onSubmit={() => this.props.onSubmit(this.state.InsurancePolicy as unknown as Record<string, unknown>, this.state.files)}
+        onSubmit={() => this.props.onSubmit(this.state.insurancePolicy as unknown as Record<string, unknown>, this.state.files)}
       >
       <div>
         <div>
-         <input name="policy_code" type="text" value={this.state.InsurancePolicy.policy_code}/>
+         <input name="policy_code" type="text" value={this.state.insurancePolicy.policy_code}/>
        </div>
         <div>
-         <input name="project_id" type="text" value={this.state.InsurancePolicy.project_id}/>
-         {(MasterForm.renderSelectOptions(projects, !this.state.InsurancePolicy.project_id))}
+         <select name="project_id" value={insurancePolicy.project_id}>
+          {MasterForm.renderSelectOptions(projects, true)}
+         </select>
         </div>
         <div>
-         <input name="company" type="text" value={this.state.InsurancePolicy.company}/>
+         <input name="company" type="text" value={this.state.insurancePolicy.company}/>
         </div>
         <div>
-         <input name="policy_details" type="text" value={this.state.InsurancePolicy.policy_details}/>
+         <input name="policy_details" type="text" value={this.state.insurancePolicy.policy_details}/>
        </div>
         <div>
-          <input name="comment" type="text" value={this.state.InsurancePolicy.comment}/>
+          <input name="comment" type="text" value={this.state.insurancePolicy.comment}/>
        </div>
         <div>
-          <input name="start_date" type="date" value={this.state.InsurancePolicy.start_date}/>
+          <input name="start_date" type="date" value={this.state.insurancePolicy.start_date}/>
         </div>
         <div>
-         <input name="end_date" type="date" value={this.state.InsurancePolicy.end_date}/>
+         <input name="end_date" type="date" value={this.state.insurancePolicy.end_date}/>
         </div>
       </div>
       </MasterForm>
