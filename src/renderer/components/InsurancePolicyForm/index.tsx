@@ -31,7 +31,7 @@ interface State {
 export default class InsurancePolicyForm extends Component<Props, State> {
   get defaultState() {
     return {
-      InsurancePolicy: this.props.insurancePolicy ?? {
+      insurancePolicy: this.props.insurancePolicy ?? {
         policy_code: '',
         project_id: undefined,
         company: '',

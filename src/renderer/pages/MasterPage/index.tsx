@@ -168,21 +168,21 @@ export default class MasterPage extends Component<Props, State> {
         return (
           <InsurancePolicyForm
             insurancePolicy={this.state.activeSubTab === 'edit' ? this.state.resourceEditing as unknown as InsurancePolicy: undefined}
-              fetchApi={this.props.fetchApi}
-              onClose={() => this.setState({
-                  activeSubTab: 'view',
-                  resourceEditing: null
+            fetchApi={this.props.fetchApi}
+            onClose={() => this.setState({
+              activeSubTab: 'view',
+              resourceEditing: null
             })}
             onDelete={async () => {
               await this.handleDelete(resourceEditing?.id ?? '');
-                this.setState({
-                  activeSubTab: 'view',
-                  resourceEditing: null
-                });
+              this.setState({
+                activeSubTab: 'view',
+                resourceEditing: null
+              });
             }}
             onSubmit={this.handleSubmit}
             projects={resources.get('projects') ?? []}
-            />
+          />
         );
 
       default:
