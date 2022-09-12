@@ -112,7 +112,7 @@ export default class MasterPage extends Component<Props, State> {
           {this.renderTab('employees')}
           {/* {this.renderTab('subcontractors')} */}
           {this.renderTab('projects')}
-          {this.renderTab('insurance_policy')}
+          {this.renderTab('insurance_policies')}
           {this.renderTab('insurance_companies')}
           {this.renderTab('positions')}
         </div>
