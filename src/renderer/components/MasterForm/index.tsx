@@ -81,7 +81,7 @@ export default class MasterForm<TResource> extends Component<Props<TResource>, S
             <button onClick={this.props.onClose} type="button">
               Close
             </button>
-            <button type="submit">
+            <button type="submit" className="submit">
               Save
             </button>
             {this.props.isEditing && (
