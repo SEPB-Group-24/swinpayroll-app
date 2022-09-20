@@ -20,8 +20,8 @@ interface Props {
   onClose: () => void;
   onDelete: () => void;
   onSubmit: (data: Data) => void;
+  insuranceCompanies: Resource[];
   projects: Resource[];
-  insuranceCompany: Resource[];
 }
 
 interface State {
@@ -50,7 +50,7 @@ export default class InsurancePolicyForm extends Component<Props, State> {
   }
   
   render() {
-    const { projects, insuranceCompany } = this.props;
+    const { insuranceCompanies, projects  } = this.props;
     const { insurancePolicy } = this.state;
     return (
       <MasterForm<State['insurancePolicy']>
@@ -85,7 +85,7 @@ export default class InsurancePolicyForm extends Component<Props, State> {
         <div>
           Insurance Company:
          <select name="insurance_company_id" value={insurancePolicy.insurance_company_id}>
-           {MasterForm.renderSelectOptions(insuranceCompany, true)}
+           {MasterForm.renderSelectOptions(insuranceCompanies, true)}
          </select>
         </div>
         <div>
