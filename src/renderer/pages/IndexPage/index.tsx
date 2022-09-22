@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import { Link } from 'react-router-dom';
+
 import { OnLogout } from 'renderer/components/Auth';
 
 import logo from './logo.jpg';
@@ -34,7 +35,7 @@ export default class IndexPage extends Component<Props> {
             <Link to="/"><button>Master-Detail</button></Link>
           </div>
           <div className="logout">
-            <Link to="/"><button onClick={() => this.props.onLogout()}>Log Out</button></Link>
+            <button onClick={() => this.props.onLogout()}>Log Out</button>
           </div>
         </div>
       </div>
