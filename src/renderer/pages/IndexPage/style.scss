@@ -1,0 +1,45 @@
+.IndexPage {
+  display: flex;
+  flex-direction: column;
+
+  > .header {
+    display: flex;
+    text-align: center;
+    margin: 10% auto;
+    vertical-align: middle;
+
+    > .logoContainer {
+      display: flex;
+      text-align: end;
+      margin-right: 20px;
+    }
+
+    > .headingMain {
+      display: flex;
+      font-weight: bold;
+      font-size: 36px;
+      text-align: start;
+      height: 100px;
+      align-items: center;
+    }
+  }
+
+  > .body {
+    margin: auto;
+    text-align: center;
+
+    button {
+      padding: 15px;
+      border-radius: 10px;
+      margin: 5px;
+      width: 100%;
+      font-size: 25px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #008cff;
+        color: white;
+      }
+    }
+  }
+}

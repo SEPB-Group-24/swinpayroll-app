@@ -5,22 +5,22 @@
   > .header {
     display: flex;
     text-align: center;
-    margin-top: 10%;
-    vertical-align: baseline;
+    margin: 10% auto;
+    vertical-align: middle;
 
     > .logoContainer {
-      width: 40%;
+      display: flex;
       text-align: end;
       margin-right: 20px;
     }
 
     > .headingMain {
+      display: flex;
       font-weight: bold;
-      font-size: 2em;
-      width: 60%;
+      font-size: 36px;
       text-align: start;
       height: 100px;
-      margin-top: 35px;
+      align-items: center;
     }
   }
 

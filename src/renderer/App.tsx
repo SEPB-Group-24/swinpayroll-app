@@ -18,7 +18,7 @@ export default class App extends Component {
               <>
                 {user ? (
                   <Routes>
-                    <Route path="/" element={<IndexPage />} />
+                    <Route path="/" element={<IndexPage onLogout={onLogout} />} />
                     <Route path="/master" element={<MasterPage fetchApi={fetchApi} />} />
                   </Routes>
                 ) : (
