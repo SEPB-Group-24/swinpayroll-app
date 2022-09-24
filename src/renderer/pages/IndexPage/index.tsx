@@ -12,7 +12,7 @@ interface Props {
 }
 
 export default class IndexPage extends Component<Props> {
-  constructor(props:Props) {
+  constructor(props: Props) {
     super(props);
   }
 
