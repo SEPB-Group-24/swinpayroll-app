@@ -3,10 +3,11 @@
 
   > form {
     display: flex;
-    justify-content: space-between;
     width: 100%;
 
     > div {
+      flex: 1;
+
       > div {
         padding: 5px 0;
 
@@ -27,6 +28,7 @@
 
       &:last-of-type {
         display: flex;
+        flex: 0.25;
         flex-direction: column;
         height: 150px;
         justify-content: space-around;

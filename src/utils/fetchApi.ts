@@ -34,6 +34,19 @@ export default async function fetchApi(method: 'GET' | 'POST' | 'PUT' | 'DELETE'
     }
   });
 
+  if (response.status === 422) {
+    let json: unknown = null;
+    try {
+      json = await response.json();
+    } catch {
+      // swallow
+    }
+
+    if (json) {
+      throw json;
+    }
+  }
+
   if (!response.ok) {
     throw new Error('response not ok');
   }

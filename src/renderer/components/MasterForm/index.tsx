@@ -7,17 +7,26 @@ export interface Resource {
   name: string;
 }
 
+export interface ValidationError {
+  attribute: string;
+  message: string;
+}
+
 interface Props<TResource> {
-  children: ReactElement;
+  children: (errors: ValidationError[]) => ReactElement;
   isEditing: true;
   onChange: (key: keyof TResource, value: TResource[keyof TResource]) => void;
   onClose: () => void;
   onDelete: () => void;
   onFileChange?: (key: string, value: File) => void;
-  onSubmit: () => void;
+  onSubmit: () => Promise<void>;
 }
 
-export default class MasterForm<TResource> extends Component<Props<TResource>> {
+interface State {
+  errors: ValidationError[];
+}
+
+export default class MasterForm<TResource> extends Component<Props<TResource>, State> {
   static renderSelectOptions(resources: Resource[], optional = false) {
     return [
       ...optional ? [
@@ -27,6 +36,14 @@ export default class MasterForm<TResource> extends Component<Props<TResource>> {
         <option key={index} value={id}>{name} ({code})</option>
       ))
     ]
+  }
+
+  constructor(props: Props<TResource>) {
+    super(props);
+
+    this.state = {
+      errors: []
+    };
   }
 
   render() {
@@ -43,13 +60,23 @@ export default class MasterForm<TResource> extends Component<Props<TResource>> {
               this.props.onChange(name as keyof TResource, value);
             }
           }}
-          onSubmit={(event: FormEvent) => {
+          onSubmit={async (event: FormEvent) => {
             event.preventDefault();
 
-            this.props.onSubmit();
+            try {
+              await this.props.onSubmit();
+            } catch (error) {
+              const { errors } = (error as { errors?: ValidationError[] });
+              if (errors) {
+                this.setState({ errors });
+                return;
+              }
+
+              throw error;
+            }
           }}
         >
-          {this.props.children}
+          {this.props.children(this.state.errors)}
           <div>
             <button onClick={this.props.onClose} type="button">
               Close
