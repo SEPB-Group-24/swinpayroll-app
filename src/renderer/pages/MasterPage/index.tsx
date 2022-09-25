@@ -161,8 +161,7 @@ export default class MasterPage extends Component<Props, State> {
             onSubmit={this.handleSubmit}
             positions={resources.get('positions') ?? []}
             projects={resources.get('projects') ?? []}
-            // TODO
-            subcontracts={[]}
+            subcontracts={resources.get('subcontracts') ?? []}
           />
         );
       case 'insurance_companies':
