@@ -15,12 +15,12 @@ export interface InsurancePolicy {
 }
 
 interface Props {
-  insurancePolicy?: InsurancePolicy;
   fetchApi: FetchApi;
+  insuranceCompanies: Resource[];
+  insurancePolicy?: InsurancePolicy;
   onClose: () => void;
   onDelete: () => void;
   onSubmit: (data: Data) => void;
-  insuranceCompanies: Resource[];
   projects: Resource[];
 }
 
