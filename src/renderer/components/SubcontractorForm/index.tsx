@@ -17,17 +17,17 @@ interface Props {
   onClose: () => void;
   onDelete: () => void;
   onSubmit: (data: Data) => void;
-  subcontractor?: Subcontract;
+  subcontract?: Subcontract;
 }
 
 interface State {
-  subcontractor: Subcontract;
+  subcontract: Subcontract;
 }
 
-export default class SubcontractorForm extends Component<Props, State> {
+export default class SubcontractForm extends Component<Props, State> {
   get defaultState() {
     return {
-      subcontractor: this.props.subcontractor ?? {
+      subcontract: this.props.subcontract ?? {
         name: '',
         code: '',
         down_payment1: '',
@@ -44,52 +44,52 @@ export default class SubcontractorForm extends Component<Props, State> {
   }
 
   componentDidUpdate(prevProps: Props) {
-    if (!!prevProps.subcontractor !== !!this.props.subcontractor) {
+    if (!!prevProps.subcontract !== !!this.props.subcontract) {
       this.setState(this.defaultState);
     }
   }
 
   render() {
-    const { subcontractor } = this.state;
+    const { subcontract } = this.state;
     return (
-      <MasterForm<State['subcontractor']>
-        isEditing={!!subcontractor}
+      <MasterForm<State['subcontract']>
+        isEditing={!!subcontract}
         onChange={(key, value) => {
           if (!key) {
             return;
           }
 
           this.setState({
-            subcontractor: {
-              ...this.state.subcontractor,
+            subcontract: {
+              ...this.state.subcontract,
               [key]: value
             }
           })
         }}
         onClose={this.props.onClose}
         onDelete={this.props.onDelete}
-        onSubmit={() => this.props.onSubmit(this.state.subcontractor as unknown as Record<string, unknown>)}
+        onSubmit={() => this.props.onSubmit(this.state.subcontract as unknown as Record<string, unknown>)}
         >
         <div>
           <div>
-            Sub-Contractor Code:
-            <input name="code" type="text" value={this.state.subcontractor.code} />    
+            Subcontract Code:
+            <input name="code" type="text" value={this.state.subcontract.code} />    
           </div>
           <div>
             Name:
-            <input name="name" type="text" value={this.state.subcontractor.name} />
+            <input name="name" type="text" value={this.state.subcontract.name} />
           </div>
             <div>
               Down Payment 1:
-              <input name="down_payment1" type="number" min="0" step="0.01" value={this.state.subcontractor.down_payment1} />
+              <input name="down_payment1" type="number" min="0" step="0.01" value={this.state.subcontract.down_payment1} />
             </div>
             <div>
               Down Payment 2:
-              <input name="down_payment2" type="number" min="0" step="0.01" value={this.state.subcontractor.down_payment2} />
+              <input name="down_payment2" type="number" min="0" step="0.01" value={this.state.subcontract.down_payment2} />
             </div>
             <div>
               Down Payment 3:
-              <input name="down_payment3" type="number" min="0" step="0.01" value={this.state.subcontractor.down_payment3} />
+              <input name="down_payment3" type="number" min="0" step="0.01" value={this.state.subcontract.down_payment3} />
           </div>
         </div>
       </MasterForm>
