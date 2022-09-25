@@ -65,32 +65,30 @@ export default class PostionForm extends Component<Props, State> {
         >
           {(errors) => (
             <div>
-              <div>
-                <InputWrapper attribute="code" errors={errors}>
-                  <>
-                    Position Code:
-                    <input name="code" type="text" value={position.code} />
-                  </>
-                </InputWrapper>
-                <InputWrapper attribute="name" errors={errors}>
-                  <>
-                    Position Name:
-                    <input name="name" type="text" value={position.name} />
-                  </>
-                </InputWrapper>
-                <InputWrapper attribute="minimum_pay" errors={errors}>
-                  <>
-                    Minimum Rate:
-                    <input name="minimum_pay" type="number" min="0" step="0.01" value={position.minimum_pay} />
-                  </>
-                </InputWrapper>
-                <InputWrapper attribute="maximum_pay" errors={errors}>
-                  <>
-                    Maximum Rate:
-                    <input name="maximum_pay" type="number" min="0" step="0.01" value={position.maximum_pay} />
-                  </>
-                </InputWrapper>
-              </div>
+              <InputWrapper attribute="code" errors={errors}>
+                <>
+                  Position Code:
+                  <input name="code" type="text" value={position.code} />
+                </>
+              </InputWrapper>
+              <InputWrapper attribute="name" errors={errors}>
+                <>
+                  Position Name:
+                  <input name="name" type="text" value={position.name} />
+                </>
+              </InputWrapper>
+              <InputWrapper attribute="minimum_pay" errors={errors}>
+                <>
+                  Minimum Rate:
+                  <input name="minimum_pay" type="number" min="0" step="0.01" value={position.minimum_pay} />
+                </>
+              </InputWrapper>
+              <InputWrapper attribute="maximum_pay" errors={errors}>
+                <>
+                  Maximum Rate:
+                  <input name="maximum_pay" type="number" min="0" step="0.01" value={position.maximum_pay} />
+                </>
+              </InputWrapper>
             </div>
           )}
         </MasterForm>
