@@ -4,19 +4,20 @@ import MasterForm, { Resource } from 'renderer/components/MasterForm';
 import { Data } from 'renderer/pages/MasterPage';
 
 export interface InsurancePolicy {
-  id?: string; 
-  policy_code: string;
-  project_id: string;
-  company: string;
-  policy_details: string;
+  id?: string;
+  code: string;
+  project_id?: string;
+  insurance_company_id?: string;
+  details: string;
   comment: string;
   start_date: string;
   end_date: string;
 }
 
 interface Props {
-  insurancePolicy?: InsurancePolicy;
   fetchApi: FetchApi;
+  insuranceCompanies: Resource[];
+  insurancePolicy?: InsurancePolicy;
   onClose: () => void;
   onDelete: () => void;
   onSubmit: (data: Data) => void;
@@ -31,19 +32,25 @@ export default class InsurancePolicyForm extends Component<Props, State> {
   get defaultState() {
     return {
       insurancePolicy: this.props.insurancePolicy ?? {
-        policy_code: '',
+        code: '',
         project_id: undefined,
-        company: '',
-        policy_details: '',
+        insurance_company_id: undefined,
+        details: '',
         comment: '',
         start_date: '',
         end_date: '',
       }
     };
   }
-  
+
+  constructor(props: Props) {
+    super(props);
+
+    this.state = this.defaultState;
+  }
+
   render() {
-    const { projects } = this.props;
+    const { insuranceCompanies, projects  } = this.props;
     const { insurancePolicy } = this.state;
     return (
       <MasterForm<State['insurancePolicy']>
@@ -66,27 +73,36 @@ export default class InsurancePolicyForm extends Component<Props, State> {
       >
       <div>
         <div>
-         <input name="policy_code" type="text" value={this.state.insurancePolicy.policy_code}/>
-       </div>
-        <div>
-         <select name="project_id" value={insurancePolicy.project_id}>
-          {MasterForm.renderSelectOptions(projects, true)}
-         </select>
+          Policy Code:
+          <input name="code" type="text" value={this.state.insurancePolicy.code}/>
         </div>
         <div>
-         <input name="company" type="text" value={this.state.insurancePolicy.company}/>
+          Project:
+          <select name="project_id" value={insurancePolicy.project_id}>
+            {MasterForm.renderSelectOptions(projects, true)}
+          </select>
         </div>
         <div>
-         <input name="policy_details" type="text" value={this.state.insurancePolicy.policy_details}/>
-       </div>
+          Insurance Company:
+          <select name="insurance_company_id" value={insurancePolicy.insurance_company_id}>
+            {MasterForm.renderSelectOptions(insuranceCompanies, true)}
+          </select>
+        </div>
         <div>
+          Policy Details:
+          <input name="details" type="text" value={this.state.insurancePolicy.details}/>
+        </div>
+        <div>
+          Comment:
           <input name="comment" type="text" value={this.state.insurancePolicy.comment}/>
-       </div>
+        </div>
         <div>
+          Start Date:
           <input name="start_date" type="date" value={this.state.insurancePolicy.start_date}/>
         </div>
         <div>
-         <input name="end_date" type="date" value={this.state.insurancePolicy.end_date}/>
+          End Date:
+          <input name="end_date" type="date" value={this.state.insurancePolicy.end_date}/>
         </div>
       </div>
       </MasterForm>
