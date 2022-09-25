@@ -1,11 +1,12 @@
 .MasterPage {
+  height: 100%;
   margin: 0 auto;
   width: calc(100% - 100px);
-  
+
   > .tabs {
     display: flex;
+    height: 30px;
     margin: 0 10px;
-    margin-bottom: -1px;
 
     > .tab {
       background: lightgrey;
@@ -29,7 +30,7 @@
 
   > .container {
     background: rgba(#000, 0.1);
-    height: 600px;
+    height: calc(100% - 30px);
 
     > .containerTabs {
       display: flex;

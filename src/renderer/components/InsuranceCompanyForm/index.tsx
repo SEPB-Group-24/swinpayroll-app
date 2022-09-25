@@ -67,7 +67,7 @@ export default class InsuranceCompanyForm extends Component<Props, State> {
         onSubmit={() => this.props.onSubmit(this.state.insuranceCompany as unknown as Record<string, unknown>)}
       >
         {(errors) => (
-          <>
+          <div>
             <InputWrapper attribute="code" errors={errors}>
               <>
                 Company Code:
@@ -80,7 +80,7 @@ export default class InsuranceCompanyForm extends Component<Props, State> {
                 <input name="name" type="text" value={insuranceCompany.name} />
               </>
             </InputWrapper>
-          </>
+          </div>
         )}
       </MasterForm>
     );
