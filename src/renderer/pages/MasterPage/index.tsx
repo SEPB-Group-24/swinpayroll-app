@@ -11,7 +11,7 @@ import singularise from 'utils/singularise';
 
 import './style.scss';
 
-const resources = ['employees', 'subcontractors', 'positions', 'projects', 'insurance_policies', 'insurance_companies'] as const;
+const resources = ['employees', 'subcontracts', 'positions', 'projects', 'insurance_policies', 'insurance_companies'] as const;
 
 export type Data = Record<string, unknown>;
 export type Files = Record<string, File>;
@@ -111,7 +111,7 @@ export default class MasterPage extends Component<Props, State> {
       <div className="MasterPage">
         <div className="tabs">
           {this.renderTab('employees')}
-          {this.renderTab('subcontractors')}
+          {this.renderTab('subcontracts')}
           {this.renderTab('projects')}
           {this.renderTab('insurance_policies')}
           {this.renderTab('insurance_companies')}
@@ -226,7 +226,7 @@ export default class MasterPage extends Component<Props, State> {
             onSubmit={this.handleSubmit}
           />
         );
-      case 'subcontractors':
+      case 'subcontracts':
       return (
         <SubcontractForm
           subcontract={this.state.activeSubTab === 'edit' ? this.state.resourceEditing as unknown as Subcontract : undefined}
