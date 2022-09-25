@@ -12,11 +12,11 @@ export interface Position {
 }
 
 interface Props { 
-  position?: Position;
   fetchApi: FetchApi;
   onClose: () => void;
   onDelete: () => void;
   onSubmit: (data: Data)  => void;
+  position?: Position;
 }
 
 interface State {

@@ -227,10 +227,10 @@ export default class MasterPage extends Component<Props, State> {
             onSubmit={this.handleSubmit}
           />
         );
-      case 'positions' :
+      case 'positions':
         return (
           <PositionForm
-            position={this.state.activeSubTab === 'edit' ? this.state.resourceEditing as unknown as Position: undefined}
+            position={this.state.activeSubTab === 'edit' ? this.state.resourceEditing as unknown as Position : undefined}
             fetchApi={this.props.fetchApi}
             onClose={() => this.setState({
               activeSubTab: 'view',
