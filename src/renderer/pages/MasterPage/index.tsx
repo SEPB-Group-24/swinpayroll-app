@@ -185,6 +185,7 @@ export default class MasterPage extends Component<Props, State> {
       case 'insurance_policies':
         return (
           <InsurancePolicyForm
+            insuranceCompanies={resources.get('insurance_companies') ?? []}
             insurancePolicy={this.state.activeSubTab === 'edit' ? this.state.resourceEditing as unknown as InsurancePolicy: undefined}
             fetchApi={this.props.fetchApi}
             onClose={() => this.setState({
@@ -200,7 +201,6 @@ export default class MasterPage extends Component<Props, State> {
             }}
             onSubmit={this.handleSubmit}
             projects={resources.get('projects') ?? []}
-            insuranceCompanies={resources.get('insurance_companies') ?? []}
           />
         );
       case 'projects':

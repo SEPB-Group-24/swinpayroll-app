@@ -4,7 +4,7 @@ import MasterForm, { Resource } from 'renderer/components/MasterForm';
 import { Data } from 'renderer/pages/MasterPage';
 
 export interface InsurancePolicy {
-  id?: string; 
+  id?: string;
   code: string;
   project_id?: string;
   insurance_company_id?: string;
@@ -48,7 +48,7 @@ export default class InsurancePolicyForm extends Component<Props, State> {
 
     this.state = this.defaultState;
   }
-  
+
   render() {
     const { insuranceCompanies, projects  } = this.props;
     const { insurancePolicy } = this.state;
@@ -74,35 +74,35 @@ export default class InsurancePolicyForm extends Component<Props, State> {
       <div>
         <div>
           Policy Code:
-         <input name="code" type="text" value={this.state.insurancePolicy.code}/>
-       </div>
+          <input name="code" type="text" value={this.state.insurancePolicy.code}/>
+        </div>
         <div>
-          Project ID:
-         <select name="project_id" value={insurancePolicy.project_id}>
-          {MasterForm.renderSelectOptions(projects, true)}
-         </select>
+          Project:
+          <select name="project_id" value={insurancePolicy.project_id}>
+            {MasterForm.renderSelectOptions(projects, true)}
+          </select>
         </div>
         <div>
           Insurance Company:
-         <select name="insurance_company_id" value={insurancePolicy.insurance_company_id}>
-           {MasterForm.renderSelectOptions(insuranceCompanies, true)}
-         </select>
+          <select name="insurance_company_id" value={insurancePolicy.insurance_company_id}>
+            {MasterForm.renderSelectOptions(insuranceCompanies, true)}
+          </select>
         </div>
         <div>
           Policy Details:
-         <input name="details" type="text" value={this.state.insurancePolicy.details}/>
-       </div>
+          <input name="details" type="text" value={this.state.insurancePolicy.details}/>
+        </div>
         <div>
           Comment:
           <input name="comment" type="text" value={this.state.insurancePolicy.comment}/>
-       </div>
+        </div>
         <div>
           Start Date:
           <input name="start_date" type="date" value={this.state.insurancePolicy.start_date}/>
         </div>
         <div>
           End Date:
-         <input name="end_date" type="date" value={this.state.insurancePolicy.end_date}/>
+          <input name="end_date" type="date" value={this.state.insurancePolicy.end_date}/>
         </div>
       </div>
       </MasterForm>
