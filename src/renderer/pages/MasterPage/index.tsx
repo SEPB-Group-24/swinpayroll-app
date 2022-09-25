@@ -5,7 +5,7 @@ import EmployeeForm, { Employee } from 'renderer/components/EmployeeForm';
 import InsuranceCompanyForm, { InsuranceCompany } from 'renderer/components/InsuranceCompanyForm';
 import InsurancePolicyForm, { InsurancePolicy } from 'renderer/components/InsurancePolicyForm';
 import ProjectForm, { Project } from 'renderer/components/ProjectForm';
-import PostionForm, { Position } from 'renderer/components/PositionForm';
+import PositionForm, { Position } from 'renderer/components/PositionForm';
 import { Resource as BaseResource } from 'renderer/components/MasterForm';
 import singularise from 'utils/singularise';
 
@@ -227,9 +227,9 @@ export default class MasterPage extends Component<Props, State> {
             onSubmit={this.handleSubmit}
           />
         );
-      case 'positions':
+      case 'positions' :
         return (
-          <PostionForm
+          <PositionForm
             position={this.state.activeSubTab === 'edit' ? this.state.resourceEditing as unknown as Position: undefined}
             fetchApi={this.props.fetchApi}
             onClose={() => this.setState({

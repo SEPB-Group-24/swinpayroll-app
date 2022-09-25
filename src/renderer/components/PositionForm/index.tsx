@@ -66,19 +66,19 @@ export default class PostionForm extends Component<Props, State> {
             <div>
               <div>
                 Position Code:
-                  <input name="code" type="text" value={position.code} />
+                <input name="code" type="text" value={position.code} />
               </div>
               <div>
                 Position Name:
-                  <input name="name" type="text" value={position.name} />
+                <input name="name" type="text" value={position.name} />
               </div>
               <div>
                 Minimum Rate:
-                  <input name="minimum_pay" type="number" min="0" step="0.01" value={position.minimum_pay} />
+                <input name="minimum_pay" type="number" min="0" step="0.01" value={position.minimum_pay} />
               </div>
               <div>
                 Maximum Rate:
-                  <input name="maximum_pay" type="number" min="0" step="0.01" value={position.maximum_pay} />
+                <input name="maximum_pay" type="number" min="0" step="0.01" value={position.maximum_pay} />
               </div>
             </div>
           </>
