@@ -5,7 +5,7 @@ import EmployeeForm, { Employee } from 'renderer/components/EmployeeForm';
 import InsuranceCompanyForm, { InsuranceCompany } from 'renderer/components/InsuranceCompanyForm';
 import InsurancePolicyForm, { InsurancePolicy } from 'renderer/components/InsurancePolicyForm';
 import ProjectForm, { Project } from 'renderer/components/ProjectForm';
-import SubcontractorForm, { Subcontractor } from 'renderer/components/SubcontractorForm';
+import SubcontractorForm, { Subcontract } from 'renderer/components/SubcontractorForm';
 import { Resource as BaseResource } from 'renderer/components/MasterForm';
 import singularise from 'utils/singularise';
 
@@ -229,7 +229,7 @@ export default class MasterPage extends Component<Props, State> {
       case 'subcontractors':
       return (
         <SubcontractorForm
-          subcontractor={this.state.activeSubTab === 'edit' ? this.state.resourceEditing as unknown as Subcontractor: undefined}
+          subcontractor={this.state.activeSubTab === 'edit' ? this.state.resourceEditing as unknown as Subcontract: undefined}
           fetchApi={this.props.fetchApi}
           onClose={() => this.setState({
             activeSubTab: 'view',
@@ -243,7 +243,6 @@ export default class MasterPage extends Component<Props, State> {
             });
           }}
           onSubmit={this.handleSubmit}
-          projects={resources.get('projects') ?? []}
         />
       );
       default:

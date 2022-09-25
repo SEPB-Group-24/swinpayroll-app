@@ -1,31 +1,27 @@
 import { Component } from 'react';
 import { FetchApi } from 'renderer/components/Auth';
-import MasterForm, { Resource } from 'renderer/components/MasterForm';
+import MasterForm from 'renderer/components/MasterForm';
 import { Data } from 'renderer/pages/MasterPage';
 
-export interface Subcontractor {
+export interface Subcontract {
   id?: string;
   code: string;
   name: string;
-  start_date: string;
-  project_id?: string;
-  value: string;
   down_payment1: string;
   down_payment2: string;
   down_payment3: string;
 }
 
 interface Props {
-  subcontractor?: Subcontractor;
   fetchApi: FetchApi;
   onClose: () => void;
   onDelete: () => void;
   onSubmit: (data: Data) => void;
-  projects: Resource[];
+  subcontractor?: Subcontract;
 }
 
 interface State {
-  subcontractor: Subcontractor;
+  subcontractor: Subcontract;
 }
 
 export default class SubcontractorForm extends Component<Props, State> {
@@ -33,10 +29,7 @@ export default class SubcontractorForm extends Component<Props, State> {
     return {
       subcontractor: this.props.subcontractor ?? {
         name: '',
-        start_date: '',
         code: '',
-        project_id: undefined,
-        value: '',
         down_payment1: '',
         down_payment2: '',
         down_payment3: ''
@@ -57,7 +50,6 @@ export default class SubcontractorForm extends Component<Props, State> {
   }
 
   render() {
-    const { projects } = this.props;
     const { subcontractor } = this.state;
     return (
       <MasterForm<State['subcontractor']>
@@ -81,42 +73,26 @@ export default class SubcontractorForm extends Component<Props, State> {
         <div>
           <div>
             Sub-Contractor Code:
-              <input name="code" type="text" value={this.state.subcontractor.code} />    
+            <input name="code" type="text" value={this.state.subcontractor.code} />    
           </div>
           <div>
             Name:
-              <input name="name" type="text" value={this.state.subcontractor.name} />
+            <input name="name" type="text" value={this.state.subcontractor.name} />
           </div>
-          <div>
-            Contract Start Date:
-              <input name="start_date" type="date" value={this.state.subcontractor.start_date} />
-          </div>
-          <div>
-            Project Code:
-              <select name="project_code" value={this.state.subcontractor.project_id}>
-                {MasterForm.renderSelectOptions(projects, true)}
-              </select>
-          </div>
-          <div>
-            Contract Value:
-              <input name="value" type="number" min="0" step="0.01" value={this.state.subcontractor.value} />
-          </div>
-          <div>
             <div>
               Down Payment 1:
-                <input name="down_payment1" type="number" min="0" step="0.01" value={this.state.subcontractor.down_payment1} />
+              <input name="down_payment1" type="number" min="0" step="0.01" value={this.state.subcontractor.down_payment1} />
             </div>
             <div>
               Down Payment 2:
-                <input name="down_payment2" type="number" min="0" step="0.01" value={this.state.subcontractor.down_payment2} />
+              <input name="down_payment2" type="number" min="0" step="0.01" value={this.state.subcontractor.down_payment2} />
             </div>
             <div>
               Down Payment 3:
-                <input name="down_payment3" type="number" min="0" step="0.01" value={this.state.subcontractor.down_payment3} />
-            </div>
+              <input name="down_payment3" type="number" min="0" step="0.01" value={this.state.subcontractor.down_payment3} />
           </div>
         </div>
-        </MasterForm>
+      </MasterForm>
     );
   }
 }
