@@ -113,7 +113,7 @@ export default class MasterPage extends Component<Props, State> {
           {this.renderTab('employees')}
           {/* {this.renderTab('subcontractors')} */}
           {this.renderTab('projects')}
-          {this.renderTab('insurance_policies')}
+          {/* {this.renderTab('insurance_policies')} */}
           {this.renderTab('insurance_companies')}
           {this.renderTab('positions')}
         </div>
@@ -294,8 +294,6 @@ export default class MasterPage extends Component<Props, State> {
                     Delete
                   </button>
                 </td>
-
-                
                 {Object.values(resource).map((value, index) => <td key={index}>{typeof value === 'string' ? value : JSON.stringify(value)}</td>)}
               </tr>
             ))}

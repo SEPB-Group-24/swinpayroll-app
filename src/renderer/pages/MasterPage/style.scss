@@ -2,7 +2,6 @@
   margin: 0 auto;
   width: calc(100% - 100px);
   
-
   > .tabs {
     display: flex;
     margin: 0 10px;
@@ -30,17 +29,15 @@
 
   > .container {
     background: rgba(#000, 0.1);
-    border-radius: 5px;
+    height: 600px;
 
     > .containerTabs {
       display: flex;
 
       > .containerTab {
         background: lightgrey;
-        border-left: none;
+        border: none;
         border-right: 1px solid #000;
-        border-top: none;
-        border-bottom: none; 
         color: black;
         cursor: pointer;
         flex-grow: 1;
@@ -70,7 +67,7 @@
     > .containerContent {
       display: flex;
       margin: 0 auto;
-      max-width: 1000px;
+      max-width: 900px;
       padding: 20px;
 
       > .tableWrapper {
