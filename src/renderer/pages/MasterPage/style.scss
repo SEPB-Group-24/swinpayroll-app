@@ -69,7 +69,8 @@
       display: flex;
       margin: 0 auto;
       max-width: 900px;
-      padding: 20px;
+      padding: 30px;
+      height: calc(100% - 100px);
 
       > .tableWrapper {
         overflow-x: auto;
