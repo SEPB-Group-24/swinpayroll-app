@@ -64,7 +64,7 @@ export default class PostionForm extends Component<Props, State> {
         onSubmit={() => this.props.onSubmit(this.state.position as unknown as Record<string, unknown>)}
         >
           {(errors) => (
-            <>
+            <div>
               <div>
                 <InputWrapper attribute="code" errors={errors}>
                   <>
@@ -91,7 +91,7 @@ export default class PostionForm extends Component<Props, State> {
                   </>
                 </InputWrapper>
               </div>
-            </>
+            </div>
           )}
         </MasterForm>
     );

@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import { FetchApi } from 'renderer/components/Auth';
+import InputWrapper from 'renderer/components/InputWrapper';
 import MasterForm from 'renderer/components/MasterForm';
 import { Data } from 'renderer/pages/MasterPage';
 
@@ -16,7 +17,7 @@ interface Props {
   fetchApi: FetchApi;
   onClose: () => void;
   onDelete: () => void;
-  onSubmit: (data: Data) => void;
+  onSubmit: (data: Data) => Promise<void>;
   subcontract?: Subcontract;
 }
 
@@ -70,28 +71,40 @@ export default class SubcontractForm extends Component<Props, State> {
         onDelete={this.props.onDelete}
         onSubmit={() => this.props.onSubmit(this.state.subcontract as unknown as Record<string, unknown>)}
         >
-        <div>
+        {(errors) => (
           <div>
-            Subcontract Code:
-            <input name="code" type="text" value={this.state.subcontract.code} />    
+            <InputWrapper attribute="code" errors={errors}>
+              <>
+                Subcontract Code:
+                <input name="code" type="text" value={this.state.subcontract.code} />
+              </>
+            </InputWrapper>
+            <InputWrapper attribute="name" errors={errors}>
+              <>
+                Name:
+                <input name="name" type="text" value={this.state.subcontract.name} />
+              </>
+            </InputWrapper>
+            <InputWrapper attribute="down_payment1" errors={errors}>
+              <>
+                Down Payment 1:
+                <input name="down_payment1" type="number" min="0" step="0.01" value={this.state.subcontract.down_payment1} />
+              </>
+            </InputWrapper>
+            <InputWrapper attribute="down_payment2" errors={errors}>
+              <>
+                Down Payment 2:
+                <input name="down_payment2" type="number" min="0" step="0.01" value={this.state.subcontract.down_payment2} />
+              </>
+            </InputWrapper>
+            <InputWrapper attribute="down_payment3" errors={errors}>
+              <>
+                Down Payment 3:
+                <input name="down_payment3" type="number" min="0" step="0.01" value={this.state.subcontract.down_payment3} />
+              </>
+            </InputWrapper>
           </div>
-          <div>
-            Name:
-            <input name="name" type="text" value={this.state.subcontract.name} />
-          </div>
-            <div>
-              Down Payment 1:
-              <input name="down_payment1" type="number" min="0" step="0.01" value={this.state.subcontract.down_payment1} />
-            </div>
-            <div>
-              Down Payment 2:
-              <input name="down_payment2" type="number" min="0" step="0.01" value={this.state.subcontract.down_payment2} />
-            </div>
-            <div>
-              Down Payment 3:
-              <input name="down_payment3" type="number" min="0" step="0.01" value={this.state.subcontract.down_payment3} />
-          </div>
-        </div>
+        )}
       </MasterForm>
     );
   }
