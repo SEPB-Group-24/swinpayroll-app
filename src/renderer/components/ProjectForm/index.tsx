@@ -1,8 +1,9 @@
 import { Component } from 'react';
 
 import { FetchApi } from 'renderer/components/Auth';
-import MasterForm, { Resource } from 'renderer/components/MasterForm';
-import { Data, Files } from 'renderer/pages/MasterPage';
+import InputWrapper from 'renderer/components/InputWrapper';
+import MasterForm from 'renderer/components/MasterForm';
+import { Data } from 'renderer/pages/MasterPage';
 
 export interface Project {
   id?: string;
@@ -21,7 +22,7 @@ interface Props {
   fetchApi: FetchApi;
   onClose: () => void;
   onDelete: () => void;
-  onSubmit: (data: Data) => void;
+  onSubmit: (data: Data) => Promise<void>;
 }
 
 interface State {
@@ -43,6 +44,7 @@ export default class ProjectForm extends Component<Props, State> {
       }
     };
   }
+
   constructor(props: Props) {
     super(props);
 
@@ -76,49 +78,67 @@ export default class ProjectForm extends Component<Props, State> {
         onDelete={this.props.onDelete}
         onSubmit={() => this.props.onSubmit(this.state.project as unknown as Record<string, unknown>)}
       >
-        <>
-          <div>
+        {(errors) => (
+          <>
             <div>
-              Project #:
-              <input name="code" type="text" value={project.code} />
-            </div>
+              <InputWrapper attribute="code" errors={errors}>
+                <>
+                  Project #:
+                  <input name="code" type="text" value={project.code} />
+                </>
+              </InputWrapper>
 
-            <div>
-              Name:
-              <input name="name" type="text" value={project.name} />
-            </div>
+              <InputWrapper attribute="name" errors={errors}>
+                <>
+                  Name:
+                  <input name="name" type="text" value={project.name} />
+                </>
+              </InputWrapper>
 
-            <div>
-              Acronym:
-              <input name="acronym" type="text" value={project.acronym} />
-            </div>
+              <InputWrapper attribute="acronym" errors={errors}>
+                <>
+                  Acronym:
+                  <input name="acronym" type="text" value={project.acronym} />
+                </>
+              </InputWrapper>
 
-            <div>
-              Accumulation Amount:
-              <input name="accumulation_amount" type="number" min="0" step="0.01" value={project.accumulation_amount} />
-            </div>
+              <InputWrapper attribute="accumulation_amount" errors={errors}>
+                <>
+                  Accumulation Amount:
+                  <input name="accumulation_amount" type="number" min="0" step="0.01" value={project.accumulation_amount} />
+                </>
+              </InputWrapper>
 
-            <div>
-              Project Group:
-              <input name="project_group" type="text" value={project.project_group} />
-            </div>
+              <InputWrapper attribute="project_group" errors={errors}>
+                <>
+                  Project Group:
+                  <input name="project_group" type="text" value={project.project_group} />
+                </>
+              </InputWrapper>
 
-            <div>
-              Start Date:
-              <input name="start_date" type="date" value={project.start_date} />
-            </div>
+              <InputWrapper attribute="start_date" errors={errors}>
+                <>
+                  Start Date:
+                  <input name="start_date" type="date" value={project.start_date} />
+                </>
+              </InputWrapper>
 
-            <div>
-              End Date:
-              <input name="end_date" type="date" value={project.end_date} />
-            </div>
+              <InputWrapper attribute="end_date" errors={errors}>
+                <>
+                  End Date:
+                  <input name="end_date" type="date" value={project.end_date} />
+                </>
+              </InputWrapper>
 
-            <div>
-              Address:
-              <input name="address" type="text" value={project.address} />
+              <InputWrapper attribute="address" errors={errors}>
+                <>
+                  Address:
+                  <input name="address" type="text" value={project.address} />
+                </>
+              </InputWrapper>
             </div>
-          </div>
-        </>
+          </>
+        )}
       </MasterForm>
     );
   }

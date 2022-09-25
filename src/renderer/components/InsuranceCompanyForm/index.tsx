@@ -1,6 +1,7 @@
 import { Component } from 'react';
 
 import { FetchApi } from 'renderer/components/Auth';
+import InputWrapper from 'renderer/components/InputWrapper';
 import MasterForm from 'renderer/components/MasterForm';
 import { Data } from 'renderer/pages/MasterPage';
 
@@ -15,7 +16,7 @@ interface Props {
   fetchApi: FetchApi;
   onClose: () => void;
   onDelete: () => void;
-  onSubmit: (data: Data) => void;
+  onSubmit: (data: Data) => Promise<void>;
 }
 
 interface State {
@@ -65,20 +66,22 @@ export default class InsuranceCompanyForm extends Component<Props, State> {
         onDelete={this.props.onDelete}
         onSubmit={() => this.props.onSubmit(this.state.insuranceCompany as unknown as Record<string, unknown>)}
       >
-        <>
+        {(errors) => (
           <div>
-            <div>
-              Company Code:
-              <input name="code" type="text" value={insuranceCompany.code} />
-            </div>
+            <InputWrapper attribute="code" errors={errors}>
+              <>
+                Company Code:
+                <input name="code" type="text" value={insuranceCompany.code} />
+              </>
+            </InputWrapper>
+            <InputWrapper attribute="name" errors={errors}>
+              <>
+                Company Name:
+                <input name="name" type="text" value={insuranceCompany.name} />
+              </>
+            </InputWrapper>
           </div>
-          <div>
-            <div>
-              Company Name:
-              <input name="name" type="text" value={insuranceCompany.name} />
-            </div>
-          </div>
-        </>
+        )}
       </MasterForm>
     );
   }

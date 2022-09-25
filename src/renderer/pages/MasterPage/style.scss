@@ -1,20 +1,21 @@
 .MasterPage {
+  height: 100%;
   margin: 0 auto;
   width: calc(100% - 100px);
 
   > .tabs {
     display: flex;
+    height: 30px;
     margin: 0 10px;
-    margin-bottom: -1px;
 
     > .tab {
-      background: #fff;
-      border: 1px solid #6e6e6e;
+      background: lightgrey;
+      border: none;
       border-bottom: 0;
       border-radius: 5px 5px 0 0;
       cursor: pointer;
       flex-grow: 1;
-      font-size: 20px;
+      font-size: 15px;
       padding: 5px 0;
       margin: 0 3px;
       text-align: center;
@@ -22,21 +23,22 @@
       &:hover,
       &.active {
         background-color: #111827;
-        color: white;
+        color: lightgrey;
       }
     }
   }
 
   > .container {
     background: rgba(#000, 0.1);
-    border-radius: 5px;
+    height: calc(100% - 30px);
 
     > .containerTabs {
       display: flex;
 
       > .containerTab {
-        background: #fff;
-        border: 1px solid #000;
+        background: lightgrey;
+        border: none;
+        border-right: 1px solid #000;
         color: black;
         cursor: pointer;
         flex-grow: 1;
@@ -48,7 +50,7 @@
         &.active {
           color: white;
           background-color: #111827;
-          border-bottom: 1px solid #a9a9a9;
+          border-bottom: 1px solid #111827;
         }
 
         &.newTab {
@@ -66,8 +68,9 @@
     > .containerContent {
       display: flex;
       margin: 0 auto;
-      max-width: 1000px;
-      padding: 40px 0;
+      max-width: 900px;
+      padding: 30px;
+      height: calc(100% - 100px);
 
       > .tableWrapper {
         overflow-x: auto;
