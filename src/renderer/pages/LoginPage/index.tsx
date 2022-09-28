@@ -1,7 +1,7 @@
 import { Component, FormEvent } from 'react';
 
 import { OnLogin } from 'renderer/components/Auth';
-import fetchApi from 'utils/fetchApi';
+import fetchApi from 'renderer/utils/fetchApi';
 
 import logo from './logo.jpg';
 

@@ -80,6 +80,11 @@
             background-color: #111827;
             margin-top: auto;
           }
+
+          &:disabled {
+            color: grey;
+            cursor: default;
+          }
         }
       }
     }
