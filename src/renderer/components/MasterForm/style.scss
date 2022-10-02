@@ -80,6 +80,11 @@
             background-color: #111827;
             margin-top: auto;
           }
+
+          &:hover {
+            background-color: lightgrey;
+            color: #111827;
+          }
         }
       }
     }

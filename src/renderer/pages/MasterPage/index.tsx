@@ -308,6 +308,7 @@ export default class MasterPage extends Component<Props, State> {
                     })}
                   >Edit</button>
                   <button
+                    className="delete"
                     onClick={() => this.handleDelete(resource.id)}
                   >
                     Delete
