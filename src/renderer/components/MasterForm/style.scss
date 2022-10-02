@@ -85,6 +85,11 @@
             color: grey;
             cursor: default;
           }
+
+          &:hover {
+            background-color: lightgrey;
+            color: #111827;
+          }
         }
       }
     }
