@@ -1,11 +1,14 @@
 .LoginPage {
   display: flex;
   flex-direction: column;
+  color: lightgrey;
 
   > .header {
     display: flex;
     text-align: center;
-    margin: 10% auto;
+    margin: auto;
+    margin-top: 10%;
+    margin-bottom: 5%;
     vertical-align: middle;
 
     > .logoContainer {
@@ -38,32 +41,36 @@
         }
 
         > button {
-          background-color: #008cff;
-          color: white;
-          padding: 0.8em 0em 0.8em 0em;
+          background-color: #111827;
+          color: lightgrey;
+          padding: 10px;
           border: none;
           border-radius: 10px;
-          width: 7em;
           margin: 5px;
-          border: #008cff 2px solid;
           cursor: pointer;
-
-          &:hover {
-            background-color: white;
-            color: black;
-            border: #008cff 2px solid;
-          }
         }
-
 
         > input {
-          margin: 5px;
+          border-radius: 5px;
+          border: none;
+          margin-left: 5px;
+          background: lightgrey;
           width: 100%;
+          padding: 2px;
+
+          &:focus {
+            outline: none;
+          }
+
+
         }
+
+        
+
       }
 
       .headingSub {
-        font-size: 1.3em;
+        font-size: 20px;
         font-weight: bold;
       }
     }

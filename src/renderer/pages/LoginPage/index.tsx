@@ -93,20 +93,6 @@ export default class LoginPage extends Component<Props, State> {
             <div>
               <button disabled={inFlight} type="submit">SIGN IN</button>
             </div>
-
-            <div>
-              <a href="">Forgot Password?</a>
-            </div>
-
-            <hr/>
-
-            <div>
-              New User?
-            </div>
-
-            <div>
-              <button disabled={inFlight}>SIGN UP</button>
-            </div>
           </form>
         </div>
       </div>
