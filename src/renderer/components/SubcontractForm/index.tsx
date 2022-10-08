@@ -72,38 +72,42 @@ export default class SubcontractForm extends Component<Props, State> {
         onSubmit={() => this.props.onSubmit(this.state.subcontract as unknown as Record<string, unknown>)}
         >
         {(errors) => (
-          <div>
-            <InputWrapper attribute="code" errors={errors}>
-              <>
-                Subcontract Code:
-                <input name="code" type="text" value={this.state.subcontract.code} />
-              </>
-            </InputWrapper>
-            <InputWrapper attribute="name" errors={errors}>
-              <>
-                Name:
-                <input name="name" type="text" value={this.state.subcontract.name} />
-              </>
-            </InputWrapper>
-            <InputWrapper attribute="down_payment1" errors={errors}>
-              <>
-                Down Payment 1:
-                <input name="down_payment1" type="number" min="0" step="0.01" value={this.state.subcontract.down_payment1} />
-              </>
-            </InputWrapper>
-            <InputWrapper attribute="down_payment2" errors={errors}>
-              <>
-                Down Payment 2:
-                <input name="down_payment2" type="number" min="0" step="0.01" value={this.state.subcontract.down_payment2} />
-              </>
-            </InputWrapper>
-            <InputWrapper attribute="down_payment3" errors={errors}>
-              <>
-                Down Payment 3:
-                <input name="down_payment3" type="number" min="0" step="0.01" value={this.state.subcontract.down_payment3} />
-              </>
-            </InputWrapper>
-          </div>
+          <>
+            <div>
+              <InputWrapper attribute="code" errors={errors}>
+                <>
+                  Subcontract Code:
+                  <input name="code" type="text" value={this.state.subcontract.code} />
+                </>
+              </InputWrapper>
+              <InputWrapper attribute="name" errors={errors}>
+                <>
+                  Name:
+                  <input name="name" type="text" value={this.state.subcontract.name} />
+                </>
+              </InputWrapper>
+            </div>
+            <div>
+              <InputWrapper attribute="down_payment1" errors={errors}>
+                <>
+                  Down Payment 1:
+                  <input name="down_payment1" type="number" min="0" step="0.01" value={this.state.subcontract.down_payment1} />
+                </>
+              </InputWrapper>
+              <InputWrapper attribute="down_payment2" errors={errors}>
+                <>
+                  Down Payment 2:
+                  <input name="down_payment2" type="number" min="0" step="0.01" value={this.state.subcontract.down_payment2} />
+                </>
+              </InputWrapper>
+              <InputWrapper attribute="down_payment3" errors={errors}>
+                <>
+                  Down Payment 3:
+                  <input name="down_payment3" type="number" min="0" step="0.01" value={this.state.subcontract.down_payment3} />
+                </>
+              </InputWrapper>
+            </div>
+          </>
         )}
       </MasterForm>
     );
