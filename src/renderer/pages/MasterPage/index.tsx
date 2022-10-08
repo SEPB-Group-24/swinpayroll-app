@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import { FetchApi } from 'renderer/components/Auth';
 import EmployeeForm, { Employee } from 'renderer/components/EmployeeForm';
@@ -110,6 +111,9 @@ export default class MasterPage extends Component<Props, State> {
 
     return (
       <div className="MasterPage">
+        <div className="backToIndex">
+          <Link to="/"><button type="button">Go Back</button></Link>
+        </div>
         <div className="tabs">
           {this.renderTab('employees')}
           {this.renderTab('subcontracts')}
