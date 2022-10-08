@@ -87,53 +87,48 @@ export default class ProjectForm extends Component<Props, State> {
                   <input name="code" type="text" value={project.code} />
                 </>
               </InputWrapper>
-
               <InputWrapper attribute="name" errors={errors}>
                 <>
                   Name:
                   <input name="name" type="text" value={project.name} />
                 </>
               </InputWrapper>
-
               <InputWrapper attribute="acronym" errors={errors}>
                 <>
                   Acronym:
                   <input name="acronym" type="text" value={project.acronym} />
                 </>
               </InputWrapper>
-
               <InputWrapper attribute="accumulation_amount" errors={errors}>
                 <>
                   Accumulation Amount:
                   <input name="accumulation_amount" type="number" min="0" step="0.01" value={project.accumulation_amount} />
                 </>
               </InputWrapper>
-
+            </div>
+            <div>
               <InputWrapper attribute="project_group" errors={errors}>
                 <>
                   Project Group:
                   <input name="project_group" type="text" value={project.project_group} />
                 </>
               </InputWrapper>
-
+              <InputWrapper attribute="address" errors={errors}>
+                <>
+                  Address:
+                  <input name="address" type="text" value={project.address} />
+                </>
+              </InputWrapper>
               <InputWrapper attribute="start_date" errors={errors}>
                 <>
                   Start Date:
                   <input name="start_date" type="date" value={project.start_date} />
                 </>
               </InputWrapper>
-
               <InputWrapper attribute="end_date" errors={errors}>
                 <>
                   End Date:
                   <input name="end_date" type="date" value={project.end_date} />
-                </>
-              </InputWrapper>
-
-              <InputWrapper attribute="address" errors={errors}>
-                <>
-                  Address:
-                  <input name="address" type="text" value={project.address} />
                 </>
               </InputWrapper>
             </div>

@@ -67,20 +67,24 @@ export default class InsuranceCompanyForm extends Component<Props, State> {
         onSubmit={() => this.props.onSubmit(this.state.insuranceCompany as unknown as Record<string, unknown>)}
       >
         {(errors) => (
-          <div>
-            <InputWrapper attribute="code" errors={errors}>
-              <>
-                Company Code:
-                <input name="code" type="text" value={insuranceCompany.code} />
-              </>
-            </InputWrapper>
-            <InputWrapper attribute="name" errors={errors}>
-              <>
-                Company Name:
-                <input name="name" type="text" value={insuranceCompany.name} />
-              </>
-            </InputWrapper>
-          </div>
+          <>
+            <div>
+              <InputWrapper attribute="code" errors={errors}>
+                <>
+                  Company Code:
+                  <input name="code" type="text" value={insuranceCompany.code} />
+                </>
+              </InputWrapper>
+            </div>
+            <div>
+              <InputWrapper attribute="name" errors={errors}>
+                <>
+                  Company Name:
+                  <input name="name" type="text" value={insuranceCompany.name} />
+                </>
+              </InputWrapper>
+            </div>
+          </>
         )}
       </MasterForm>
     );
