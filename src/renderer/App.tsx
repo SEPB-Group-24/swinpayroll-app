@@ -5,6 +5,7 @@ import Auth from 'renderer/components/Auth';
 import IndexPage from 'renderer/pages/IndexPage';
 import LoginPage from 'renderer/pages/LoginPage';
 import MasterPage from 'renderer/pages/MasterPage';
+import PayrollHistoryPage from 'renderer/pages/PayrollHistoryPage';
 
 import './App.css';
 
@@ -13,13 +14,14 @@ export default class App extends Component {
     return (
       <Router>
         <Auth>
-          {({ fetchApi, onLogin, onLogout, user }) => {
+          {({ authToken, fetchApi, onLogin, onLogout, user }) => {
             return (
               <>
                 {user ? (
                   <Routes>
                     <Route path="/" element={<IndexPage onLogout={onLogout} />} />
                     <Route path="/master" element={<MasterPage fetchApi={fetchApi} />} />
+                    <Route path="/payroll-history" element={<PayrollHistoryPage fetchApi={fetchApi} />} />
                   </Routes>
                 ) : (
                   <Routes>

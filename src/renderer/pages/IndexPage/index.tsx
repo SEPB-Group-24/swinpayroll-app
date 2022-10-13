@@ -29,10 +29,10 @@ export default class IndexPage extends Component<Props> {
         </div>
         <div className="body">
           <div className="master">
-            <Link to="/master"><button>Master</button></Link>
+            <Link to="/master"><button>Records</button></Link>
           </div>
           <div className="masterDetail">
-            <Link to="/"><button>Master-Detail</button></Link>
+            <Link to="/payroll-history"><button>Payroll History</button></Link>
           </div>
           <div className="logout">
             <button onClick={() => this.props.onLogout()}>Log Out</button>

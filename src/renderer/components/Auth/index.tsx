@@ -2,7 +2,7 @@ import { Component, ReactElement } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
-import fetchApi from 'utils/fetchApi';
+import fetchApi from 'renderer/utils/fetchApi';
 
 export enum Role {
   LEVEL_1 = 'level1',

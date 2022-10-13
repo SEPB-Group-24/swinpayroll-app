@@ -124,8 +124,12 @@ export default class EmployeeForm extends Component<Props, State> {
       return;
     }
 
-    const blob = await this.props.fetchApi('GET', `employees/${employee.id}/photo`);
-    this.setPhotoSrc(blob);
+    try {
+      const blob = await this.props.fetchApi('GET', `employees/${employee.id}/photo`);
+      this.setPhotoSrc(blob);
+    } catch {
+      // swallow
+    }
   }
 
   setPhotoSrc(blob: Blob) {
@@ -247,8 +251,15 @@ export default class EmployeeForm extends Component<Props, State> {
 
             <InputWrapper attribute="hourly_rate" errors={errors}>
               <>
-                Pay Rate:
+                Regular Hourly Rate:
                 <input name="hourly_rate" type="number" min="0" step="0.01" value={employee.hourly_rate} />
+              </>
+            </InputWrapper>
+
+            <InputWrapper attribute="overtime_rate" errors={errors}>
+              <>
+                Overtime Hourly Rate:
+                <input name="overtime_rate" type="number" min="0" step="0.01" value={employee.overtime_rate} />
               </>
             </InputWrapper>
 
@@ -263,7 +274,7 @@ export default class EmployeeForm extends Component<Props, State> {
               <>
                 <div>Subcontract:</div>
                 <select name="subcontract_id" value={employee.subcontract_id}>
-                  {MasterForm.renderSelectOptions(subcontracts, true)}
+                  {MasterForm.renderSelectOptions(subcontracts)}
                 </select>
               </>
             </InputWrapper>
@@ -296,7 +307,7 @@ export default class EmployeeForm extends Component<Props, State> {
               <>
                 <div>Position:</div>
                 <select name="position_id" value={employee.position_id}>
-                  {MasterForm.renderSelectOptions(positions, !employee.position_id)}
+                  {MasterForm.renderSelectOptions(positions)}
                 </select>
               </>
             </InputWrapper>
@@ -305,7 +316,7 @@ export default class EmployeeForm extends Component<Props, State> {
               <>
                 <div>Project:</div>
                 <select name="project_id" value={employee.project_id}>
-                  {MasterForm.renderSelectOptions(projects, !employee.project_id)}
+                  {MasterForm.renderSelectOptions(projects)}
                 </select>
               </>
             </InputWrapper>

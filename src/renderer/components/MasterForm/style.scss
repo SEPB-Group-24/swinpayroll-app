@@ -57,7 +57,7 @@
         width: 150px;
       }
 
-      &:last-of-type {
+      &.buttons {
         display: flex;
         flex: 0.25;
         flex-direction: column;
@@ -79,6 +79,11 @@
           &.delete {
             background-color: #111827;
             margin-top: auto;
+          }
+
+          &:disabled {
+            color: grey;
+            cursor: default;
           }
         }
       }

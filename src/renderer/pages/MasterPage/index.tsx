@@ -8,7 +8,7 @@ import { Resource as BaseResource } from 'renderer/components/MasterForm';
 import PositionForm, { Position } from 'renderer/components/PositionForm';
 import ProjectForm, { Project } from 'renderer/components/ProjectForm';
 import SubcontractForm, { Subcontract } from 'renderer/components/SubcontractForm';
-import singularise from 'utils/singularise';
+import singularise from 'renderer/utils/singularise';
 
 import './style.scss';
 
