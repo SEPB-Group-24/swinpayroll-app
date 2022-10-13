@@ -20,7 +20,7 @@ export default class App extends Component {
                 {user ? (
                   <Routes>
                     <Route path="/" element={<IndexPage onLogout={onLogout} showRecords={user.role !== Role.LEVEL_3}  />} />
-                    {user.role !== Role.LEVEL_3 && <Route path="/master" element={<MasterPage fetchApi={fetchApi} readonly={user.role !== Role.LEVEL_1} />} />}
+                    {user.role !== Role.LEVEL_3 && <Route path="/master" element={<MasterPage fetchApi={fetchApi} readonly={user.role !== Role.LEVEL_1} showUsers={user.role === Role.LEVEL_1} />} />}
                     <Route path="/payroll-history" element={<PayrollHistoryPage fetchApi={fetchApi} readonly={user.role === Role.LEVEL_3} />} />
                   </Routes>
                 ) : (

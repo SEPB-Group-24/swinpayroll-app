@@ -9,11 +9,12 @@ import { Resource as BaseResource } from 'renderer/components/MasterForm';
 import PositionForm, { Position } from 'renderer/components/PositionForm';
 import ProjectForm, { Project } from 'renderer/components/ProjectForm';
 import SubcontractForm, { Subcontract } from 'renderer/components/SubcontractForm';
+import UserForm, { User } from 'renderer/components/UserForm';
 import singularise from 'renderer/utils/singularise';
 
 import './style.scss';
 
-const resources = ['employees', 'subcontracts', 'positions', 'projects', 'insurance_policies', 'insurance_companies'] as const;
+const resources = ['users', 'employees', 'subcontracts', 'positions', 'projects', 'insurance_policies', 'insurance_companies'] as const;
 
 export type Data = Record<string, unknown>;
 export type Files = Record<string, File>;
@@ -25,6 +26,7 @@ type Resources = Map<ResourceName, Resource[]>;
 interface Props {
   fetchApi: FetchApi;
   readonly: boolean;
+  showUsers: boolean;
 }
 
 interface State {
@@ -70,6 +72,9 @@ export default class MasterPage extends Component<Props, State> {
       });
       const ret: Resources = new Map();
       await Promise.all(resources.map(async (resourceName) => {
+        if (!this.props.showUsers && resourceName === 'users') {
+          return;
+        }
         const response = await this.props.fetchApi('GET', resourceName);
         ret.set(resourceName, response[resourceName]);
       }));
@@ -89,6 +94,8 @@ export default class MasterPage extends Component<Props, State> {
 
   getTableKeys() {
     switch (this.state.activeTab) {
+      case 'users':
+        return ['name', 'email', 'role'];
       case 'employees':
         return ['hired_date', 'code', 'name', 'date_of_birth', 'sex', 'skill'];
       case 'subcontracts':
@@ -119,7 +126,7 @@ export default class MasterPage extends Component<Props, State> {
   }
 
   render() {
-    const { readonly } = this.props;
+    const { readonly, showUsers } = this.props;
     const { activeSubTab, inFlight, resourceEditing } = this.state;
     if (inFlight === 'fetching') {
       return <div>Loading...</div>;
@@ -135,6 +142,9 @@ export default class MasterPage extends Component<Props, State> {
           <Link to="/"><button type="button">Go Back</button></Link>
         </div>
         <div className="tabs">
+          {showUsers && (
+            this.renderTab('users')
+          )}
           {this.renderTab('employees')}
           {this.renderTab('subcontracts')}
           {this.renderTab('projects')}
@@ -275,25 +285,45 @@ export default class MasterPage extends Component<Props, State> {
           />
         );
       case 'subcontracts':
-      return (
-        <SubcontractForm
-          fetchApi={this.props.fetchApi}
-          onClose={() => this.setState({
-            activeSubTab: 'view',
-            resourceEditing: null
-          })}
-          onDelete={async () => {
-            await this.handleDelete(resourceEditing?.id ?? '');
-            this.setState({
+        return (
+          <SubcontractForm
+            fetchApi={this.props.fetchApi}
+            onClose={() => this.setState({
               activeSubTab: 'view',
               resourceEditing: null
-            });
-          }}
-          onSubmit={this.handleSubmit}
-          readonly={readonly}
-          subcontract={this.state.activeSubTab === 'edit' ? this.state.resourceEditing as unknown as Subcontract : undefined}
-        />
-      );
+            })}
+            onDelete={async () => {
+              await this.handleDelete(resourceEditing?.id ?? '');
+              this.setState({
+                activeSubTab: 'view',
+                resourceEditing: null
+              });
+            }}
+            onSubmit={this.handleSubmit}
+            readonly={readonly}
+            subcontract={this.state.activeSubTab === 'edit' ? this.state.resourceEditing as unknown as Subcontract : undefined}
+          />
+        );
+      case 'users':
+        return (
+          <UserForm
+            fetchApi={this.props.fetchApi}
+            onClose={() => this.setState({
+              activeSubTab: 'view',
+              resourceEditing: null
+            })}
+            onDelete={async () => {
+              await this.handleDelete(resourceEditing?.id ?? '');
+              this.setState({
+                activeSubTab: 'view',
+                resourceEditing: null
+              });
+            }}
+            onSubmit={this.handleSubmit}
+            readonly={readonly}
+            user={this.state.activeSubTab === 'edit' ? this.state.resourceEditing as unknown as User : undefined}
+          />
+        );
       default:
         return <></>;
     }
