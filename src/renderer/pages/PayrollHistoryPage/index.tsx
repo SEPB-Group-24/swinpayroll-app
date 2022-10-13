@@ -10,6 +10,8 @@ import getDateAtStartOfWeek from 'renderer/utils/getDateAtStartOfWeek';
 import snakeCase from 'renderer/utils/snakeCase';
 import titleCase from 'renderer/utils/titleCase';
 
+import './style.scss';
+
 
 interface PayrollHistory {
   id?: string;
@@ -347,65 +349,53 @@ export default class PayrollHistoryPage extends Component<Props, State> {
           {(errors, onSubmit) => (
             <>
               <div>
-                <InputWrapper attribute="week_start_date" errors={errors}>
-                  <>
-                    Start of Week:
-                    <input name="week_start_date" type="date" value={newWeeklyPayrollHistory.week_start_date} />
-                  </>
-                </InputWrapper>
+                <div>
+                  <InputWrapper attribute="week_start_date" errors={errors}>
+                    <>
+                      Start of Week:
+                      <input name="week_start_date" type="date" value={newWeeklyPayrollHistory.week_start_date} />
+                    </>
+                  </InputWrapper>
 
-                <InputWrapper attribute="employee_id" errors={errors}>
-                  <>
-                    <div>Employee:</div>
-                    <select name="employee_id" value={newWeeklyPayrollHistory.employee_id}>
-                      {MasterForm.renderSelectOptions(employees)}
-                    </select>
-                  </>
-                </InputWrapper>
-              </div>
-              <div>
-                <div>
-                  Project Name
-                  <input disabled={true} type="text" value={employee ? (projects.find((project) => project.id === newWeeklyPayrollHistory.project_id)?.name ?? 'Unknown') : 'Choose an employee'} />
+                  <InputWrapper attribute="employee_id" errors={errors}>
+                    <>
+                      <div>Employee:</div>
+                      <select name="employee_id" value={newWeeklyPayrollHistory.employee_id}>
+                        {MasterForm.renderSelectOptions(employees)}
+                      </select>
+                    </>
+                  </InputWrapper>
+                  <div>
+                    Project Name
+                    <input disabled={true} type="text" value={employee ? (projects.find((project) => project.id === newWeeklyPayrollHistory.project_id)?.name ?? 'Unknown') : 'Choose an employee'} />
+                  </div>
+                  <div>
+                    Employee Hourly Rate:
+                    <input disabled={true} type="number" value={newWeeklyPayrollHistory.employee_hourly_rate} />
+                  </div>
+                  <div>
+                    Employee Overtime Rate:
+                    <input disabled={true} type="number" value={newWeeklyPayrollHistory.employee_overtime_rate} />
+                  </div>
+                  <div>
+                    Employee Position
+                    <input disabled={true} type="text" value={newWeeklyPayrollHistory.employee_position} />
+                  </div>
                 </div>
                 <div>
-                  Employee Hourly Rate:
-                  <input disabled={true} type="number" value={newWeeklyPayrollHistory.employee_hourly_rate} />
-                </div>
-                <div>
-                  Employee Overtime Rate:
-                  <input disabled={true} type="number" value={newWeeklyPayrollHistory.employee_overtime_rate} />
-                </div>
-                <div>
-                  Employee Position
-                  <input disabled={true} type="text" value={newWeeklyPayrollHistory.employee_position} />
+                  {
+                    numAttrs.map((attr) => (
+                      <InputWrapper attribute={attr} errors={errors}>
+                        <>
+                          {titleCase(attr)}:
+                          <input name={attr} type="number" min="0" value={newWeeklyPayrollHistory[attr]} />
+                        </>
+                      </InputWrapper>
+                    ))
+                  }
                 </div>
               </div>
-              <div>
-                {
-                  numAttrs.slice(0, 9).map((attr) => (
-                    <InputWrapper attribute={attr} errors={errors}>
-                      <>
-                        {titleCase(attr)}:
-                        <input name={attr} type="number" min="0" value={newWeeklyPayrollHistory[attr]} />
-                      </>
-                    </InputWrapper>
-                  ))
-                }
-              </div>
-              <div>
-                {
-                  numAttrs.slice(9).map((attr) => (
-                    <InputWrapper attribute={attr} errors={errors}>
-                      <>
-                        {titleCase(attr)}:
-                        <input name={attr} type="number" min="0" value={newWeeklyPayrollHistory[attr]} />
-                      </>
-                    </InputWrapper>
-                  ))
-                }
-              </div>
-              <div>
+              <div className="buttons">
                 <button disabled={!this.state.newWeeklyPayrollHistory.id} onClick={this.handlePrint} type="button">Print</button>
                 <button disabled={!this.state.newWeeklyPayrollHistory.id} onClick={this.handleSavePdf} type="button">Save PDF</button>
                 <button onClick={this.handleSaveCsv} type="button">Save CSV (all records)</button>
