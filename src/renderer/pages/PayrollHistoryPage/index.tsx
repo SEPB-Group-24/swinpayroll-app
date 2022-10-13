@@ -1,4 +1,5 @@
-import { Component } from 'react';
+import { Component, KeyboardEvent } from 'react';
+import { Link } from 'react-router-dom';
 
 import printJS from 'print-js'
 
@@ -44,6 +45,7 @@ interface PayrollHistory {
 
 interface Props {
   fetchApi: FetchApi;
+  readonly: boolean;
 }
 
 type InFlight = 'creating' | 'error' | 'fetching' | null;
@@ -139,6 +141,7 @@ export default class PayrollHistoryPage extends Component<Props, State> {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleClear = this.handleClear.bind(this);
+    this.handleKeyUp = this.handleKeyUp.bind(this);
     this.handlePrint = this.handlePrint.bind(this);
     this.handleSaveCsv = this.handleSaveCsv.bind(this);
     this.handleSavePdf = this.handleSavePdf.bind(this);
@@ -241,6 +244,27 @@ export default class PayrollHistoryPage extends Component<Props, State> {
     });
   }
 
+  handleKeyUp(event: KeyboardEvent<HTMLDivElement>) {
+    if (event.code !== 'Enter') {
+      return;
+    }
+
+    event.preventDefault();
+
+    type Input = HTMLInputElement | HTMLSelectElement | null
+    let nextInput: Input = event.target as HTMLInputElement | HTMLSelectElement;
+    const find = (element: Element | null | undefined) => element?.nextElementSibling?.querySelector('input, select') as Input;
+    do {
+      let newNextInput = find(nextInput.parentElement)
+      if (!newNextInput) {
+        newNextInput = find(nextInput.parentElement?.parentElement);
+      }
+
+      nextInput = newNextInput;
+    } while (nextInput?.disabled);
+    nextInput?.focus();
+  }
+
   async handlePrint() {
     const { id } = this.state.newWeeklyPayrollHistory;
     if (!id) {
@@ -341,6 +365,9 @@ export default class PayrollHistoryPage extends Component<Props, State> {
     const employee = this.state.employees.find(({ id }) => id === newWeeklyPayrollHistory.employee_id) as Employee;
     return (
       <div className="PayrollHistoryPage">
+        <div className="backToIndex">
+          <Link to="/"><button type="button">Go Back</button></Link>
+        </div>
         <MasterForm<PayrollHistory>
           onChange={this.handleChange}
           onSubmit={this.handleSubmit}
@@ -348,7 +375,7 @@ export default class PayrollHistoryPage extends Component<Props, State> {
         >
           {(errors, onSubmit) => (
             <>
-              <div>
+              <div onKeyUp={this.handleKeyUp}>
                 <div>
                   <InputWrapper attribute="week_start_date" errors={errors}>
                     <>
@@ -388,21 +415,25 @@ export default class PayrollHistoryPage extends Component<Props, State> {
                       <InputWrapper attribute={attr} errors={errors}>
                         <>
                           {titleCase(attr)}:
-                          <input name={attr} type="number" min="0" value={newWeeklyPayrollHistory[attr]} />
+                          <input disabled={this.props.readonly} name={attr} type="number" min="0" value={newWeeklyPayrollHistory[attr]} />
                         </>
                       </InputWrapper>
                     ))
                   }
                 </div>
               </div>
-              <div className="buttons">
+              <div>
                 <button disabled={!this.state.newWeeklyPayrollHistory.id} onClick={this.handlePrint} type="button">Print</button>
                 <button disabled={!this.state.newWeeklyPayrollHistory.id} onClick={this.handleSavePdf} type="button">Save PDF</button>
                 <button onClick={this.handleSaveCsv} type="button">Save CSV (all records)</button>
-                <div></div>
-                <div></div>
-                <button onClick={this.handleClear} type="button">Clear</button>
-                <button onClick={onSubmit} type="button">Save</button>
+                {!this.props.readonly && (
+                  <>
+                    <div></div>
+                    <div></div>
+                    <button onClick={this.handleClear} type="button">Clear</button>
+                    <button onClick={onSubmit} type="button">Save</button>
+                  </>
+                )}
               </div>
             </>
           )}

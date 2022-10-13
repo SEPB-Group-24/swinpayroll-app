@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { HashRouter as Router, Navigate, Routes, Route } from 'react-router-dom';
 
-import Auth from 'renderer/components/Auth';
+import Auth, { Role } from 'renderer/components/Auth';
 import IndexPage from 'renderer/pages/IndexPage';
 import LoginPage from 'renderer/pages/LoginPage';
 import MasterPage from 'renderer/pages/MasterPage';
@@ -14,14 +14,14 @@ export default class App extends Component {
     return (
       <Router>
         <Auth>
-          {({ authToken, fetchApi, onLogin, onLogout, user }) => {
+          {({ fetchApi, onLogin, onLogout, user }) => {
             return (
               <>
                 {user ? (
                   <Routes>
-                    <Route path="/" element={<IndexPage onLogout={onLogout} />} />
-                    <Route path="/master" element={<MasterPage fetchApi={fetchApi} />} />
-                    <Route path="/payroll-history" element={<PayrollHistoryPage fetchApi={fetchApi} />} />
+                    <Route path="/" element={<IndexPage onLogout={onLogout} showRecords={user.role !== Role.LEVEL_3}  />} />
+                    {user.role !== Role.LEVEL_3 && <Route path="/master" element={<MasterPage fetchApi={fetchApi} readonly={user.role !== Role.LEVEL_1} />} />}
+                    <Route path="/payroll-history" element={<PayrollHistoryPage fetchApi={fetchApi} readonly={user.role === Role.LEVEL_3} />} />
                   </Routes>
                 ) : (
                   <Routes>

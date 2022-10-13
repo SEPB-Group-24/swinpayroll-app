@@ -9,13 +9,10 @@ import './style.scss';
 
 interface Props {
   onLogout: OnLogout;
+  showRecords: boolean;
 }
 
 export default class IndexPage extends Component<Props> {
-  constructor(props: Props) {
-    super(props);
-  }
-
   render() {
     return (
       <div className="IndexPage">
@@ -28,9 +25,11 @@ export default class IndexPage extends Component<Props> {
           </div>
         </div>
         <div className="body">
-          <div className="master">
-            <Link to="/master"><button>Records</button></Link>
-          </div>
+          {this.props.showRecords && (
+            <div className="master">
+              <Link to="/master"><button>Records</button></Link>
+            </div>
+          )}
           <div className="masterDetail">
             <Link to="/payroll-history"><button>Payroll History</button></Link>
           </div>

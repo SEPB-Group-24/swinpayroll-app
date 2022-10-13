@@ -48,7 +48,10 @@ export default async function fetchApi(method: 'GET' | 'POST' | 'PUT' | 'DELETE'
   }
 
   if (!response.ok) {
-    throw new Error('response not ok');
+    throw {
+      message: 'response not okay',
+      status: response.status
+    };
   }
 
   try {

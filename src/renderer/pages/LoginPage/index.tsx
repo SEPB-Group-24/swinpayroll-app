@@ -13,6 +13,7 @@ interface Props {
 
 interface State {
   email: string;
+  error: string;
   inFlight: boolean;
   password: string;
 }
@@ -44,10 +45,19 @@ export default class LoginPage extends Component<Props, State> {
         password
       });
       this.props.onLogin(user);
-    } catch (error) {
+    } catch (error: { status: number }) {
       console.error('error while logging in', {
-          error
+        error
       });
+      if (error.status >= 400 && error.status < 500) {
+        this.setState({
+          error: 'Invalid credentials'
+        });
+      } else {
+        this.setState({
+          error: 'Something went wrong, try again later'
+        });
+      }
     } finally {
       this.setState({
         inFlight: false
@@ -56,7 +66,7 @@ export default class LoginPage extends Component<Props, State> {
   }
 
   render() {
-    const { inFlight } = this.state;
+    const { error, inFlight } = this.state;
     return (
       <div className="LoginPage">
         <div className="header">
@@ -92,6 +102,10 @@ export default class LoginPage extends Component<Props, State> {
 
             <div>
               <button disabled={inFlight} type="submit">SIGN IN</button>
+            </div>
+
+            <div className="error">
+              {error}
             </div>
           </form>
         </div>

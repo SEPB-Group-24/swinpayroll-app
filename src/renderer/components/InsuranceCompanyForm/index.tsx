@@ -17,6 +17,7 @@ interface Props {
   onClose: () => void;
   onDelete: () => void;
   onSubmit: (data: Data) => Promise<void>;
+  readonly: boolean;
 }
 
 interface State {
@@ -46,10 +47,11 @@ export default class InsuranceCompanyForm extends Component<Props, State> {
   }
 
   render() {
+    const { readonly } = this.props;
     const { insuranceCompany } = this.state;
     return (
-      <MasterForm<State['insuranceCompany']>
-        isEditing={!!insuranceCompany}
+      <MasterForm<InsuranceCompany>
+        isEditing={!!this.props.insuranceCompany}
         onChange={(key, value) => {
           if (!key) {
             return;
@@ -65,6 +67,7 @@ export default class InsuranceCompanyForm extends Component<Props, State> {
         onClose={this.props.onClose}
         onDelete={this.props.onDelete}
         onSubmit={() => this.props.onSubmit(this.state.insuranceCompany as unknown as Record<string, unknown>)}
+        readonly={readonly}
       >
         {(errors) => (
           <>
@@ -72,7 +75,7 @@ export default class InsuranceCompanyForm extends Component<Props, State> {
               <InputWrapper attribute="code" errors={errors}>
                 <>
                   Company Code:
-                  <input name="code" type="text" value={insuranceCompany.code} />
+                  <input disabled={readonly} name="code" type="text" value={insuranceCompany.code} />
                 </>
               </InputWrapper>
             </div>
@@ -80,7 +83,7 @@ export default class InsuranceCompanyForm extends Component<Props, State> {
               <InputWrapper attribute="name" errors={errors}>
                 <>
                   Company Name:
-                  <input name="name" type="text" value={insuranceCompany.name} />
+                  <input disabled={readonly} name="name" type="text" value={insuranceCompany.name} />
                 </>
               </InputWrapper>
             </div>
