@@ -14,7 +14,6 @@ import titleCase from 'renderer/utils/titleCase';
 interface PayrollHistory {
   id?: string;
   week_start_date: string;
-  project_id: string;
   employee_id: string;
   hours_day_1: number;
   hours_day_2: number;
@@ -35,6 +34,7 @@ interface PayrollHistory {
   slip_deduction_5: number;
   slip_deduction_6: number;
   // automatically filled in
+  project_id: string;
   employee_hourly_rate: number;
   employee_overtime_rate: number
   employee_position: string;
@@ -86,7 +86,6 @@ export default class PayrollHistoryPage extends Component<Props, State> {
   get defaultPayrollHistory() {
     return {
       week_start_date: PayrollHistoryPage.formatStartDate(new Date()),
-      project_id: '',
       employee_id: '',
       hours_day_1: 0,
       hours_day_2: 0,
@@ -106,6 +105,7 @@ export default class PayrollHistoryPage extends Component<Props, State> {
       slip_deduction_4: 0,
       slip_deduction_5: 0,
       slip_deduction_6: 0,
+      project_id: '',
       employee_hourly_rate: 0,
       employee_overtime_rate: 0,
       employee_position: 'Choose an employee'
@@ -182,6 +182,7 @@ export default class PayrollHistoryPage extends Component<Props, State> {
     if (key === 'employee_id') {
       const employee = this.state.employees.find(({ id }) => id === value) as Employee;
       const position = this.state.positions.find(({ id }) => id === employee?.position_id);
+      extraAttrs.project_id = employee?.project_id ?? '';
       extraAttrs.employee_hourly_rate = employee?.hourly_rate ?? 0;
       extraAttrs.employee_overtime_rate = employee?.overtime_rate ?? 0;
       extraAttrs.employee_position = position?.name ?? (employee ? 'Unknown' : 'Choose an employee');
@@ -198,10 +199,10 @@ export default class PayrollHistoryPage extends Component<Props, State> {
         [key]: value
       }
     }, () => {
-      if (key === 'project_id' || key === 'employee_id' || key === 'week_start_date') {
+      if (key === 'employee_id' || key === 'week_start_date') {
         const { newWeeklyPayrollHistory, weeklyPayrollHistories } = this.state;
-        const matchingWeeklyPayrollHistory = weeklyPayrollHistories.find(({ employee_id, project_id, week_start_date }) => {
-          return employee_id === newWeeklyPayrollHistory.employee_id && project_id === newWeeklyPayrollHistory.project_id && week_start_date === newWeeklyPayrollHistory.week_start_date;
+        const matchingWeeklyPayrollHistory = weeklyPayrollHistories.find(({ employee_id, week_start_date }) => {
+          return employee_id === newWeeklyPayrollHistory.employee_id && week_start_date === newWeeklyPayrollHistory.week_start_date;
         });
         if (matchingWeeklyPayrollHistory) {
           this.setState({
@@ -335,6 +336,7 @@ export default class PayrollHistoryPage extends Component<Props, State> {
       return <div>An error occurred</div>
     }
 
+    const employee = this.state.employees.find(({ id }) => id === newWeeklyPayrollHistory.employee_id) as Employee;
     return (
       <div className="PayrollHistoryPage">
         <MasterForm<PayrollHistory>
@@ -352,15 +354,6 @@ export default class PayrollHistoryPage extends Component<Props, State> {
                   </>
                 </InputWrapper>
 
-                <InputWrapper attribute="project_id" errors={errors}>
-                  <>
-                    <div>Project:</div>
-                    <select name="project_id" value={newWeeklyPayrollHistory.project_id}>
-                      {MasterForm.renderSelectOptions(projects)}
-                    </select>
-                  </>
-                </InputWrapper>
-
                 <InputWrapper attribute="employee_id" errors={errors}>
                   <>
                     <div>Employee:</div>
@@ -371,6 +364,10 @@ export default class PayrollHistoryPage extends Component<Props, State> {
                 </InputWrapper>
               </div>
               <div>
+                <div>
+                  Project Name
+                  <input disabled={true} type="text" value={employee ? (projects.find((project) => project.id === newWeeklyPayrollHistory.project_id)?.name ?? 'Unknown') : 'Choose an employee'} />
+                </div>
                 <div>
                   Employee Hourly Rate:
                   <input disabled={true} type="number" value={newWeeklyPayrollHistory.employee_hourly_rate} />
