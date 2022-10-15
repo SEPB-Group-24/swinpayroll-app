@@ -79,13 +79,13 @@ export default class SubcontractForm extends Component<Props, State> {
             <div>
               <InputWrapper attribute="code" errors={errors}>
                 <>
-                  Subcontract Code:
+                  <div className="label">Subcontract Code:</div>
                   <input disabled={readonly} name="code" type="text" value={subcontract.code} />
                 </>
               </InputWrapper>
               <InputWrapper attribute="name" errors={errors}>
                 <>
-                  Name:
+                  <div className="label">Name:</div>
                   <input disabled={readonly} name="name" type="text" value={subcontract.name} />
                 </>
               </InputWrapper>
@@ -93,19 +93,19 @@ export default class SubcontractForm extends Component<Props, State> {
             <div>
               <InputWrapper attribute="down_payment1" errors={errors}>
                 <>
-                  Down Payment 1:
+                  <div className="label">Down Payment 1:</div>
                   <input disabled={readonly} name="down_payment1" type="number" min="0" step="0.01" value={subcontract.down_payment1} />
                 </>
               </InputWrapper>
               <InputWrapper attribute="down_payment2" errors={errors}>
                 <>
-                  Down Payment 2:
+                  <div className="label">Down Payment 2:</div>
                   <input disabled={readonly} name="down_payment2" type="number" min="0" step="0.01" value={subcontract.down_payment2} />
                 </>
               </InputWrapper>
               <InputWrapper attribute="down_payment3" errors={errors}>
                 <>
-                  Down Payment 3:
+                  <div className="label">Down Payment 3:</div>
                   <input disabled={readonly} name="down_payment3" type="number" min="0" step="0.01" value={subcontract.down_payment3} />
                 </>
               </InputWrapper>

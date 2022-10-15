@@ -86,25 +86,25 @@ export default class ProjectForm extends Component<Props, State> {
             <div>
               <InputWrapper attribute="code" errors={errors}>
                 <>
-                  Project #:
+                  <div className="label">Project #:</div>
                   <input disabled={readonly} name="code" type="text" value={project.code} />
                 </>
               </InputWrapper>
               <InputWrapper attribute="name" errors={errors}>
                 <>
-                  Name:
+                  <div className="label">Name:</div>
                   <input disabled={readonly} name="name" type="text" value={project.name} />
                 </>
               </InputWrapper>
               <InputWrapper attribute="acronym" errors={errors}>
                 <>
-                  Acronym:
+                  <div className="label">Acronym:</div>
                   <input disabled={readonly} name="acronym" type="text" value={project.acronym} />
                 </>
               </InputWrapper>
               <InputWrapper attribute="accumulation_amount" errors={errors}>
                 <>
-                  Accumulation Amount:
+                  <div className="label">Accumulation Amount:</div>
                   <input disabled={readonly} name="accumulation_amount" type="number" min="0" step="0.01" value={project.accumulation_amount} />
                 </>
               </InputWrapper>
@@ -112,25 +112,25 @@ export default class ProjectForm extends Component<Props, State> {
             <div>
               <InputWrapper attribute="project_group" errors={errors}>
                 <>
-                  Project Group:
+                  <div className="label">Project Group:</div>
                   <input disabled={readonly} name="project_group" type="text" value={project.project_group} />
                 </>
               </InputWrapper>
               <InputWrapper attribute="address" errors={errors}>
                 <>
-                  Address:
+                  <div className="label">Address:</div>
                   <input disabled={readonly} name="address" type="text" value={project.address} />
                 </>
               </InputWrapper>
               <InputWrapper attribute="start_date" errors={errors}>
                 <>
-                  Start Date:
+                  <div className="label">Start Date:</div>
                   <input disabled={readonly} name="start_date" type="date" value={project.start_date} />
                 </>
               </InputWrapper>
               <InputWrapper attribute="end_date" errors={errors}>
                 <>
-                  End Date:
+                  <div className="label">End Date:</div>
                   <input disabled={readonly} name="end_date" type="date" value={project.end_date} />
                 </>
               </InputWrapper>

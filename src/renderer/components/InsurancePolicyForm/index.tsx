@@ -79,13 +79,13 @@ export default class InsurancePolicyForm extends Component<Props, State> {
             <div>
               <InputWrapper attribute="code" errors={errors}>
                 <>
-                  Policy Code:
+                  <div className="label">Policy Code:</div>
                   <input disabled={readonly} name="code" type="text" value={this.state.insurancePolicy.code}/>
                 </>
               </InputWrapper>
               <InputWrapper attribute="project_id" errors={errors}>
                 <>
-                  <div>Project:</div>
+                  <div className="label">Project:</div>
                   <select disabled={readonly} name="project_id" value={insurancePolicy.project_id}>
                     {MasterForm.renderSelectOptions(projects)}
                   </select>
@@ -93,7 +93,7 @@ export default class InsurancePolicyForm extends Component<Props, State> {
               </InputWrapper>
               <InputWrapper attribute="insurance_company_id" errors={errors}>
                 <>
-                  <div>Insurance Company:</div>
+                  <div className="label">Insurance Company:</div>
                   <select disabled={readonly} name="insurance_company_id" value={insurancePolicy.insurance_company_id}>
                     {MasterForm.renderSelectOptions(insuranceCompanies)}
                   </select>
@@ -103,25 +103,25 @@ export default class InsurancePolicyForm extends Component<Props, State> {
             <div>
               <InputWrapper attribute="details" errors={errors}>
                 <>
-                  Policy Details:
+                  <div className="label">Policy Details:</div>
                   <input disabled={readonly} name="details" type="text" value={this.state.insurancePolicy.details}/>
                 </>
               </InputWrapper>
               <InputWrapper attribute="comment" errors={errors}>
                 <>
-                  Comment:
+                  <div className="label">Comment:</div>
                   <input disabled={readonly} name="comment" type="text" value={this.state.insurancePolicy.comment}/>
                 </>
               </InputWrapper>
               <InputWrapper attribute="start_date" errors={errors}>
                 <>
-                  Start Date:
+                  <div className="label">Start Date:</div>
                   <input disabled={readonly} name="start_date" type="date" value={this.state.insurancePolicy.start_date}/>
                 </>
               </InputWrapper>
               <InputWrapper attribute="end_date" errors={errors}>
                 <>
-                  End Date:
+                  <div className="label">End Date:</div>
                   <input disabled={readonly} name="end_date" type="date" value={this.state.insurancePolicy.end_date}/>
                 </>
               </InputWrapper>

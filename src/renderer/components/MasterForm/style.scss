@@ -11,10 +11,16 @@
     > div {
       flex: 1;
 
-      > div {
+      > div > div {
         padding: 5px 0;
+        display: flex;
 
-        > input {
+        > .label {
+          width: calc(50% - 15px);
+        }
+
+        > input, select, textarea {
+          width: calc(50% - 15px);
           border-radius: 5px;
           border: none;
           margin-left: 5px;

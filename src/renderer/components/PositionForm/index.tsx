@@ -71,13 +71,13 @@ export default class PostionForm extends Component<Props, State> {
               <div>
                 <InputWrapper attribute="code" errors={errors}>
                   <>
-                    Position Code:
+                    <div className="label">Position Code:</div>
                     <input disabled={readonly} name="code" type="text" value={position.code} />
                   </>
                 </InputWrapper>
                 <InputWrapper attribute="name" errors={errors}>
                   <>
-                    Position Name:
+                    <div className="label">Position Name:</div>
                     <input disabled={readonly} name="name" type="text" value={position.name} />
                   </>
                 </InputWrapper>
@@ -85,13 +85,13 @@ export default class PostionForm extends Component<Props, State> {
               <div>
                 <InputWrapper attribute="minimum_pay" errors={errors}>
                   <>
-                    Minimum Rate:
+                    <div className="label">Minimum Rate:</div>
                     <input disabled={readonly} name="minimum_pay" type="number" min="0" step="0.01" value={position.minimum_pay} />
                   </>
                 </InputWrapper>
                 <InputWrapper attribute="maximum_pay" errors={errors}>
                   <>
-                    Maximum Rate:
+                    <div className="label">Maximum Rate:</div>
                     <input disabled={readonly} name="maximum_pay" type="number" min="0" step="0.01" value={position.maximum_pay} />
                   </>
                 </InputWrapper>

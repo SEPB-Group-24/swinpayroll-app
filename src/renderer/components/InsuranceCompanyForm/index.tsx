@@ -74,7 +74,7 @@ export default class InsuranceCompanyForm extends Component<Props, State> {
             <div>
               <InputWrapper attribute="code" errors={errors}>
                 <>
-                  Company Code:
+                  <div className="label">Company Code:</div>
                   <input disabled={readonly} name="code" type="text" value={insuranceCompany.code} />
                 </>
               </InputWrapper>
@@ -82,7 +82,7 @@ export default class InsuranceCompanyForm extends Component<Props, State> {
             <div>
               <InputWrapper attribute="name" errors={errors}>
                 <>
-                  Company Name:
+                  <div className="label">Company Name:</div>
                   <input disabled={readonly} name="name" type="text" value={insuranceCompany.name} />
                 </>
               </InputWrapper>

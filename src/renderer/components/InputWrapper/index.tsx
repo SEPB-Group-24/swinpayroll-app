@@ -16,7 +16,7 @@ export default class InputWrapper extends Component<Props> {
     const error = errors.find((error) => error.attribute === attribute);
     return (
       <div className="InputWrapper">
-        {children}
+        <div>{children}</div>
         <div className="errorMessage">{error ? error.message : ''}</div>
       </div>
     );

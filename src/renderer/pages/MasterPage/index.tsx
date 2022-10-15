@@ -322,14 +322,14 @@ export default class MasterPage extends Component<Props, State> {
         <table>
           <thead>
             <tr>
-              <th></th>
+              <th className="buttons"></th>
               {keys.map((key) => <th>{key}</th>)}
             </tr>
           </thead>
           <tbody>
             {resources.map((resource) => (
               <tr>
-                <td>
+                <td className="buttons">
                   <button
                     onClick={() => this.setState({
                       activeSubTab: 'edit',
