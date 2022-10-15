@@ -85,7 +85,8 @@
 
           &.delete {
             background-color: #111827;
-            margin-top: auto;
+            position: absolute;
+            bottom: 42px;
           }
 
           &:disabled {
