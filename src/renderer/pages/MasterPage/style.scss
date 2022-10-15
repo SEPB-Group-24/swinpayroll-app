@@ -4,7 +4,7 @@
   width: calc(100% - 100px);
   min-width: 575px;
 
-  .backToIndex {
+  > .backToIndex {
     button {
       background-color: darkred;
       border: 0;
@@ -64,17 +64,24 @@
         border: none;
         border-right: 1px solid #000;
         color: black;
-        cursor: pointer;
         flex-grow: 1;
         font-size: 15px;
         padding: 5px 0;
         text-align: center;
 
-        &:hover,
-        &.active {
-          color: white;
-          background-color: #111827;
-          border-bottom: 1px solid #111827;
+        &:disabled {
+          color: grey;
+        }
+
+        &:not(:disabled) {
+          cursor: pointer;
+
+          &:hover,
+          &.active {
+            color: white;
+            background-color: #111827;
+            border-bottom: 1px solid #111827;
+          }
         }
 
         &.newTab {
@@ -117,7 +124,7 @@
             padding: 10px 10px;
             margin: 5px auto;
             width: 100%;
-  
+
             &.delete {
               background-color: #111827;
               margin-top: auto;

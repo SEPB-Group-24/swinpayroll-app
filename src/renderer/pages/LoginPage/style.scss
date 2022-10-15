@@ -36,6 +36,10 @@
       > div {
         margin: 8px;
 
+        &.error {
+          color: red;
+        }
+
         > a {
           margin: 5px;
         }

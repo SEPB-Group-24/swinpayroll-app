@@ -50,6 +50,7 @@ interface Props {
   onSubmit: (data: Data, files: Files) => Promise<void>;
   positions: Resource[]
   projects: Resource[];
+  readonly: boolean;
   subcontracts: Resource[];
 }
 
@@ -124,8 +125,12 @@ export default class EmployeeForm extends Component<Props, State> {
       return;
     }
 
-    const blob = await this.props.fetchApi('GET', `employees/${employee.id}/photo`);
-    this.setPhotoSrc(blob);
+    try {
+      const blob = await this.props.fetchApi('GET', `employees/${employee.id}/photo`);
+      this.setPhotoSrc(blob);
+    } catch {
+      // swallow
+    }
   }
 
   setPhotoSrc(blob: Blob) {
@@ -145,11 +150,11 @@ export default class EmployeeForm extends Component<Props, State> {
   }
 
   render() {
-    const { positions, projects, subcontracts } = this.props;
+    const { positions, projects, readonly, subcontracts } = this.props;
     const { employee } = this.state;
     return (
-      <MasterForm<State['employee']>
-        isEditing={!!employee}
+      <MasterForm<Employee>
+        isEditing={!!this.props.employee}
         onChange={(key, value) => {
           if (!key) {
             return;
@@ -171,6 +176,7 @@ export default class EmployeeForm extends Component<Props, State> {
           }
         })}
         onSubmit={() => this.props.onSubmit(this.state.employee as unknown as Record<string, unknown>, this.state.files)}
+        readonly={readonly}
       >
         {(errors) => (
         <>
@@ -178,41 +184,41 @@ export default class EmployeeForm extends Component<Props, State> {
             <InputWrapper attribute="code" errors={errors}>
               <>
                 Employee #:
-                <input name="code" type="text" value={employee.code} />
+                <input disabled={readonly} name="code" type="text" value={employee.code} />
               </>
             </InputWrapper>
 
             <InputWrapper attribute="name" errors={errors}>
               <>
                 Name:
-                <input name="name" type="text" value={employee.name} />
+                <input disabled={readonly} name="name" type="text" value={employee.name} />
               </>
             </InputWrapper>
             <InputWrapper attribute="address" errors={errors}>
               <>
                 Address:
-                <input name="address" type="text" value={employee.address} />
+                <input disabled={readonly} name="address" type="text" value={employee.address} />
               </>
             </InputWrapper>
 
             <InputWrapper attribute="phone" errors={errors}>
               <>
                 Phone:
-                <input name="phone" type="text" value={employee.phone} />
+                <input disabled={readonly} name="phone" type="text" value={employee.phone} />
               </>
             </InputWrapper>
 
             <InputWrapper attribute="date_of_birth" errors={errors}>
               <>
                 DOB:
-                <input name="date_of_birth" type="date" value={employee.date_of_birth} />
+                <input disabled={readonly} name="date_of_birth" type="date" value={employee.date_of_birth} />
               </>
             </InputWrapper>
 
             <InputWrapper attribute="sex" errors={errors}>
               <>
                 <div>Sex:</div>
-                <select name="sex" value={employee.sex}>
+                <select disabled={readonly} name="sex" value={employee.sex}>
                   {Object.entries(sexLabels).map(([value, label]) => (
                     <option key={value} value={value}>{label}</option>
                   ))}
@@ -223,7 +229,7 @@ export default class EmployeeForm extends Component<Props, State> {
             <InputWrapper attribute="marital_status" errors={errors}>
               <>
                 <div>Marital Status:</div>
-                <select name="marital_status" value={employee.marital_status}>
+                <select disabled={readonly} name="marital_status" value={employee.marital_status}>
                   {Object.entries(maritalStatusLabels).map(([value, label]) => (
                     <option key={value} value={value}>{label}</option>
                   ))}
@@ -234,36 +240,43 @@ export default class EmployeeForm extends Component<Props, State> {
             <InputWrapper attribute="referee" errors={errors}>
               <>
                 Referee:
-                <input name="referee" type="text" value={employee.referee} />
+                <input disabled={readonly} name="referee" type="text" value={employee.referee} />
               </>
             </InputWrapper>
 
             <InputWrapper attribute="hired_date" errors={errors}>
               <>
                 Date Hired:
-                <input name="hired_date" type="date" value={employee.hired_date} />
+                <input disabled={readonly} name="hired_date" type="date" value={employee.hired_date} />
               </>
             </InputWrapper>
 
             <InputWrapper attribute="hourly_rate" errors={errors}>
               <>
-                Pay Rate:
-                <input name="hourly_rate" type="number" min="0" step="0.01" value={employee.hourly_rate} />
+                Regular Hourly Rate:
+                <input disabled={readonly} name="hourly_rate" type="number" min="0" step="0.01" value={employee.hourly_rate} />
+              </>
+            </InputWrapper>
+
+            <InputWrapper attribute="overtime_rate" errors={errors}>
+              <>
+                Overtime Hourly Rate:
+                <input disabled={readonly} name="overtime_rate" type="number" min="0" step="0.01" value={employee.overtime_rate} />
               </>
             </InputWrapper>
 
             <InputWrapper attribute="skill" errors={errors}>
               <>
                 <div>Skills:</div>
-                <textarea name="skill" value={employee.skill}></textarea>
+                <textarea disabled={readonly} name="skill" value={employee.skill}></textarea>
               </>
             </InputWrapper>
 
             <InputWrapper attribute="subcontract_id" errors={errors}>
               <>
                 <div>Subcontract:</div>
-                <select name="subcontract_id" value={employee.subcontract_id}>
-                  {MasterForm.renderSelectOptions(subcontracts, true)}
+                <select disabled={readonly} name="subcontract_id" value={employee.subcontract_id}>
+                  {MasterForm.renderSelectOptions(subcontracts)}
                 </select>
               </>
             </InputWrapper>
@@ -276,7 +289,7 @@ export default class EmployeeForm extends Component<Props, State> {
             </div>
             <input
               accept="image/*"
-              name="photo"
+              disabled={readonly} name="photo"
               type="file"
               onChange={({ currentTarget }) => {
                 if (!currentTarget || !currentTarget.files) {
@@ -289,14 +302,14 @@ export default class EmployeeForm extends Component<Props, State> {
 
             <div>
               <div>CV:</div>
-              <input accept="application/pdf" name="cv" type="file" />
+              <input accept="application/pdf" disabled={readonly} name="cv" type="file" />
             </div>
 
             <InputWrapper attribute="position_id" errors={errors}>
               <>
                 <div>Position:</div>
-                <select name="position_id" value={employee.position_id}>
-                  {MasterForm.renderSelectOptions(positions, !employee.position_id)}
+                <select disabled={readonly} name="position_id" value={employee.position_id}>
+                  {MasterForm.renderSelectOptions(positions)}
                 </select>
               </>
             </InputWrapper>
@@ -304,8 +317,8 @@ export default class EmployeeForm extends Component<Props, State> {
             <InputWrapper attribute="project_id" errors={errors}>
               <>
                 <div>Project:</div>
-                <select name="project_id" value={employee.project_id}>
-                  {MasterForm.renderSelectOptions(projects, !employee.project_id)}
+                <select disabled={readonly} name="project_id" value={employee.project_id}>
+                  {MasterForm.renderSelectOptions(projects)}
                 </select>
               </>
             </InputWrapper>
@@ -315,21 +328,21 @@ export default class EmployeeForm extends Component<Props, State> {
             <InputWrapper attribute="emergency_name" errors={errors}>
               <>
                 Name:
-                <input name="emergency_name" type="text" value={employee.emergency_name} />
+                <input disabled={readonly} name="emergency_name" type="text" value={employee.emergency_name} />
               </>
             </InputWrapper>
 
             <InputWrapper attribute="emergency_address" errors={errors}>
               <>
                 Address:
-                <input name="emergency_address" type="text" value={employee.emergency_address} />
+                <input disabled={readonly} name="emergency_address" type="text" value={employee.emergency_address} />
               </>
             </InputWrapper>
 
             <InputWrapper attribute="emergency_phone" errors={errors}>
               <>
                 Phone:
-                <input name="emergency_phone" type="text" value={employee.emergency_phone} />
+                <input disabled={readonly} name="emergency_phone" type="text" value={employee.emergency_phone} />
               </>
             </InputWrapper>
           </div>

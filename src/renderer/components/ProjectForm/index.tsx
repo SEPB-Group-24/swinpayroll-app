@@ -23,6 +23,7 @@ interface Props {
   onClose: () => void;
   onDelete: () => void;
   onSubmit: (data: Data) => Promise<void>;
+  readonly: boolean;
 }
 
 interface State {
@@ -58,10 +59,11 @@ export default class ProjectForm extends Component<Props, State> {
   }
 
   render() {
+    const { readonly } = this.props;
     const { project } = this.state;
     return (
-      <MasterForm<State['project']>
-        isEditing={!!project}
+      <MasterForm<Project>
+        isEditing={!!this.props.project}
         onChange={(key, value) => {
           if (!key) {
             return;
@@ -77,6 +79,7 @@ export default class ProjectForm extends Component<Props, State> {
         onClose={this.props.onClose}
         onDelete={this.props.onDelete}
         onSubmit={() => this.props.onSubmit(this.state.project as unknown as Record<string, unknown>)}
+        readonly={readonly}
       >
         {(errors) => (
           <>
@@ -84,25 +87,25 @@ export default class ProjectForm extends Component<Props, State> {
               <InputWrapper attribute="code" errors={errors}>
                 <>
                   Project #:
-                  <input name="code" type="text" value={project.code} />
+                  <input disabled={readonly} name="code" type="text" value={project.code} />
                 </>
               </InputWrapper>
               <InputWrapper attribute="name" errors={errors}>
                 <>
                   Name:
-                  <input name="name" type="text" value={project.name} />
+                  <input disabled={readonly} name="name" type="text" value={project.name} />
                 </>
               </InputWrapper>
               <InputWrapper attribute="acronym" errors={errors}>
                 <>
                   Acronym:
-                  <input name="acronym" type="text" value={project.acronym} />
+                  <input disabled={readonly} name="acronym" type="text" value={project.acronym} />
                 </>
               </InputWrapper>
               <InputWrapper attribute="accumulation_amount" errors={errors}>
                 <>
                   Accumulation Amount:
-                  <input name="accumulation_amount" type="number" min="0" step="0.01" value={project.accumulation_amount} />
+                  <input disabled={readonly} name="accumulation_amount" type="number" min="0" step="0.01" value={project.accumulation_amount} />
                 </>
               </InputWrapper>
             </div>
@@ -110,25 +113,25 @@ export default class ProjectForm extends Component<Props, State> {
               <InputWrapper attribute="project_group" errors={errors}>
                 <>
                   Project Group:
-                  <input name="project_group" type="text" value={project.project_group} />
+                  <input disabled={readonly} name="project_group" type="text" value={project.project_group} />
                 </>
               </InputWrapper>
               <InputWrapper attribute="address" errors={errors}>
                 <>
                   Address:
-                  <input name="address" type="text" value={project.address} />
+                  <input disabled={readonly} name="address" type="text" value={project.address} />
                 </>
               </InputWrapper>
               <InputWrapper attribute="start_date" errors={errors}>
                 <>
                   Start Date:
-                  <input name="start_date" type="date" value={project.start_date} />
+                  <input disabled={readonly} name="start_date" type="date" value={project.start_date} />
                 </>
               </InputWrapper>
               <InputWrapper attribute="end_date" errors={errors}>
                 <>
                   End Date:
-                  <input name="end_date" type="date" value={project.end_date} />
+                  <input disabled={readonly} name="end_date" type="date" value={project.end_date} />
                 </>
               </InputWrapper>
             </div>

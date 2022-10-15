@@ -9,7 +9,7 @@ import { Resource as BaseResource } from 'renderer/components/MasterForm';
 import PositionForm, { Position } from 'renderer/components/PositionForm';
 import ProjectForm, { Project } from 'renderer/components/ProjectForm';
 import SubcontractForm, { Subcontract } from 'renderer/components/SubcontractForm';
-import singularise from 'utils/singularise';
+import singularise from 'renderer/utils/singularise';
 
 import './style.scss';
 
@@ -24,6 +24,7 @@ type Resources = Map<ResourceName, Resource[]>;
 
 interface Props {
   fetchApi: FetchApi;
+  readonly: boolean;
 }
 
 interface State {
@@ -40,7 +41,7 @@ export default class MasterPage extends Component<Props, State> {
 
     this.state = {
       activeTab: 'employees',
-      activeSubTab: 'new',
+      activeSubTab: props.readonly ? 'view' : 'new',
       inFlight: 'fetching',
       resourceEditing: null,
       resources: new Map()
@@ -56,6 +57,7 @@ export default class MasterPage extends Component<Props, State> {
   componentDidUpdate(prevProps: Props, prevState: State) {
     if (prevState.activeTab !== this.state.activeTab) {
       this.setState({
+        activeSubTab: this.state.activeSubTab === 'edit' ? (this.props.readonly ? 'view' : 'new') : this.state.activeSubTab,
         resourceEditing: null
       });
     }
@@ -85,6 +87,23 @@ export default class MasterPage extends Component<Props, State> {
     }
   }
 
+  getTableKeys() {
+    switch (this.state.activeTab) {
+      case 'employees':
+        return ['hired_date', 'code', 'name', 'date_of_birth', 'sex', 'skill'];
+      case 'subcontracts':
+        return ['code', 'name'];
+      case 'projects':
+        return ['code', 'name', 'acronym', 'start_date', 'end_date'];
+      case 'insurance_policies':
+        return ['code', 'start_date', 'end_date', 'details'];
+      case 'insurance_companies':
+        return ['code', 'name'];
+      case 'positions':
+        return ['code', 'name', 'minimum_pay', 'maximum_pay'];
+    }
+  }
+
   async handleDelete(id: string) {
     await this.props.fetchApi('DELETE', `${this.state.activeTab}/${id}`);
     await this.fetchResources();
@@ -100,7 +119,8 @@ export default class MasterPage extends Component<Props, State> {
   }
 
   render() {
-    const { activeSubTab, inFlight } = this.state;
+    const { readonly } = this.props;
+    const { activeSubTab, inFlight, resourceEditing } = this.state;
     if (inFlight === 'fetching') {
       return <div>Loading...</div>;
     }
@@ -125,9 +145,11 @@ export default class MasterPage extends Component<Props, State> {
 
         <div className="container">
           <div className="containerTabs">
-            <button className={`containerTab newTab ${activeSubTab === 'new' ? 'active' : ''}`} onClick={() => this.setState({ activeSubTab: 'new'})}>New</button>
-            <button className={`containerTab editTab ${activeSubTab === 'edit' ? 'active' : ''}`} onClick={() => this.setState({ activeSubTab: 'edit'})}>Edit</button>
-            <button className={`containerTab viewTab ${activeSubTab === 'view' ? 'active' : ''}`} onClick={() => this.setState({ activeSubTab: 'view' })}>View</button>
+            {!readonly && (
+              <button className={`containerTab newTab ${activeSubTab === 'new' ? 'active' : ''}`} onClick={() => this.setState({ activeSubTab: 'new'})}>New</button>
+            )}
+            <button className={`containerTab editTab ${activeSubTab === 'edit' ? 'active' : ''}`} disabled={!resourceEditing} onClick={() => this.setState({ activeSubTab: 'edit'})}>{readonly ? 'View One' : 'Edit'}</button>
+            <button className={`containerTab viewTab ${activeSubTab === 'view' ? 'active' : ''}`} onClick={() => this.setState({ activeSubTab: 'view' })}>{readonly ? 'View All' : 'View'}</button>
           </div>
           <div className="containerContent">
             {activeSubTab === 'view' ? this.renderTable() : this.renderForm()}
@@ -138,6 +160,7 @@ export default class MasterPage extends Component<Props, State> {
   }
 
   renderForm() {
+    const { readonly } = this.props;
     const { activeSubTab, activeTab, resources, resourceEditing } = this.state;
     if (activeSubTab === 'edit' && !resourceEditing) {
       return (
@@ -165,14 +188,15 @@ export default class MasterPage extends Component<Props, State> {
             onSubmit={this.handleSubmit}
             positions={resources.get('positions') ?? []}
             projects={resources.get('projects') ?? []}
+            readonly={readonly}
             subcontracts={resources.get('subcontracts') ?? []}
           />
         );
       case 'insurance_companies':
         return (
           <InsuranceCompanyForm
-            insuranceCompany={this.state.activeSubTab === 'edit' ? this.state.resourceEditing as unknown as InsuranceCompany : undefined}
             fetchApi={this.props.fetchApi}
+            insuranceCompany={this.state.activeSubTab === 'edit' ? this.state.resourceEditing as unknown as InsuranceCompany : undefined}
             onClose={() => this.setState({
               activeSubTab: 'view',
               resourceEditing: null
@@ -185,14 +209,15 @@ export default class MasterPage extends Component<Props, State> {
               });
             }}
             onSubmit={this.handleSubmit}
+            readonly={readonly}
           />
         );
       case 'insurance_policies':
         return (
           <InsurancePolicyForm
+            fetchApi={this.props.fetchApi}
             insuranceCompanies={resources.get('insurance_companies') ?? []}
             insurancePolicy={this.state.activeSubTab === 'edit' ? this.state.resourceEditing as unknown as InsurancePolicy : undefined}
-            fetchApi={this.props.fetchApi}
             onClose={() => this.setState({
               activeSubTab: 'view',
               resourceEditing: null
@@ -206,12 +231,12 @@ export default class MasterPage extends Component<Props, State> {
             }}
             onSubmit={this.handleSubmit}
             projects={resources.get('projects') ?? []}
+            readonly={readonly}
           />
         );
       case 'positions':
         return (
           <PositionForm
-            position={this.state.activeSubTab === 'edit' ? this.state.resourceEditing as unknown as Position : undefined}
             fetchApi={this.props.fetchApi}
             onClose={() => this.setState({
               activeSubTab: 'view',
@@ -225,16 +250,13 @@ export default class MasterPage extends Component<Props, State> {
               });
             }}
             onSubmit={this.handleSubmit}
+            position={this.state.activeSubTab === 'edit' ? this.state.resourceEditing as unknown as Position : undefined}
+            readonly={readonly}
           />
         );
       case 'projects':
         return (
           <ProjectForm
-            project={
-              this.state.activeSubTab === 'edit'
-                ? (this.state.resourceEditing as unknown as Project)
-                : undefined
-            }
             fetchApi={this.props.fetchApi}
             onClose={() => this.setState({
               activeSubTab: 'view',
@@ -248,6 +270,8 @@ export default class MasterPage extends Component<Props, State> {
               });
             }}
             onSubmit={this.handleSubmit}
+            project={this.state.activeSubTab === 'edit' ? this.state.resourceEditing as unknown as Project : undefined}
+            readonly={readonly}
           />
         );
       case 'subcontracts':
@@ -266,6 +290,7 @@ export default class MasterPage extends Component<Props, State> {
             });
           }}
           onSubmit={this.handleSubmit}
+          readonly={readonly}
           subcontract={this.state.activeSubTab === 'edit' ? this.state.resourceEditing as unknown as Subcontract : undefined}
         />
       );
@@ -291,7 +316,7 @@ export default class MasterPage extends Component<Props, State> {
 
   renderTable() {
     const resources = this.state.resources.get(this.state.activeTab) ?? [];
-    const keys = Object.keys(resources[0] ?? {});
+    const keys = this.getTableKeys();
     return (
       <div className="tableWrapper">
         <table>
@@ -310,15 +335,20 @@ export default class MasterPage extends Component<Props, State> {
                       activeSubTab: 'edit',
                       resourceEditing: resource
                     })}
-                  >Edit</button>
-                  <button
-                    className="delete"
-                    onClick={() => this.handleDelete(resource.id)}
-                  >
-                    Delete
-                  </button>
+                  >{this.props.readonly ? 'View' : 'Edit'}</button>
+                  {!this.props.readonly && (
+                    <button
+                      className="delete"
+                      onClick={() => this.handleDelete(resource.id)}
+                    >
+                      Delete
+                    </button>
+                  )}
                 </td>
-                {Object.values(resource).map((value, index) => <td key={index}>{typeof value === 'string' ? value : JSON.stringify(value)}</td>)}
+                {keys.map((key, index) => {
+                  const value = resource[key];
+                  return <td key={index}>{typeof value === 'string' ? value : JSON.stringify(value)}</td>;
+                })}
               </tr>
             ))}
           </tbody>

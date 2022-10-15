@@ -13,13 +13,15 @@ export interface ValidationError {
 }
 
 interface Props<TResource> {
-  children: (errors: ValidationError[]) => ReactElement;
-  isEditing: true;
+  children: (errors: ValidationError[], onSubmit: typeof MasterForm.prototype.handleSubmit) => ReactElement;
+  isEditing?: boolean;
   onChange: (key: keyof TResource, value: TResource[keyof TResource]) => void;
-  onClose: () => void;
-  onDelete: () => void;
+  onClose?: () => void;
+  onDelete?: () => void;
   onFileChange?: (key: string, value: File) => void;
   onSubmit: () => Promise<void>;
+  readonly?: boolean;
+  renderButtons?: boolean;
 }
 
 interface State {
@@ -27,11 +29,9 @@ interface State {
 }
 
 export default class MasterForm<TResource> extends Component<Props<TResource>, State> {
-  static renderSelectOptions(resources: Resource[], optional = false) {
+  static renderSelectOptions(resources: Resource[]) {
     return [
-      ...optional ? [
-        <option key="none" value={undefined}>None</option>
-      ] : [],
+      <option key="none" value="">None</option>,
       ...resources.map(({ code, id, name }, index) => (
         <option key={index} value={id}>{name} ({code})</option>
       ))
@@ -44,6 +44,24 @@ export default class MasterForm<TResource> extends Component<Props<TResource>, S
     this.state = {
       errors: []
     };
+
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  async handleSubmit(event: FormEvent) {
+    event.preventDefault();
+
+    try {
+      await this.props.onSubmit();
+    } catch (error) {
+      const { errors } = (error as { errors?: ValidationError[] });
+      if (errors) {
+        this.setState({ errors });
+        return;
+      }
+
+      throw error;
+    }
   }
 
   render() {
@@ -60,36 +78,30 @@ export default class MasterForm<TResource> extends Component<Props<TResource>, S
               this.props.onChange(name as keyof TResource, value);
             }
           }}
-          onSubmit={async (event: FormEvent) => {
-            event.preventDefault();
-
-            try {
-              await this.props.onSubmit();
-            } catch (error) {
-              const { errors } = (error as { errors?: ValidationError[] });
-              if (errors) {
-                this.setState({ errors });
-                return;
-              }
-
-              throw error;
-            }
-          }}
+          onSubmit={this.handleSubmit}
         >
-          {this.props.children(this.state.errors)}
-          <div>
-            <button onClick={this.props.onClose} type="button">
-              Close
-            </button>
-            <button type="submit" className="submit">
-              Save
-            </button>
-            {this.props.isEditing && (
-              <button className="delete" onClick={this.props.onDelete} type="button">
-                Delete
-              </button>
-            )}
-          </div>
+          {this.props.children(this.state.errors, this.handleSubmit)}
+          {this.props.renderButtons !== false && (
+            <div>
+              {this.props.onClose && (
+                <button onClick={this.props.onClose} type="button">
+                  Close
+                </button>
+              )}
+              {!this.props.readonly && (
+                <>
+                  <button type="submit" className="submit">
+                    Save
+                  </button>
+                  {this.props.onDelete && this.props.isEditing && (
+                    <button className="delete" onClick={this.props.onDelete} type="button">
+                      Delete
+                    </button>
+                  )}
+                </>
+              )}
+            </div>
+          )}
         </form>
       </div>
     );

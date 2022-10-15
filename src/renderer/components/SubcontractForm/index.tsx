@@ -18,6 +18,7 @@ interface Props {
   onClose: () => void;
   onDelete: () => void;
   onSubmit: (data: Data) => Promise<void>;
+  readonly: boolean;
   subcontract?: Subcontract;
 }
 
@@ -51,10 +52,11 @@ export default class SubcontractForm extends Component<Props, State> {
   }
 
   render() {
+    const { readonly } = this.props;
     const { subcontract } = this.state;
     return (
-      <MasterForm<State['subcontract']>
-        isEditing={!!subcontract}
+      <MasterForm<Subcontract>
+        isEditing={!!this.props.subcontract}
         onChange={(key, value) => {
           if (!key) {
             return;
@@ -62,28 +64,29 @@ export default class SubcontractForm extends Component<Props, State> {
 
           this.setState({
             subcontract: {
-              ...this.state.subcontract,
+              ...subcontract,
               [key]: value
             }
           })
         }}
         onClose={this.props.onClose}
         onDelete={this.props.onDelete}
-        onSubmit={() => this.props.onSubmit(this.state.subcontract as unknown as Record<string, unknown>)}
-        >
+        onSubmit={() => this.props.onSubmit(subcontract as unknown as Record<string, unknown>)}
+        readonly={readonly}
+      >
         {(errors) => (
           <>
             <div>
               <InputWrapper attribute="code" errors={errors}>
                 <>
                   Subcontract Code:
-                  <input name="code" type="text" value={this.state.subcontract.code} />
+                  <input disabled={readonly} name="code" type="text" value={subcontract.code} />
                 </>
               </InputWrapper>
               <InputWrapper attribute="name" errors={errors}>
                 <>
                   Name:
-                  <input name="name" type="text" value={this.state.subcontract.name} />
+                  <input disabled={readonly} name="name" type="text" value={subcontract.name} />
                 </>
               </InputWrapper>
             </div>
@@ -91,19 +94,19 @@ export default class SubcontractForm extends Component<Props, State> {
               <InputWrapper attribute="down_payment1" errors={errors}>
                 <>
                   Down Payment 1:
-                  <input name="down_payment1" type="number" min="0" step="0.01" value={this.state.subcontract.down_payment1} />
+                  <input disabled={readonly} name="down_payment1" type="number" min="0" step="0.01" value={subcontract.down_payment1} />
                 </>
               </InputWrapper>
               <InputWrapper attribute="down_payment2" errors={errors}>
                 <>
                   Down Payment 2:
-                  <input name="down_payment2" type="number" min="0" step="0.01" value={this.state.subcontract.down_payment2} />
+                  <input disabled={readonly} name="down_payment2" type="number" min="0" step="0.01" value={subcontract.down_payment2} />
                 </>
               </InputWrapper>
               <InputWrapper attribute="down_payment3" errors={errors}>
                 <>
                   Down Payment 3:
-                  <input name="down_payment3" type="number" min="0" step="0.01" value={this.state.subcontract.down_payment3} />
+                  <input disabled={readonly} name="down_payment3" type="number" min="0" step="0.01" value={subcontract.down_payment3} />
                 </>
               </InputWrapper>
             </div>
