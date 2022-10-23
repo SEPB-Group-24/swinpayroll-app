@@ -10,11 +10,18 @@
 
     > div {
       flex: 1;
+      
 
-      > div {
+      > div > div {
         padding: 5px 0;
+        display: flex;
 
-        > input {
+        > .label {
+          width: calc(50% - 15px);
+        }
+
+        > input, select, textarea {
+          width: calc(50% - 15px);
           border-radius: 5px;
           border: none;
           margin-left: 5px;
@@ -57,9 +64,9 @@
         width: 150px;
       }
 
-      &.buttons {
+      &:last-of-type {
         display: flex;
-        flex: 0.25;
+        flex: 0;
         flex-direction: column;
         justify-content: flex-start;
 
@@ -71,6 +78,7 @@
           cursor: pointer;
           padding: 10px 10px;
           margin: 5px;
+          width: 70px;
 
           &.submit {
             margin-bottom: auto;
@@ -78,16 +86,21 @@
 
           &.delete {
             background-color: #111827;
-            margin-top: auto;
+            position: absolute;
+            bottom: 42px;
           }
 
           &:disabled {
             color: grey;
             cursor: default;
           }
+
+          &:hover {
+            background-color: lightgrey;
+            color: #111827;
+          }
         }
       }
     }
   }
-
 }

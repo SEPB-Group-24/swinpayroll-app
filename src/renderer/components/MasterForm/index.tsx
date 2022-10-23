@@ -20,6 +20,7 @@ interface Props<TResource> {
   onDelete?: () => void;
   onFileChange?: (key: string, value: File) => void;
   onSubmit: () => Promise<void>;
+  readonly?: boolean;
   renderButtons?: boolean;
 }
 
@@ -87,13 +88,17 @@ export default class MasterForm<TResource> extends Component<Props<TResource>, S
                   Close
                 </button>
               )}
-              <button type="submit" className="submit">
-                Save
-              </button>
-              {this.props.onDelete && this.props.isEditing && (
-                <button className="delete" onClick={this.props.onDelete} type="button">
-                  Delete
-                </button>
+              {!this.props.readonly && (
+                <>
+                  <button type="submit" className="submit">
+                    Save
+                  </button>
+                  {this.props.onDelete && this.props.isEditing && (
+                    <button className="delete" onClick={this.props.onDelete} type="button">
+                      Delete
+                    </button>
+                  )}
+                </>
               )}
             </div>
           )}

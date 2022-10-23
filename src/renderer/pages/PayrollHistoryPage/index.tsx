@@ -1,4 +1,5 @@
-import { Component } from 'react';
+import { Component, KeyboardEvent } from 'react';
+import { Link } from 'react-router-dom';
 
 import printJS from 'print-js'
 
@@ -44,6 +45,7 @@ interface PayrollHistory {
 
 interface Props {
   fetchApi: FetchApi;
+  readonly: boolean;
 }
 
 type InFlight = 'creating' | 'error' | 'fetching' | null;
@@ -77,6 +79,7 @@ const numAttrs = [
   'slip_deduction_5',
   'slip_deduction_6'
 ] as const;
+
 
 export default class PayrollHistoryPage extends Component<Props, State> {
   static formatStartDate(date: Date) {
@@ -139,6 +142,7 @@ export default class PayrollHistoryPage extends Component<Props, State> {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleClear = this.handleClear.bind(this);
+    this.handleKeyUp = this.handleKeyUp.bind(this);
     this.handlePrint = this.handlePrint.bind(this);
     this.handleSaveCsv = this.handleSaveCsv.bind(this);
     this.handleSavePdf = this.handleSavePdf.bind(this);
@@ -241,6 +245,27 @@ export default class PayrollHistoryPage extends Component<Props, State> {
     });
   }
 
+  handleKeyUp(event: KeyboardEvent<HTMLDivElement>) {
+    if (event.code !== 'Enter') {
+      return;
+    }
+
+    event.preventDefault();
+
+    type Input = HTMLInputElement | HTMLSelectElement | null
+    let nextInput: Input = event.target as HTMLInputElement | HTMLSelectElement;
+    const find = (element: Element | null | undefined) => element?.nextElementSibling?.querySelector('input, select') as Input;
+    do {
+      let newNextInput = find(nextInput.parentElement)
+      if (!newNextInput) {
+        newNextInput = find(nextInput.parentElement?.parentElement);
+      }
+
+      nextInput = newNextInput;
+    } while (nextInput?.disabled);
+    nextInput?.focus();
+  }
+
   async handlePrint() {
     const { id } = this.state.newWeeklyPayrollHistory;
     if (!id) {
@@ -341,72 +366,104 @@ export default class PayrollHistoryPage extends Component<Props, State> {
     const employee = this.state.employees.find(({ id }) => id === newWeeklyPayrollHistory.employee_id) as Employee;
     return (
       <div className="PayrollHistoryPage">
-        <MasterForm<PayrollHistory>
-          onChange={this.handleChange}
-          onSubmit={this.handleSubmit}
-          renderButtons={false}
-        >
-          {(errors, onSubmit) => (
-            <>
-              <div>
-                <div>
-                  <InputWrapper attribute="week_start_date" errors={errors}>
-                    <>
-                      Start of Week:
-                      <input name="week_start_date" type="date" value={newWeeklyPayrollHistory.week_start_date} />
-                    </>
-                  </InputWrapper>
+        <div className="backToIndex">
+          <Link to="/"><button type="button">Go Back</button></Link>
+        </div>
+          <div onKeyUp={this.handleKeyUp} className="payrollWrapper">
+            <MasterForm<PayrollHistory>
+              onChange={this.handleChange}
+              onSubmit={this.handleSubmit}
+              renderButtons={false}
+            >
+              {(errors, onSubmit) => (
+                <>
+                  <div>
+                    <InputWrapper attribute="week_start_date" errors={errors}>
+                      <>
+                        <div className="label">Start of Week:</div>
+                        <input name="week_start_date" type="date" value={newWeeklyPayrollHistory.week_start_date} />
+                      </>
+                    </InputWrapper>
+                    <InputWrapper attribute="employee_id" errors={errors}>
+                      <>
+                        <div className="label">Employee:</div>
+                        <select name="employee_id" value={newWeeklyPayrollHistory.employee_id}>
+                          {MasterForm.renderSelectOptions(employees)}
+                        </select>
+                      </>
+                    </InputWrapper>
+                    <div>
+                      <div>
+                        <div className="label">Project Name</div>
+                        <input disabled={true} type="text" value={employee ? (projects.find((project) => project.id === newWeeklyPayrollHistory.project_id)?.name ?? 'Unknown') : 'Choose an employee'} />
+                      </div>
+                    </div>
 
-                  <InputWrapper attribute="employee_id" errors={errors}>
-                    <>
-                      <div>Employee:</div>
-                      <select name="employee_id" value={newWeeklyPayrollHistory.employee_id}>
-                        {MasterForm.renderSelectOptions(employees)}
-                      </select>
-                    </>
-                  </InputWrapper>
+                    <div>
+                      <div>
+                        <div className="label">Employee Hourly Rate:</div>
+                        <input disabled={true} type="number" value={newWeeklyPayrollHistory.employee_hourly_rate} />
+                      </div>
+                    </div>
+
+                    <div>
+                      <div>
+                        <div className="label">Employee Overtime Rate:</div>
+                        <input disabled={true} type="number" value={newWeeklyPayrollHistory.employee_overtime_rate} />
+                      </div>
+                    </div>
+
+                    <div>
+                      <div>
+                        <div className="label">Employee Position</div>
+                        <input disabled={true} type="text" value={newWeeklyPayrollHistory.employee_position} />
+                      </div>
+                    </div>
+                  </div>
+                  <div></div>
                   <div>
-                    Project Name
-                    <input disabled={true} type="text" value={employee ? (projects.find((project) => project.id === newWeeklyPayrollHistory.project_id)?.name ?? 'Unknown') : 'Choose an employee'} />
+                    {
+                      numAttrs.slice(0,9).map((attr) => (
+                        <InputWrapper attribute={attr} errors={errors}>
+                          <>
+                            <div className="label">{titleCase(attr)}:</div>
+                            <input disabled={this.props.readonly} name={attr} type="number" min="0" value={newWeeklyPayrollHistory[attr]} />
+                          </>
+                        </InputWrapper>
+                      ))
+                    }
                   </div>
                   <div>
-                    Employee Hourly Rate:
-                    <input disabled={true} type="number" value={newWeeklyPayrollHistory.employee_hourly_rate} />
+                    {
+                      numAttrs.slice(9,18).map((attr) => (
+                        <InputWrapper attribute={attr} errors={errors}>
+                          <>
+                            <div className="label">{titleCase(attr)}:</div>
+                            <input disabled={this.props.readonly} name={attr} type="number" min="0" value={newWeeklyPayrollHistory[attr]} />
+                          </>
+                        </InputWrapper>
+                      ))
+                    }
                   </div>
-                  <div>
-                    Employee Overtime Rate:
-                    <input disabled={true} type="number" value={newWeeklyPayrollHistory.employee_overtime_rate} />
+
+                  <div className="buttons">
+                    <button disabled={!this.state.newWeeklyPayrollHistory.id} onClick={this.handlePrint} type="button">Print</button>
+                    <button disabled={!this.state.newWeeklyPayrollHistory.id} onClick={this.handleSavePdf} type="button">Save PDF</button>
+                    <button onClick={this.handleSaveCsv} type="button">Save CSV (all records)</button>
+                    {!this.props.readonly && (
+                      <>
+                        <div></div>
+                        <div></div>
+                        <button onClick={this.handleClear} type="button">Clear</button>
+                        <button onClick={onSubmit} type="button">Save</button>
+                      </>
+                    )}
                   </div>
-                  <div>
-                    Employee Position
-                    <input disabled={true} type="text" value={newWeeklyPayrollHistory.employee_position} />
-                  </div>
-                </div>
-                <div>
-                  {
-                    numAttrs.map((attr) => (
-                      <InputWrapper attribute={attr} errors={errors}>
-                        <>
-                          {titleCase(attr)}:
-                          <input name={attr} type="number" min="0" value={newWeeklyPayrollHistory[attr]} />
-                        </>
-                      </InputWrapper>
-                    ))
-                  }
-                </div>
-              </div>
-              <div className="buttons">
-                <button disabled={!this.state.newWeeklyPayrollHistory.id} onClick={this.handlePrint} type="button">Print</button>
-                <button disabled={!this.state.newWeeklyPayrollHistory.id} onClick={this.handleSavePdf} type="button">Save PDF</button>
-                <button onClick={this.handleSaveCsv} type="button">Save CSV (all records)</button>
-                <div></div>
-                <div></div>
-                <button onClick={this.handleClear} type="button">Clear</button>
-                <button onClick={onSubmit} type="button">Save</button>
-              </div>
-            </>
-          )}
-        </MasterForm>
+                </>
+              )}
+            </MasterForm>
+          </div>
+          
       </div>
     );
   }

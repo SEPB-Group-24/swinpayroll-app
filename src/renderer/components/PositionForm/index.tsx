@@ -18,6 +18,7 @@ interface Props {
   onDelete: () => void;
   onSubmit: (data: Data) => Promise<void>;
   position?: Position;
+  readonly: boolean;
 }
 
 interface State {
@@ -43,10 +44,11 @@ export default class PostionForm extends Component<Props, State> {
   }
 
   render() {
+    const { readonly } = this.props;
     const { position } = this.state;
     return (
-      <MasterForm<State['position']>
-        isEditing={!!position}
+      <MasterForm<Position>
+        isEditing={!!this.props.position}
         onChange={(key, value) => {
           if (!key) {
             return;
@@ -62,34 +64,39 @@ export default class PostionForm extends Component<Props, State> {
         onClose={this.props.onClose}
         onDelete={this.props.onDelete}
         onSubmit={() => this.props.onSubmit(this.state.position as unknown as Record<string, unknown>)}
+        readonly={readonly}
         >
           {(errors) => (
-            <div>
-              <InputWrapper attribute="code" errors={errors}>
-                <>
-                  Position Code:
-                  <input name="code" type="text" value={position.code} />
-                </>
-              </InputWrapper>
-              <InputWrapper attribute="name" errors={errors}>
-                <>
-                  Position Name:
-                  <input name="name" type="text" value={position.name} />
-                </>
-              </InputWrapper>
-              <InputWrapper attribute="minimum_pay" errors={errors}>
-                <>
-                  Minimum Rate:
-                  <input name="minimum_pay" type="number" min="0" step="0.01" value={position.minimum_pay} />
-                </>
-              </InputWrapper>
-              <InputWrapper attribute="maximum_pay" errors={errors}>
-                <>
-                  Maximum Rate:
-                  <input name="maximum_pay" type="number" min="0" step="0.01" value={position.maximum_pay} />
-                </>
-              </InputWrapper>
-            </div>
+            <>
+              <div>
+                <InputWrapper attribute="code" errors={errors}>
+                  <>
+                    <div className="label">Position Code:</div>
+                    <input disabled={readonly} name="code" type="text" value={position.code} />
+                  </>
+                </InputWrapper>
+                <InputWrapper attribute="name" errors={errors}>
+                  <>
+                    <div className="label">Position Name:</div>
+                    <input disabled={readonly} name="name" type="text" value={position.name} />
+                  </>
+                </InputWrapper>
+              </div>
+              <div>
+                <InputWrapper attribute="minimum_pay" errors={errors}>
+                  <>
+                    <div className="label">Minimum Rate:</div>
+                    <input disabled={readonly} name="minimum_pay" type="number" min="0" step="0.01" value={position.minimum_pay} />
+                  </>
+                </InputWrapper>
+                <InputWrapper attribute="maximum_pay" errors={errors}>
+                  <>
+                    <div className="label">Maximum Rate:</div>
+                    <input disabled={readonly} name="maximum_pay" type="number" min="0" step="0.01" value={position.maximum_pay} />
+                  </>
+                </InputWrapper>
+              </div>
+            </>
           )}
         </MasterForm>
     );

@@ -23,6 +23,7 @@ interface Props {
   onDelete: () => void;
   onSubmit: (data: Data) => Promise<void>;
   projects: Resource[];
+  readonly: boolean;
 }
 
 interface State {
@@ -51,11 +52,11 @@ export default class InsurancePolicyForm extends Component<Props, State> {
   }
 
   render() {
-    const { insuranceCompanies, projects  } = this.props;
+    const { insuranceCompanies, projects, readonly } = this.props;
     const { insurancePolicy } = this.state;
     return (
-      <MasterForm<State['insurancePolicy']>
-        isEditing={!!insurancePolicy}
+      <MasterForm<InsurancePolicy>
+        isEditing={!!this.props.insurancePolicy}
         onChange={(key, value) => {
           if (!key) {
             return;
@@ -71,56 +72,61 @@ export default class InsurancePolicyForm extends Component<Props, State> {
         onClose={this.props.onClose}
         onDelete={this.props.onDelete}
         onSubmit={() => this.props.onSubmit(this.state.insurancePolicy as unknown as Record<string, unknown>)}
+        readonly={readonly}
       >
         {(errors) => (
-          <div>
-            <InputWrapper attribute="code" errors={errors}>
-              <>
-                Policy Code:
-                <input name="code" type="text" value={this.state.insurancePolicy.code}/>
-              </>
-            </InputWrapper>
-            <InputWrapper attribute="project_id" errors={errors}>
-              <>
-                <div>Project:</div>
-                <select name="project_id" value={insurancePolicy.project_id}>
-                  {MasterForm.renderSelectOptions(projects)}
-                </select>
-              </>
-            </InputWrapper>
-            <InputWrapper attribute="insurance_company_id" errors={errors}>
-              <>
-                <div>Insurance Company:</div>
-                <select name="insurance_company_id" value={insurancePolicy.insurance_company_id}>
-                  {MasterForm.renderSelectOptions(insuranceCompanies)}
-                </select>
-              </>
-            </InputWrapper>
-            <InputWrapper attribute="details" errors={errors}>
-              <>
-                Policy Details:
-                <input name="details" type="text" value={this.state.insurancePolicy.details}/>
-              </>
-            </InputWrapper>
-            <InputWrapper attribute="comment" errors={errors}>
-              <>
-                Comment:
-                <input name="comment" type="text" value={this.state.insurancePolicy.comment}/>
-              </>
-            </InputWrapper>
-            <InputWrapper attribute="start_date" errors={errors}>
-              <>
-                Start Date:
-                <input name="start_date" type="date" value={this.state.insurancePolicy.start_date}/>
-              </>
-            </InputWrapper>
-            <InputWrapper attribute="end_date" errors={errors}>
-              <>
-                End Date:
-                <input name="end_date" type="date" value={this.state.insurancePolicy.end_date}/>
-              </>
-            </InputWrapper>
-          </div>
+          <>
+            <div>
+              <InputWrapper attribute="code" errors={errors}>
+                <>
+                  <div className="label">Policy Code:</div>
+                  <input disabled={readonly} name="code" type="text" value={this.state.insurancePolicy.code}/>
+                </>
+              </InputWrapper>
+              <InputWrapper attribute="project_id" errors={errors}>
+                <>
+                  <div className="label">Project:</div>
+                  <select disabled={readonly} name="project_id" value={insurancePolicy.project_id}>
+                    {MasterForm.renderSelectOptions(projects)}
+                  </select>
+                </>
+              </InputWrapper>
+              <InputWrapper attribute="insurance_company_id" errors={errors}>
+                <>
+                  <div className="label">Insurance Company:</div>
+                  <select disabled={readonly} name="insurance_company_id" value={insurancePolicy.insurance_company_id}>
+                    {MasterForm.renderSelectOptions(insuranceCompanies)}
+                  </select>
+                </>
+              </InputWrapper>
+            </div>
+            <div>
+              <InputWrapper attribute="details" errors={errors}>
+                <>
+                  <div className="label">Policy Details:</div>
+                  <input disabled={readonly} name="details" type="text" value={this.state.insurancePolicy.details}/>
+                </>
+              </InputWrapper>
+              <InputWrapper attribute="comment" errors={errors}>
+                <>
+                  <div className="label">Comment:</div>
+                  <input disabled={readonly} name="comment" type="text" value={this.state.insurancePolicy.comment}/>
+                </>
+              </InputWrapper>
+              <InputWrapper attribute="start_date" errors={errors}>
+                <>
+                  <div className="label">Start Date:</div>
+                  <input disabled={readonly} name="start_date" type="date" value={this.state.insurancePolicy.start_date}/>
+                </>
+              </InputWrapper>
+              <InputWrapper attribute="end_date" errors={errors}>
+                <>
+                  <div className="label">End Date:</div>
+                  <input disabled={readonly} name="end_date" type="date" value={this.state.insurancePolicy.end_date}/>
+                </>
+              </InputWrapper>
+            </div>
+          </>
         )}
       </MasterForm>
     );

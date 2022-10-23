@@ -5,8 +5,11 @@
   > .header {
     display: flex;
     text-align: center;
-    margin: 10% auto;
+    margin: auto;
+    margin-top: 10%;
+    margin-bottom: 5%;
     vertical-align: middle;
+    color: lightgrey;
 
     > .logoContainer {
       display: flex;
@@ -35,10 +38,13 @@
       width: 100%;
       font-size: 25px;
       cursor: pointer;
+      background-color: #111827;
+      color: lightgrey;
+      border: 0;
 
       &:hover {
-        background-color: #008cff;
-        color: white;
+        background-color: lightgrey;
+        color: #111827;
       }
     }
   }
