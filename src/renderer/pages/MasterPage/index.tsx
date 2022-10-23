@@ -112,8 +112,17 @@ export default class MasterPage extends Component<Props, State> {
   }
 
   async handleDelete(id: string) {
-    await this.props.fetchApi('DELETE', `${this.state.activeTab}/${id}`);
-    await this.fetchResources();
+    try {
+      await this.props.fetchApi('DELETE', `${this.state.activeTab}/${id}`);
+      await this.fetchResources();
+    } catch (error: { status: number }) {
+      if (error.status === 409) {
+        alert('Sorry - something is dependent on that resource. Please delete all child resources first.');
+        return;
+      }
+
+      throw error;
+    }
   }
 
   async handleSubmit(data: Data, files: Files = {}) {
