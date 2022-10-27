@@ -80,19 +80,19 @@ export default class UserForm extends Component<Props, State> {
               <div>
                 <InputWrapper attribute="name" errors={errors}>
                   <>
-                    Name:
+                    <div className="label">Name:</div>
                     <input disabled={readonly} name="name" type="text" value={user.name} />
                   </>
                 </InputWrapper>
                 <InputWrapper attribute="email" errors={errors}>
                   <>
-                    Email:
+                    <div className="label">Email:</div>
                     <input disabled={readonly} name="email" type="text" value={user.email} />
                   </>
                 </InputWrapper>
               <InputWrapper attribute="role" errors={errors}>
                 <>
-                  <div>Role:</div>
+                  <div className="label">Role:</div>
                   <select disabled={readonly} name="role" value={user.role}>
                     {Object.entries(roleLabels).map(([value, label]) => (
                       <option key={value} value={value}>{label}</option>
@@ -104,14 +104,14 @@ export default class UserForm extends Component<Props, State> {
               <div>
                 <InputWrapper attribute="password" errors={errors}>
                   <>
-                    Password
+                    <div className="label">Password</div>
                     <input disabled={readonly} name="password" placeholder={isEditing ? '(unchanged)' : ''} type="password" value={user.password} />
                   </>
                 </InputWrapper>
                 {(user.password || !isEditing) && (
                   <InputWrapper attribute="password_confirmation" errors={errors}>
                     <>
-                      Password Confirmation
+                      <div className="label">Password Confirmation</div>
                       <input disabled={readonly} name="password_confirmation" type="password" value={user.password_confirmation} />
                     </>
                   </InputWrapper>
