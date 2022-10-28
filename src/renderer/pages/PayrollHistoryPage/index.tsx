@@ -167,7 +167,21 @@ export default class PayrollHistoryPage extends Component<Props, State> {
       await Promise.all((['employees', 'positions', 'projects', 'weeklyPayrollHistories'] as const).map(async (resourceName) => {
         const endpoint = snakeCase(resourceName);
         const response = await this.props.fetchApi('GET', endpoint);
-        resources[resourceName] = response[endpoint];
+        const data = response[endpoint];
+        if (resourceName === 'employees') {
+          (data as Employee[]).sort((a, b) => {
+            if (a.name > b.name) {
+              return 1;
+            }
+
+            if (b.name > a.name) {
+              return -1;
+            }
+
+            return 0;
+          });
+        }
+        resources[resourceName] = data;
       }));
       this.setState({
         inFlight: null,
@@ -463,7 +477,7 @@ export default class PayrollHistoryPage extends Component<Props, State> {
               )}
             </MasterForm>
           </div>
-          
+
       </div>
     );
   }
